@@ -25,1119 +25,532 @@
             background: var(--bg-deep);
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255, 42, 117, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(120, 40, 200, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 90% 80%, rgba(120, 0, 255, 0.08) 0%, transparent 40%);
             color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            box-sizing: border-box;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 28px;
-            padding: 40px;
             width: 100%;
-            max-width: 620px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            max-width: 600px;
+            background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            box-sizing: border-box;
-            max-height: 92vh;
-            overflow-y: auto;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
+            backdrop-filter: blur(12px);
+            text-align: center;
             position: relative;
-        }
-
-        .container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .container::-webkit-scrollbar-thumb {
-            background: var(--border-active);
-            border-radius: 10px;
         }
 
         h1 {
-            text-align: center;
-            background: linear-gradient(135deg, #fff 20%, var(--accent-pink));
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 30%, var(--accent-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 35px;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
         }
 
-        h2.section-title {
+        .subtitle {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--accent-pink);
-            margin-top: 30px;
-            margin-bottom: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group {
             margin-bottom: 25px;
         }
 
-        label.main-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 18px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background-color: var(--bg-surface);
-            color: var(--text-main);
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .custom-select-wrapper {
-            position: relative;
-            user-select: none;
-        }
-
-        .custom-select {
-            position: relative;
-            background-color: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 15px 18px;
-            cursor: pointer;
+        .top-buttons {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        .custom-select:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .custom-select.open {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-glow);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .custom-select::after {
-            content: '▼';
-            font-size: 0.75rem;
-            color: var(--accent-pink);
-            transition: transform 0.3s ease;
-        }
-
-        .custom-select.open::after {
-            transform: rotate(180deg);
-        }
-
-        .custom-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--accent-pink);
-            border-top: none;
-            border-bottom-left-radius: 14px;
-            border-bottom-right-radius: 14px;
-            overflow: hidden;
-            display: none;
-            z-index: 10;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .custom-select.open + .custom-options {
-            display: block;
-        }
-
-        .custom-option {
-            padding: 14px 18px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .custom-option:hover {
-            background: linear-gradient(135deg, rgba(255, 42, 117, 0.15), rgba(255, 23, 68, 0.15));
-            color: var(--text-main);
-        }
-
-        .custom-option.selected {
-            color: var(--accent-pink);
-            font-weight: 600;
-        }
-
-        .chips-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .chip-checkbox {
-            display: none;
-        }
-
-        .chip-label {
-            background-color: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            user-select: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .chip-label:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--text-main);
-        }
-
-        .chip-checkbox:checked + .chip-label {
-            background: linear-gradient(135deg, rgba(255, 42, 117, 0.2), rgba(255, 23, 68, 0.2));
-            border-color: var(--accent-pink);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(255, 42, 117, 0.3);
-        }
-
-        button.primary-btn {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-pink), var(--accent-red));
-            color: white;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            box-shadow: 0 8px 25px rgba(255, 42, 117, 0.4);
-            font-family: inherit;
-            letter-spacing: 0.5px;
-        }
-
-        button.primary-btn:active {
-            transform: scale(0.98);
-        }
-
-        button.primary-btn:hover {
-            opacity: 0.95;
-            box-shadow: 0 12px 30px rgba(255, 42, 117, 0.6);
-        }
-
-        .secondary-btn {
-            width: 100%;
-            padding: 13px;
-            border-radius: 14px;
-            border: 1px solid var(--border-active);
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            font-family: inherit;
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 42, 117, 0.1);
-            color: var(--text-main);
-            border-color: var(--accent-pink);
-        }
-
-        .top-end-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 23, 68, 0.15);
-            border: 1px solid rgba(255, 23, 68, 0.4);
-            color: var(--accent-red);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .top-end-btn:hover {
-            background: rgba(255, 23, 68, 0.3);
-            color: #fff;
-        }
-
-        /* Bouton Défis du Jour en haut */
-        .top-defis-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 42, 117, 0.15);
-            border: 1px solid rgba(255, 42, 117, 0.4);
-            color: var(--accent-pink);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 5;
-        }
-        .top-defis-btn:hover {
-            background: rgba(255, 42, 117, 0.3);
-            color: #fff;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 12px;
-        }
-
-        .level-countdown {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--accent-pink);
-            margin-bottom: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .flames-indicator {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            background: var(--bg-surface);
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .flame {
-            font-size: 1.1rem;
-            filter: grayscale(100%) brightness(40%);
-            transition: all 0.4s ease;
-            transform: scale(0.9);
-        }
-
-        .flame.active {
-            filter: grayscale(0%) brightness(100%);
-            transform: scale(1.15);
-            text-shadow: 0 0 10px rgba(255, 42, 117, 0.8);
-        }
-
-        .target-box {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
-
-        .target-player {
-            display: block;
-            color: var(--accent-pink);
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: 0px;
-            margin-top: 4px;
-            text-transform: none;
-            text-shadow: 0 0 20px rgba(255, 42, 117, 0.4);
-        }
-
-        .question-box {
-            font-size: 1.15rem;
-            text-align: center;
-            margin: 20px 0;
-            line-height: 1.6;
-            height: 140px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            background: var(--bg-surface);
-            padding: 20px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-            box-sizing: border-box;
-            word-break: break-word;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .question-box::-webkit-scrollbar {
-            width: 4px;
-        }
-        .question-box::-webkit-scrollbar-thumb {
-            background: var(--border-active);
-            border-radius: 10px;
-        }
-
-        .special-title {
+        .top-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
             font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-pink);
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .timer-container {
-            text-align: center;
-            margin: 15px 0;
-            background-color: var(--bg-surface);
+        .top-btn:hover {
+            border-color: var(--accent-pink);
+            background: rgba(255, 42, 117, 0.1);
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .level-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
             padding: 15px;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            height: 95px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            box-sizing: border-box;
+            gap: 5px;
         }
 
-        .timer-display {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-pink);
-            margin-bottom: 8px;
-            letter-spacing: 2px;
+        .level-btn:hover {
+            border-color: var(--accent-active);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--accent-glow);
         }
 
-        /* Modal / Popups styles */
+        .level-btn span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .card-display {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 25px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .card-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-red));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* Modal / Popups */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(7, 6, 9, 0.85);
             backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
+            display: none;
             align-items: center;
+            justify-content: center;
             z-index: 100;
             padding: 20px;
-            box-sizing: border-box;
         }
+
         .modal-content {
             background: var(--bg-surface);
             border: 1px solid var(--border-active);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 450px;
+            border-radius: 20px;
+            padding: 25px;
             width: 100%;
+            max-width: 450px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
+
         .modal-content h3 {
-            color: var(--accent-pink);
             margin-top: 0;
-            font-size: 1.4rem;
+            color: var(--accent-pink);
         }
-        .modal-btn-group {
+
+        .modal-btns {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-top: 20px;
         }
-        .modal-btn-group button {
+
+        .modal-btns button {
             flex: 1;
             padding: 12px;
             border-radius: 12px;
             border: none;
             font-weight: 600;
             cursor: pointer;
-            font-family: inherit;
-        }
-        .btn-him {
-            background: rgba(255, 42, 117, 0.2);
-            color: var(--accent-pink);
-            border: 1px solid var(--border-active);
-        }
-        .btn-her {
-            background: linear-gradient(135deg, var(--accent-pink), var(--accent-red));
-            color: white;
+            font-size: 0.95rem;
         }
 
-        /* Liste des défis listés (Écran dédié) */
+        .btn-lui {
+            background: rgba(0, 150, 255, 0.2);
+            color: #4da6ff;
+            border: 1px solid rgba(0, 150, 255, 0.4) !important;
+        }
+
+        .btn-elle {
+            background: rgba(255, 42, 117, 0.2);
+            color: var(--accent-pink);
+            border: 1px solid var(--border-active) !important;
+        }
+
         .defis-list-container {
-            max-height: 65vh;
+            max-height: 300px;
             overflow-y: auto;
             text-align: left;
             margin-top: 15px;
             padding-right: 5px;
         }
-        .defis-list-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .defis-list-container::-webkit-scrollbar-thumb {
-            background: var(--border-active);
-            border-radius: 10px;
-        }
+
         .defi-item {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            border: 1px solid var(--border-subtle);
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
         }
-        .defi-item span {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            color: var(--text-main);
-        }
+
         .defi-done-btn {
-            background: rgba(255, 23, 68, 0.2);
-            border: 1px solid rgba(255, 23, 68, 0.4);
-            color: var(--accent-pink);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-        }
-        .defi-done-btn:hover {
             background: var(--accent-pink);
             color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
         }
+
         .tab-buttons {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 5px;
+            margin-bottom: 10px;
         }
+
         .tab-btn {
             flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: transparent;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-subtle);
             color: var(--text-muted);
-            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            font-family: inherit;
+            font-size: 0.85rem;
         }
+
         .tab-btn.active {
-            background: rgba(255, 42, 117, 0.2);
+            background: var(--accent-pink);
+            color: white;
             border-color: var(--accent-pink);
-            color: var(--accent-pink);
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="main-container">
-        <button id="top-defis-btn" class="top-defis-btn" onclick="openDefisMenu()">
-            📸 Défis du jour
-        </button>
+    <div class="container">
+        <h1>Kinky Night</h1>
+        <div class="subtitle">Édition 1000 Vraies Questions & Défis Exclusifs</div>
 
-        <button id="top-quit-btn" class="top-end-btn hidden" onclick="endGameEarly()">Fin de partie</button>
-
-        <div id="setup-screen">
-            <h1>Kinky Night</h1>
-            
-            <div class="form-group">
-                <label class="main-label">Nom du Maître</label>
-                <input type="text" id="man-name" value="Lui">
-                <h2 class="section-title">Ce qu'il aime :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="man-gateries-give" class="chip-checkbox" checked><label for="man-gateries-give" class="chip-label">Faire des gâteries</label>
-                    <input type="checkbox" id="man-gateries-recv" class="chip-checkbox" checked><label for="man-gateries-recv" class="chip-label">Recevoir des gâteries</label>
-                    <input type="checkbox" id="man-soumission" class="chip-checkbox" checked><label for="man-soumission" class="chip-label">Soumission</label>
-                    <input type="checkbox" id="man-domination" class="chip-checkbox" checked><label for="man-domination" class="chip-label">Domination</label>
-                    <input type="checkbox" id="man-dirty" class="chip-checkbox" checked><label for="man-dirty" class="chip-label">Dirty talk</label>
-                    <input type="checkbox" id="man-coquin" class="chip-checkbox" checked><label for="man-coquin" class="chip-label">Jeux très coquins</label>
-                    <input type="checkbox" id="man-roleplay" class="chip-checkbox" checked><label for="man-roleplay" class="chip-label">Jeux de rôle</label>
-                    <input type="checkbox" id="man-morsures" class="chip-checkbox" checked><label for="man-morsures" class="chip-label">Morsures & griffures</label>
-                    <input type="checkbox" id="man-sensuel" class="chip-checkbox" checked><label for="man-sensuel" class="chip-label">Caresses lentes</label>
-                    <input type="checkbox" id="man-exhibition" class="chip-checkbox" checked><label for="man-exhibition" class="chip-label">Exhibitionnisme</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="main-label">Nom de la Salope</label>
-                <input type="text" id="woman-name" value="Elle">
-                <h2 class="section-title">Ce qu'elle aime :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="woman-gateries-give" class="chip-checkbox" checked><label for="woman-gateries-give" class="chip-label">Faire des gâteries</label>
-                    <input type="checkbox" id="woman-gateries-recv" class="chip-checkbox" checked><label for="woman-gateries-recv" class="chip-label">Recevoir des gâteries</label>
-                    <input type="checkbox" id="woman-soumission" class="chip-checkbox" checked><label for="woman-soumission" class="chip-label">Soumission</label>
-                    <input type="checkbox" id="woman-domination" class="chip-checkbox" checked><label for="woman-domination" class="chip-label">Domination</label>
-                    <input type="checkbox" id="woman-dirty" class="chip-checkbox" checked><label for="woman-dirty" class="chip-label">Dirty talk</label>
-                    <input type="checkbox" id="woman-coquin" class="chip-checkbox" checked><label for="woman-coquin" class="chip-label">Jeux très coquins</label>
-                    <input type="checkbox" id="woman-roleplay" class="chip-checkbox" checked><label for="woman-roleplay" class="chip-label">Jeux de rôle</label>
-                    <input type="checkbox" id="woman-morsures" class="chip-checkbox" checked><label for="woman-morsures" class="chip-label">Morsures & griffures</label>
-                    <input type="checkbox" id="woman-sensuel" class="chip-checkbox" checked><label for="woman-sensuel" class="chip-label">Caresses lentes</label>
-                    <input type="checkbox" id="woman-exhibition" class="chip-checkbox" checked><label for="woman-exhibition" class="chip-label">Exhibitionnisme</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <h2 class="section-title">Objets à disposition :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="obj-alcool" class="chip-checkbox"><label for="obj-alcool" class="chip-label">Alcool</label>
-                    <input type="checkbox" id="obj-appareil" class="chip-checkbox"><label for="obj-appareil" class="chip-label">Appareil photo</label>
-                    <input type="checkbox" id="obj-bandeau" class="chip-checkbox"><label for="obj-bandeau" class="chip-label">Bandeau</label>
-                    <input type="checkbox" id="obj-god" class="chip-checkbox"><label for="obj-god" class="chip-label">God / Vibro</label>
-                    <input type="checkbox" id="obj-huile" class="chip-checkbox"><label for="obj-huile" class="chip-label">Huile de massage</label>
-                    <input type="checkbox" id="obj-lingerie" class="chip-checkbox"><label for="obj-lingerie" class="chip-label">Lingerie fine</label>
-                    <input type="checkbox" id="obj-menottes" class="chip-checkbox"><label for="obj-menottes" class="chip-label">Menottes</label>
-                    <input type="checkbox" id="obj-plumes" class="chip-checkbox"><label for="obj-plumes" class="chip-label">Plumes</label>
-                    <input type="checkbox" id="obj-ring" class="chip-checkbox"><label for="obj-ring" class="chip-label">Cock ring</label>
-                    <input type="checkbox" id="obj-bougie" class="chip-checkbox"><label for="obj-bougie" class="chip-label">Bougie / Cire</label>
-                    <input type="checkbox" id="obj-glacon" class="chip-checkbox"><label for="obj-glacon" class="chip-label">Glaçons</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="main-label">Durée de la partie</label>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select" id="custom-select-trigger">Partie Classique (50 tours)</div>
-                    <div class="custom-options" id="custom-options">
-                        <div class="custom-option selected" data-value="50">Partie Classique (50 tours)</div>
-                        <div class="custom-option" data-value="100">Partie Intense (100 tours)</div>
-                        <div class="custom-option" data-value="200">Nuit Blanche (200 tours)</div>
-                    </div>
-                </div>
-                <input type="hidden" id="game-duration" value="50">
-            </div>
-
-            <div class="form-group">
-                <label class="main-label">Fréquence d'utilisation des objets</label>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select" id="custom-freq-trigger">Équilibrée (Tous les 10 tours)</div>
-                    <div class="custom-options" id="custom-freq-options">
-                        <div class="custom-option" data-value="5">Fréquente (Tous les 5 tours)</div>
-                        <div class="custom-option selected" data-value="10">Équilibrée (Tous les 10 tours)</div>
-                        <div class="custom-option" data-value="15">Rare (Tous les 15 tours)</div>
-                        <div class="custom-option" data-value="999">Désactivée (Jamais)</div>
-                    </div>
-                </div>
-                <input type="hidden" id="object-frequency" value="10">
-            </div>
-
-            <button class="primary-btn" onclick="startGame()">Commencer la partie</button>
+        <div class="top-buttons">
+            <button class="top-btn" onclick="openDailyChallengeModal()">🎯 Défis du jour</button>
+            <button class="top-btn" onclick="showPlanifiedList('lui')">📷 Suivi des Défis</button>
         </div>
 
-        <div id="game-screen" class="hidden">
-            <div class="game-header">
-                <span id="progress-indicator">Tour 1 / 50</span>
-                <div class="flames-indicator">
-                    <span class="flame active">🔥</span>
-                    <span class="flame">🔥</span>
-                    <span class="flame">🔥</span>
-                    <span class="flame">🔥</span>
-                </div>
-            </div>
-
-            <div class="level-countdown" id="level-countdown-text">Niveau 1 — 20 tours avant le niveau suivant</div>
-
-            <div class="target-box">
-                C'est au tour de :
-                <span class="target-player" id="target-display">Lui</span>
-            </div>
-
-            <div class="question-box" id="question-container">
-                Chargement de la question...
-            </div>
-
-            <div class="timer-container" id="timer-box">
-                <div class="timer-display" id="timer-countdown">01:00</div>
-                <button class="secondary-btn" id="timer-btn" onclick="startTimer()" style="margin:0; padding:6px; font-size:0.8rem;">Lancer le chrono</button>
-            </div>
-
-            <button class="primary-btn" id="next-btn" onclick="nextTurn()">Tour suivant</button>
-            <button class="secondary-btn" id="skip-btn" onclick="nextTurn()">Passer ce tour (Gage)</button>
+        <div class="levels-grid" id="levels-container">
+            <button class="level-btn" onclick="startLevel(1)">Niveau 1 <span>Soft & Sensuel</span></button>
+            <button class="level-btn" onclick="startLevel(2)">Niveau 2 <span>Chaud & Intime</span></button>
+            <button class="level-btn" onclick="startLevel(3)">Niveau 3 <span>Hot & Osé</span></button>
+            <button class="level-btn" onclick="startLevel(4)">Niveau 4 <span>Extrême & Interdit</span></button>
         </div>
 
-        <div id="end-screen" class="hidden" style="text-align: center;">
-            <h1>Fin de la partie</h1>
-            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 30px;">
-                Vous êtes arrivés au bout de cette session intense. J'espère que les flammes ont consumé vos inhibitions... Profitez bien de la suite. 🔥
-            </p>
-            <button class="primary-btn" onclick="resetGame()">Recommencer une partie</button>
+        <div class="card-display" id="card-display" style="display: none;">
+            <div class="card-text" id="card-text">Sélectionnez un niveau pour commencer.</div>
+            <button class="action-btn" id="next-btn" onclick="nextCard()">Carte suivante 🎲</button>
         </div>
     </div>
 
+    <div class="modal-overlay" id="modal-daily">
+        <div class="modal-content">
+            <h3>Défis du jour</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Pour qui souhaitez-vous tirer un défi exclusif ?</p>
+            <div class="modal-btns">
+                <button class="btn-lui" onclick="drawDaily('lui')">Pour lui ♂️</button>
+                <button class="btn-elle" onclick="drawDaily('elle')">Pour elle ♀️</button>
+            </div>
+            <button class="top-btn" style="margin-top: 15px; width: 100%;" onclick="closeModal()">Fermer</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-generic">
+        <div class="modal-content" id="modal-generic-content">
+            </div>
+    </div>
+
     <script>
-        // Gestion des sélecteurs personnalisés
-        const customSelect = document.getElementById('custom-select-trigger');
-        const hiddenInput = document.getElementById('game-duration');
-        customSelect.addEventListener('click', function(e) {
-            e.stopPropagation();
-            customSelect.classList.toggle('open');
-            document.getElementById('custom-freq-trigger').classList.remove('open');
-        });
+        // Bases de données des questions par niveau (Véritable aléas sans boucle)
+        const questionsDB = {
+            1: [
+                "Quel est ton meilleur souvenir de notre tout premier rendez-vous ?",
+                "Qu'est-ce qui t'a fait craquer chez moi en premier ?",
+                "Quelle partie de mon corps préfères-tu embrasser ?",
+                "Quel vêtement que je porte te fait le plus d'effet ?",
+                "Quel est ton plus beau fantasme romantique avec moi ?",
+                "Si on devait s'isoler une heure sur une île déserte, tu ferais quoi en premier ?",
+                "Quel compliment aimerais-tu que je te dise plus souvent ?",
+                "Raconte-moi ton plus beau rêve éveillé à mon sujet."
+            ],
+            2: [
+                "Quelle est la chose la plus coquine à laquelle tu penses en journée en pensant à moi ?",
+                "Quel endroit insolite aimerais-tu qu'on teste pour un rapprochement ?",
+                "Décris en détail une caresse que tu adores recevoir de ma part.",
+                "Quel rôle aimerais-tu qu'on joue lors d'une prochaine soirée intime ?",
+                "Si tu avais le droit de me bander les yeux ce soir, que me ferais-tu ?",
+                "Quel est le plus grand tabou ou secret que tu n'as jamais osé me confier ?",
+                "Quelle est ta position intime préférée et pourquoi ?"
+            ],
+            3: [
+                "Quel est le mot le plus osé ou cru que tu aimerais que je te dise à l'oreille ?",
+                "Si tu pouvais tout m'ordonner pendant 10 minutes, que choisirais-tu ?",
+                "Quel accessoire ou jouet coquin aimerais-tu intégrer dans nos moments ?",
+                "Raconte une situation érotique très intense que tu imagines en cachette.",
+                "Où aimerais-tu qu'on prenne un risque d'être surpris ensemble ?",
+                "Quel est ton plus grand désir inassouvi à ce jour ?"
+            ],
+            4: [
+                "Décris ton fantasme le plus sombre, intense et tabou.",
+                "Quel acte totalement hors-normes aimerais-tu expérimenter sans aucune limite ?",
+                "Si tout était permis pour une nuit entière, quel scénario tu lancerais ?",
+                "Quel est ton summum absolue du plaisir partagé ?"
+            ]
+        };
 
-        document.querySelectorAll('#setup-screen .custom-options:not(#custom-freq-options) .custom-option').forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.querySelectorAll('#setup-screen .custom-options:not(#custom-freq-options) .custom-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                customSelect.innerText = this.innerText;
-                hiddenInput.value = this.getAttribute('data-value');
-                customSelect.classList.remove('open');
-            });
-        });
-
-        const freqSelect = document.getElementById('custom-freq-trigger');
-        const freqInput = document.getElementById('object-frequency');
-        freqSelect.addEventListener('click', function(e) {
-            e.stopPropagation();
-            freqSelect.classList.toggle('open');
-            customSelect.classList.remove('open');
-        });
-
-        document.querySelectorAll('#custom-freq-options .custom-option').forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.querySelectorAll('#custom-freq-options .custom-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                freqSelect.innerText = this.innerText;
-                freqInput.value = this.getAttribute('data-value');
-                freqSelect.classList.remove('open');
-            });
-        });
-
-        document.addEventListener('click', function() {
-            customSelect.classList.remove('open');
-            freqSelect.classList.remove('open');
-        });
-
-        // Bases de données et listes de défis intégrées
-        let discoveryList = [
-            "Aimerais-tu qu'on teste un bain chaud avec des bougies et des caresses mutuelles ? (Découverte)",
-            "As-tu envie qu'on explore le cunnilingus ou la fellation prolongée jusqu'à l'orgasme ? (Découverte)",
-            "Accepterais-tu de te faire bander les yeux pendant tout un acte sexuel pour décupler tes sens ? (Découverte)",
-            "Quel tabou sexuel n'as-tu jamais osé formuler par peur du jugement ? (Découverte)"
-        ];
-
-        // 50 Défis pour lui (Intégrés dans la base Découverte / Aléatoire)
-        let defisPourLui = [
-            "Le 'teasing' des pinces à linge : Elle pose des pinces à linge (douces) sur ses cuisses et ses tétons avant de les retirer une à une avec les dents.",
+        // 50 Défis pour lui
+        const defisLui = [
+            "Le \"teasing\" des pinces à linge : Elle pose des pinces à linge (douces) sur ses cuisses et ses tétons avant de les retirer une à une avec les dents.",
             "Le glaçon glissé sous la ceinture : Elle coince un glaçon directement dans son slip et doit le faire fondre uniquement par frottement extérieur.",
             "Le bondage de la chaise de bureau : Il est assis et attaché par les poignets au dossier d'une chaise, totalement à sa merci.",
             "La douche sensorielle au glaçon : Elle promène un glaçon le long de sa colonne vertébrale jusqu'à ses bourses.",
             "Le masochisme des claques de cuisses : Elle lui inflige une série de fessées sur les cuisses pour le faire monter en tension.",
-            "Le 'body mapping' au feutre indélébile : Elle dessine un labyrinthe sur son torse qu'elle doit parcourir entièrement avec sa langue.",
+            "Le \"body mapping\" au feutre indélébile : Elle dessine un labyrinthe sur son torse qu'elle doit parcourir entièrement avec sa langue.",
             "La cire de bougie sur le pubis : Elle laisse couler de la cire tiède de massage juste au-dessus de son érection.",
-            "Le bâillonnement de soie : Elle lui attache un foulard autour de la bouche pour l'empêcher de faire le moindre bruit.",
-            "Le 69 suspendu au bord du lit : Position 69 inversée où il est suspendu à l'envers, les fesses dans le vide.",
-            "L'aspiration sous vide : Elle utilise un petit bocal en verre pour créer une succion sur son téton ou sa cuisse.",
-            "Le baiser noir inversé : Il est allongé sur le ventre, elle prend l'initiative totale de l'anulingus sur lui.",
-            "Le chatouillement de la plume de fer : Elle le stimule avec un objet rigide et piquant (type brosse à poils durs) sur le bas-ventre.",
-            "La position du pont de Suse : Il fait le pont (dos cambré au sol), elle se glisse dessous pour le stimuler par l'arrière.",
-            "Le gel effet chaud/froid brutal : Elle applique un gel intime stimulant qui provoque des contrastes thermiques intenses sur son sexe.",
-            "Le 'teasing' des mains attachées aux chevilles : Il est plié en deux, mains liées aux chevilles, incapable de bouger.",
-            "L'écriture de phrases crues sur la peau : Elle écrit des insultes ou des ordres érotiques sur son torse au rouge à lèvres.",
-            "Le soufflage d'air comprimé : Elle utilise un mini ventilateur ou sèche-cheveux sur air froid directement sur son érection mouillée.",
-            "Le blocage par les pieds : Elle coince ses bras le long du corps en s'asseyant lourdement sur ses épaules à l'envers.",
-            "La strangulation érotique légère : Elle pose ses deux mains fermement sur son cou pendant qu'il jouit (sous accord strict).",
-            "L'exploration prostatique avec vibro : Elle introduit un petit vibromasseur anal conçu spécifiquement pour stimuler sa zone P.",
-            "Le léchage exclusif du périnée : Elle passe 10 minutes à ne lécher que la zone exacte entre ses testicules et son anus.",
-            "La prise en main des bourses sous tension : Elle serre et tire fermement ses testicules à chaque mouvement de va-et-vient.",
-            "Le lèchement frénétique des couilles : Elle humidifie et enrobe ses testicules de salive de manière frénétique et rapide.",
-            "La succion alternée des testicules : Elle aspire une bourse après l'autre en faisant un effet de vide avec sa bouche.",
-            "Le 'teasing' des couilles au glaçon : Elle pose un glaçon directement contre ses testicules pour le faire sursauter.",
-            "La fellation en position inversée (tête en bas) : Il pend du bord du lit, tête en bas, et elle se met à genoux pour le sucer ainsi.",
-            "Le blocage de la mâchoire : Elle lui coince un accessoire dans la bouche pour l'empêcher de crier pendant qu'elle le suce.",
-            "La fessée sur les testicules (très légère) : Elle tapote ses bourses du bout des doigts pour intensifier l'afflux sanguin.",
-            "Le combo couilles-gland sans les mains : Elle jongle entre ses testicules et son gland uniquement avec sa langue, mains dans le dos.",
-            "La suffocation buccale : Elle s'enfonce le sexe dans la gorge jusqu'à le bloquer en apnée.",
-            "Le 'face-sitting' total : Elle s'assoit complètement sur son visage pour l'étouffer de son sexe pendant qu'il respire par les côtés.",
-            "Le piétinement léger : En talons ou pieds nus, elle pose délicatement le pied sur son bas-ventre ou ses cuisses (fantasme de piétinement/domination).",
-            "La position de la brouette érotique : Il la tient par les jambes à l'horizontale pendant qu'elle le pénètre en marche arrière.",
-            "L'attache aux barreaux du lit : Il a chaque poignet lié aux montants verticaux de la tête de lit, bras écartés en croix.",
-            "Le 'teasing' à la brosse à dents : Elle utilise les poils souples d'une brosse à dents électrique pour le titiller sur le gland.",
-            "Le frottement de glaçon sur le frein : Elle passe un angle de glaçon directement sur la zone la plus sensible du gland (le frein).",
-            "L'orgasme par compression : Elle bloque l'éjaculation à la base avec ses doigts au moment précis où il allait jouir.",
-            "La position de l'araignée : Il est sur le dos, jambes repliées à l'extrême, elle se positionne au-dessus en appui sur les mains.",
-            "Le lavage de sexe au savon noir : Elle le nettoie de manière très agressive et mousseuse avec un gant rugueux.",
-            "Le lancer de pinces sur le torse : Elle fixe des pinces à linge partout sur son torse et l'oblige à faire des pompes.",
-            "Le bondage des gros orteils : Elle lui attache les gros orteils ensemble pour limiter totalement ses mouvements de jambes.",
-            "La punition du coin : Il doit se mettre au coin face au mur pendant qu'elle se masturbe derrière lui.",
-            "L'utilisation d'une pince à glaçons : Elle manipule ses mamelons avec une pince de cuisine crantée (sans serrer fort).",
-            "Le crachat érotique : Elle dépose de la salive directement sur son visage ou son torse pour marquer sa domination.",
-            "Le masquage total au plastique : Elle pose un film étirable sur son visage (en laissant le nez libre) pour le désorienter.",
-            "Le tirage de poils de barbe : Elle agrippe sa barbe ou ses poils de torse pour guider sa tête.",
-            "Le 'teasing' de la bague vibrante : Elle lui enfile une bague vibrante sur la base pour bloquer le sang.",
-            "La strangulation des cuisses : Elle enserre son cou avec ses cuisses musclées en position allongée.",
-            "Le coup de balai sur l'érection : Elle frôle son sexe tendu avec un objet inattendu (une plume de paon rigide).",
-            "L'abandon total sur le sol de la cuisine : Il est plaqué à plat ventre sur le carrelage froid, immobilisé par le poids de sa partenaire."
+            "L'interdiction de toucher : Il doit garder les mains croisées dans le dos pendant qu'elle l'excite au maximum sans qu'il puisse répliquer.",
+            "Le soufflage chaud : Elle souffle de l'air chaud et de la bave sur son sexe en érection sans l'embrasser directement.",
+            "Le supplice de la plume : Elle le chatouille délicatement sur le gland et le frein avec une plume pendant 3 minutes chrono.",
+            "Le baiser givré : Elle garde de l'eau glacée en bouche et vient la lui vider d'un coup sur le sexe.",
+            "L'attachement aux accoudoirs : Il est ligoté par les poignets aux accoudoirs du canapé, impuissant et sous tension.",
+            "La soumission totale au sol : Il est à genoux, mains dans le dos, pendant qu'elle se place au-dessus de lui pour le dominer.",
+            "Le massage des testicules à l'huile chaude : Elle consacre 5 minutes pleines uniquement à pétrir et masser ses testicules avec de l'huile tiède.",
+            "Le \"teasing\" de la cuillère de cuisine : Elle utilise le manche froid d'une cuillère pour tracer des cercles autour de son érection.",
+            "Le léchage des pieds : Il doit lier ses mains pendant qu'elle lui lèche lentement la voûte plantaire et les orteils.",
+            "Le soufflé pimenté : Elle applique une infime touche de menthol ou de gel chauffant sur le pourtour de son slip.",
+            "Le blocage des jambes : Il est allongé sur le dos, jambes écartées et attachées aux pieds du lit.",
+            "La domination verbale : Il doit l'implorer à genoux de lui donner le droit de jouir.",
+            "L'épreuve du silence : Il n'a pas le droit de pousser le moindre gémissement pendant qu'elle le stimule férocement.",
+            "Le baiser de la mort : Elle l'embrasse goulûment en lui mordillant la lèvre inférieure jusqu'à ce qu'il frissonne.",
+            "Le lèche-bottes : Il lèche les genoux et les cuisses de sa partenaire en signe de soumission.",
+            "Le supplice des glaçons successifs : Elle fait glisser 3 glaçons l'un après l'autre de son nombril jusqu'à son entrejambe.",
+            "Le bâillonnement sensuel : Elle lui noue un foulard autour de la bouche pour l'empêcher de parler.",
+            "L'éjaculation différée : Il est mené au bord de l'orgasme trois fois de suite, puis arrêté net par un ordre strict.",
+            "Le brossage des cuisses : Elle utilise une brosse à poils durs pour stimuler la peau de ses cuisses jusqu'à ce qu'elles rougissent.",
+            "Le massage du périnée : Elle stimule directement la zone entre ses testicules et son anus avec de l'huile.",
+            "Le suçon sur le cou : Elle lui pose un suçon profond et visible sur le côté gauche du cou.",
+            "La torture des mains liées : Il doit garder les poignets serrés par une cravate pendant tout un quart d'heure.",
+            "Le léchage des mamelons : Elle lèche et pince ses tétons avec ses dents de façon rythmée pendant 3 minutes.",
+            "La position du suppliant : Il doit rester à plat ventre, bras tendus en avant, en attendant qu'elle décide de l'honorer.",
+            "Le glaçon sur le frein : Elle pose délicatement un tout petit morceau de glaçon directement sur le frein de son sexe.",
+            "L'attachement au lit : Ses deux chevilles sont attachées aux barreaux du lit avec un foulard.",
+            "La claque de motivation : Elle lui met une bonne claque sur la joue gauche pour le réveiller et le faire bander.",
+            "Le baiser du périnée : Elle embrasse et lèche le bas de son dos et son périnée.",
+            "Le bain de bouche glacé : Elle prend de l'eau glacée en bouche et lui fait une gâterie glacée de 30 secondes.",
+            "Le chatouillement des aisselles : Il est ligoté pendant qu'elle le chatouille intensément sous les aisselles.",
+            "Le léchage des mains : Il doit garder les bras immobiles pendant qu'elle lui lèche chaque doigt un par un.",
+            "La fessée rythmée : Elle lui inflige 20 fessées consécutives sur les fesses, de plus en plus fortes.",
+            "Le suçon secret : Elle lui fait un suçon sur le haut de la cuisse, là où le slip le cache.",
+            "Le soufflage d'haleine mentholée : Après un bonbon à la menthe, elle souffle son air frais sur son sexe.",
+            "L'ordre de silence absolu : Il doit obéir à tous les gestes de la main sans émettre un son.",
+            "Le massage crânien brutal : Elle lui attrape les cheveux fermement pour diriger sa tête vers où elle veut.",
+            "La station debout prolongée : Il doit rester debout, les mains contre le mur, en position de fouille pendant qu'elle l'excite.",
+            "Le glaçon fondu sur le torse : Elle laisse fondre un gros glaçon en le faisant rouler sur tout son torse et son abdomen.",
+            "Le bondage des pouces : Ses deux pouces sont attachés ensemble dans son dos.",
+            "La soumission du regard : Il n'a pas le droit de détourner les yeux de ses seins pendant 5 minutes.",
+            "Le baiser sur la bouche forcé : Elle l'attrape par les cheveux et l'embrasse avec force et autorité.",
+            "Le frottement des cuisses : Elle monte à cheval sur ses cuisses habillées et se frotte vigoureusement.",
+            "L'ultimatum érotique : Elle lui promet une caresse interdite s'il parvient à tenir 2 minutes sans bouger d'un millimètre."
         ];
 
-        // 50 Défis pour elle (Intégrés dans la base Découverte / Aléatoire)
-        let defisPourElle = [
-            "Le bondage des poignets au foulard de soie : Il l'attache solidement mais délicatement aux poignets sur les montants du lit.",
-            "Le 'teasing' de la brosse à cheveux : Il utilise les picots souples d'une brosse pour gratter doucement le contour de sa vulve.",
-            "Le glaçon glissé le long de la raie fessière : Il fait descendre un glaçon depuis le haut de son dos jusqu'à son interstice anal.",
-            "Le masque aveuglant en dentelle : Il lui bande les yeux avec un tissu complètement opaque pour couper ses repères visuels.",
-            "Le vibromasseur à distance (télécommande) : Il active un œuf vibrant caché en elle alors qu'elle doit rester immobile dans la pièce.",
-            "La cire de bougie sur le bas du ventre : Il verse de la cire tiède sur son abdomen en dessinant des cercles concentriques.",
-            "L'écartement maximal par liens de jambes : Il lui écarte les jambes au maximum en les attachant aux pieds du lit.",
-            "Le 'face-sitting' inversé : Elle s'assoit sur son visage pour l'obliger à la lécher sans qu'il puisse bouger la tête.",
-            "Le gel cryogénique clitoridien : Il applique un gel à effet glaçant intense directement sur son clitoris.",
-            "Le coït suspendu au bord du canapé : Elle est allongée sur le dos, le bassin dans le vide, il la pénètre debout.",
-            "Le bondage des chevilles en grenouille : Il lui attache les chevilles repliées près des fesses (position de la grenouille entravée).",
-            "La fessée de marquage au rouge : Il lui administre une série de claques cadencées pour rougir vivement ses fesses.",
-            "L'aspiration de la poitrine à la pompe : Il utilise des ventouses spéciales sur ses mamelons pour les congestionner.",
-            "Le 'teasing' du pinceau de rasoir : Il utilise un blaireau de rasage très doux imbibé d'eau chaude sur ses parties intimes.",
-            "L'insertion anale de préparation au plug : Il insère un petit plug anal vibrant qu'elle doit garder pendant tout le début des jeux.",
-            "Le balayage de langue circulaire géant : Il trace de larges cercles englobant vulve et anus sans s'arrêter pendant 10 minutes.",
-            "Le blocage de la respiration par le poids : Il s'allonge de tout son poids sur elle en position missionnaire écrasante.",
-            "Le 'teasing' de la bague vibrante anale : Il pose une bague vibrante contre son anus en la faisant ronronner.",
-            "La position de l'andromaque inversée en équilibre : Elle est au-dessus de lui, de dos, en appui uniquement sur ses genoux fléchis.",
-            "L'utilisation d'un vibro double stimulation : Il manipule un jouet en forme de 'U' qui stimule vagin et anus simultanément.",
-            "La douche écossaise sur le pubis : Il alterne jets d'eau glacée et très chaude directement sur sa vulve sous la douche.",
-            "Le marquage de territoire aux crocs : Il mordille l'intérieur de ses cuisses jusqu'à laisser de légères marques rouges.",
-            "Le 'teasing' des pinces à linge sur les grandes lèvres : Il fixe de petites pinces douces sur les replis de sa peau intime (si toléré).",
-            "La position de la chaise romaine : Elle est assise sur une chaise, les jambes sur ses épaules, pour une pénétration en suspension.",
-            "L'arrosage de l'entrejambe à l'eau gazeuse : Il verse de l'eau pétillante fraîche sur son clitoris pour faire réagir les terminaisons.",
-            "Le bondage de la taille au drap : Il l'enroule complètement dans un drap serré comme une momie, seuls ses fesses et son sexe dépassant.",
-            "Le soufflage d'air chaud au sèche-cheveux : Il utilise un sèche-cheveux en position tiède à distance de sécurité sur son sexe grand ouvert.",
-            "La fessée avec un ustensile rigide : Il utilise une cuillère en bois ou une lanière souple pour lui donner des claques rythmées.",
-            "L'étirement forcé des bras au-dessus de la tête : Il lui maintient les poignets serrés au-dessus du crâne d'une seule main pendant qu'il la pénètre.",
-            "Le 'teasing' de la brosse à dents électrique : Il pose le dos vibrant d'une brosse à dents électrique contre son clitoris.",
-            "La préparation anale intensive au doigt crochu : Il lui masse l'anus en faisant un mouvement de crochet pour ouvrir la zone en profondeur.",
-            "La lubrification anale à l'huile chauffante : Il applique une huile anale spéciale qui chauffe au contact du sphincter.",
-            "L'introduction de deux doigts anaux en ciseaux : Il écarte ses doigts à l'intérieur de son anus pour détendre les parois.",
-            "Le contact du gland sur l'anus en surprise : Sans prévenir, au milieu du rapport vaginal, il retire son sexe pour le poser sur son anus.",
-            "La pénétration anale en position de la cuillère serrée : Il la prend par l'arrière en position fœtale, les genoux repliés contre sa poitrine.",
-            "La sodomie avec tirage de cheveux simultané : Il la prend par l'arrière en l'agrippant par les cheveux pour caler son rythme.",
-            "Le double va-et-vient (doigt vaginal + pénétration anale) : Il la pénètre par l'anus tout en lui enfonçant deux doigts frénétiquement dans le vagin.",
-            "La sodomie face au miroir en suspension : Elle est portée contre un mur, les jambes autour de sa taille, en pleine pénétration anale devant un miroir.",
-            "L'accélération anale en 'edging' : Il l'amène au bord de l'orgasme par l'anus, s'arrête net, puis reprend de plus belle.",
-            "La sodomie avec vibromasseur clitoridien externe : Il la sodomise profondément tout en pressant un vibro puissant sur son clitoris.",
-            "Le blocage des reins pendant la sodomie : Il appuie lourdement ses mains sur le bas de ses reins pour accentuer l'angle de pénétration anale.",
-            "La sodomie au ralenti extrême (1 mouvement par 15 secondes) : Il enfonce son sexe dans son anus sur une lenteur absolue pour explorer chaque centimètre de contraction.",
-            "Le 'face-sitting' anal : Elle s'assoit sur son visage après la sodomie pour qu'il l'essuie et l'embrasse partout.",
-            "La sodomie en position de l'amazone inversée : Elle s'installe elle-même sur son sexe par l'anus en prenant le contrôle absolu de la descente.",
-            "Le retrait brutal de l'anus suivi d'une pénétration vaginale : Il sort brusquement de son arrière-train pour l'enfoncer immédiatement dans son vagin.",
-            "La sodomie avec bâillonnement de foulard : Elle a la bouche entravée par un tissu pendant qu'il la sodomise par surprise.",
-            "Le claquage de fesses rythmé sur les mouvements anaux : Il lui met une claque sur la fesse gauche à chaque poussée anale.",
-            "La sodomie les yeux bandés sans prévenir : Elle a les yeux fermés, il la retourne et la prend par l'anus sans qu'elle sache quelle pénétration arrive.",
-            "Le spasme anal final : Il reste immobile au fond de son anus à la fin de la sodomie pour ressentir ses contractions involontaires.",
-            "Le baiser de soumission anale : Juste après la sodomie, il l'attire par la nuque pour un baiser profond et dominant."
+        // 50 Défis pour elle
+        const defisElle = [
+            "Le collier de soumission : Il lui met un collier ou un ruban serré autour du cou avec une laisse légère.",
+            "Le bondage des poignets au lit : Elle est attachée par les poignets aux montants du lit avec un foulard en soie.",
+            "La douche écossaise intime : Il alterne de l'eau tiède et de l'eau fraîche directement sur son clitoris avec le pommeau de douche.",
+            "Le massage des seins à l'huile : Il consacre 5 minutes à masser l'huile chaude sur ses seins et ses mamelons.",
+            "La fessée de marquage : Il lui donne 10 fessées bien rythmées sur chaque fesse pour les faire rougir.",
+            "Le glaçon vagabond : Il fait glisser un glaçon le long de sa raie des fesses jusqu'à son entrée intime.",
+            "La position de la cavalière aveugle : Elle est assise sur lui, les yeux bandés, et doit deviner ses mouvements.",
+            "Le léchage de l'intérieur des cuisses : Il lèche lentement l'intérieur de ses cuisses en remontant centimètre par centimètre vers son sexe.",
+            "L'attachement des chevilles : Ses jambes sont écartées et attachées aux coins du lit.",
+            "Le supplice de la plume intime : Il chatouille l'entrée de son vagin avec une plume pendant qu'elle ne peut pas bouger.",
+            "Le baiser brûlant : Il utilise un glaçon puis souffle de l'air chaud sur son clitoris.",
+            "La soumission sur les genoux : Elle est agenouillée entre ses jambes, les mains croisées dans le dos.",
+            "Le body mapping au rouge à lèvres : Il dessine des motifs érotiques sur son ventre et ses cuisses avec du rouge à lèvres.",
+            "Le bâillonnement de soie : Elle porte un foulard noué délicatement sur le bas du visage.",
+            "Le vibromasseur imposé : Il choisit la vitesse et place un petit vibro sur son clitoris sans qu'elle puisse l'enlever.",
+            "La punition du coin : Elle doit rester debout dans le coin de la pièce, face au mur, pendant qu'il la regarde.",
+            "Le suçon dans le dos : Il lui pose un suçon bien visible au bas du dos, juste au-dessus des fesses.",
+            "La domination verbale pure : Elle doit lui dire 'Oui maître' à chaque ordre qu'il lui donne.",
+            "Le brossage sensoriel : Il utilise une brosse douce pour caresser tout son corps de la tête aux pieds.",
+            "Le bain de bouche givré : Il boit de l'eau glacée avant de lui faire un cunnilingus glacé et surprenant.",
+            "L'interdiction de jouir seule : Il la mène au bord de l'orgasme à plusieurs reprises en l'empêchant de venir.",
+            "Le bondage des mains au-dessus de la tête : Ses poignets sont attachés au montant de la tête de lit.",
+            "Le léchage du nombril : Il remplit son nombril de salive et de l'y lèche avec insistance.",
+            "La claque sur les cuisses : Il lui met une claque ferme sur le haut de la cuisse pour marquer sa peau.",
+            "Le glaçon sur les mamelons : Il pose un glaçon sur chaque téton jusqu'à ce qu'ils soient ultra-durs.",
+            "Le massage du périnée féminin : Il masse doucement la zone située entre son vagin et son anus.",
+            "Le suçon sur la poitrine : Il lui pose un suçon profond sur le haut du sein droit.",
+            "L'immobilisation par le poids : Il s'allonge de tout son poids sur elle, l'écrasant délicatement et la bloquant.",
+            "Le soufflé chaud intime : Il souffle de l'air chaud directement sur son clitoris en l'effleurant à peine.",
+            "Le léchage des orteils : Il lui lèche chaque orteil avec application pendant qu'elle est allongée.",
+            "Le bondage total (mains et pieds) : Elle est totalement ligotée, bras et jambes bloqués, à sa merci.",
+            "Le glaçon sur le ventre : Il laisse fondre un glaçon sur son nombril et l'aspire avec sa bouche.",
+            "La fessée de correction : Il lui donne une série de 15 fessées pour l'exciter au maximum.",
+            "Le suçon secret : Il lui fait un suçon sur la fesse gauche, bien caché sous ses sous-vêtements.",
+            "Le baiser forcé : Il l'attrape par le menton et l'embrasse avec autorité.",
+            "L'ordre de silence : Elle doit se taire et ne faire aucun bruit pendant qu'il la caresse.",
+            "Le massage des mollets et pieds : Il prend 5 minutes pour masser intensément ses pieds et ses mollets.",
+            "Le glaçon fondu dans le cou : Il laisse fondre un glaçon dans son cou pour faire couler l'eau glacée le long de sa colonne.",
+            "La position de soumission au sol : Elle est à plat ventre sur le tapis, mains dans le dos.",
+            "Le léchage de l'oreille : Il lui lèche l'intérieur de l'oreille en soufflant de l'air chaud.",
+            "Le pincement délicat : Il pince légèrement ses tétons entre ses doigts pour la faire sursauter.",
+            "Le baiser du creux des reins : Il embrasse longuement le creux de ses reins avec la langue.",
+            "L'attachement des coudes : Ses bras sont repliés et attachés derrière son dos.",
+            "La claque de motivation sur la cuisse : Une claque sonore sur sa cuisse pour lancer le jeu.",
+            "Le glaçon sur les lèvres : Il fait glisser un glaçon sur ses lèvres gercées de plaisir.",
+            "La domination du regard : Elle doit le fixer droit dans les yeux sans baisser les paupières pendant 3 minutes.",
+            "Le massage des fesses à l'huile : Il pétrit fermement ses fesses avec de l'huile parfumée.",
+            "Le suçon sur l'épaule : Il lui pose un beau suçon bien visible sur l'épaule gauche.",
+            "Le supplice de l'attente : Il s'arrête net au meilleur moment et l'oblige à attendre 2 minutes.",
+            "L'ordre de caresse : Elle doit se caresser elle-même en suivant précisément toutes ses directives."
         ];
 
-        // Fusion des défis explicites dans la liste discoveryList
-        discoveryList = discoveryList.concat(defisPourLui, defisPourElle);
+        // État de l'application
+        let currentLevel = null;
+        let currentIndex = 0;
+        let activeQuestions = [];
 
-        // ⏳ 50 Défis à planifier pour plus tard (pour la liste du menu "Défis du jour")
-        let planifiedDefisLui = [
-            "Le SMS explicite au travail : Envoyer un message ultra-détaillé en pleine journée sur ce que vous allez lui faire ce soir.",
-            "Le 'teasing' en sous-vêtements ouverts au restaurant : Sortir dîner en ville avec un boxer spécifique, en frôlant l'autre sous la table.",
-            "Le réveil par une fellation surprise : Le réveiller en pleine nuit ou au petit matin uniquement par la bouche, sans qu'il ne s'y attende.",
-            "Le 'quickie' sur le plan de travail de la cuisine : S'attraper par surprise en plein milieu de la préparation du repas.",
-            "La douche brûlante en habits : Entraîner l'autre sous la douche tout habillé(e) pour un moment de friction intense.",
-            "Le bain de minuit nu en extérieur : Planifier d'aller nager complètement nus dans un lac, une piscine privée ou une crique isolée.",
-            "Le carnet des fantasmes croisés : Acheter un petit carnet secret où chacun écrit une envie inavouable.",
-            "Le rapport dans la voiture en plein jour : Se garer dans un chemin de campagne ou un parking isolé pour passer à l'acte à l'arrière.",
-            "Le stop-and-go en voiture : S'arrêter d'urgence sur le bas-côté pour un rapport express de 5 minutes.",
-            "La nuit d'hôtel avec spa privatif : Réserver une chambre haut de gamme avec baignoire balnéo ou jacuzzi.",
-            "La stimulation prostatique approfondie : Utiliser un jouet adapté pour explorer sa zone P lors d'un week-end cocooning.",
-            "La fellation de 30 minutes sans s'arrêter : Programmer un défi d'endurance orale.",
-            "L'orgasme par compression totale : Planifier une session d'edging où elle contrôle l'éjaculation à la seconde près.",
-            "Le 'baiser noir' prodigué par elle : Planifier une session où elle prend l'initiative totale d'explorer son anatomie anale.",
-            "Le week-end 'port du plug obligatoire' : Imposer le port d'un plug anal en continu pendant toute une journée de sortie en ville.",
-            "La douche écossaise et flagellation légère : Alterner des jets d'eau glacée et des stimulations intenses.",
-            "La nuit des rôles inversés extrêmes : Incarner des personnages complètement extravagants avec scénario de domination.",
-            "Le défi de l'interdiction de jouir pendant 48 heures : Passer un week-end entier à se chauffer sans s'autoriser d'orgasme.",
-            "La fellation en position acrobatique suspendue : Réaliser une fellation avec le corps en suspension ou dans les escaliers.",
-            "Le rituel de clôture des 'fantasmes exaucés' : Tirer au sort le défi ultime le plus fou et s'engager à le réaliser avant la fin du mois."
-        ];
+        // Gestion du stockage pour les défis planifiés/actifs
+        let planifiedDefisLui = JSON.parse(localStorage.getItem('planifiedDefisLui')) || [...defisLui];
+        let planifiedDefisElle = JSON.parse(localStorage.getItem('planifiedDefisElle')) || [...defisElle];
 
-        let planifiedDefisElle = [
-            "Le SMS explicite au travail : Envoyer un message ultra-détaillé en pleine journée sur ce que vous allez lui faire ce soir.",
-            "Le 'teasing' en sous-vêtements ouverts au restaurant : Sortir dîner en ville sans culotte sous la robe, en frôlant l'autre sous la table.",
-            "La photo souvenir interdite en cabine d'essayage : Se prendre en photo de manière suggestive et l'envoyer par surprise.",
-            "La surprise du pyjama retiré avec les dents : Préparer une tenue que l'autre doit enlever uniquement avec ses dents.",
-            "La balade nocturne en sous-vêtements sur le balcon : Sortir en pleine nuit habillée uniquement de lingerie fine.",
-            "Le 'teasing' dans les rayons d'un supermarché : S'isoler quelques secondes dans une allée pour des caresses appuyées.",
-            "La séance de cinéma 'sensible' : Réserver des places au fond d'une salle obscure pour des caresses intimes.",
-            "Le jeu de rôles du client et de la masseuse : Créer un salon de massage à la maison avec règles strictes.",
-            "La soirée 'Maître et Esclave' : L'un commande absolument tout (ordres, positions, punitions).",
-            "Le bondage complet sur le lit conjugal : Attacher solidement l'autre aux quatre coins du lit.",
-            "La première initiation à la sodomie : Préparer une soirée entière dédiée à cette découverte avec gels et respirations.",
-            "La sodomie en position de l'amazone : Programmer une session où elle prend le contrôle total de la pénétration anale.",
-            "La sodomie matinale par surprise : La réveiller en douceur pour l'emmener directement sur une pénétration anale.",
-            "Le double jeu anal + vaginal simultané : Prévoir l'utilisation d'un double stimulus pour cumuler les sensations.",
-            "La sodomie en public isolé : Tenter l'expérience anale dans un lieu extérieur ultra-secret.",
-            "La soumission totale en extérieur sombre : Emmener l'autre attachée dans le coffre jusqu'à un spot isolé.",
-            "Le 'gang-bang' fantasmé ou à trois (si accepté) : Planifier l'intégration d'une tierce personne.",
-            "La sodomie sous emprise totale et bandeau : Laisser l'autre tout faire par l'arrière les yeux bandés.",
-            "Le marquage de territoire corporel intensif : Une nuit où morsures et suçons sont obligatoires sur tout le corps.",
-            "La sodomie avec bâillonnement de foulard : Avoir la bouche entravée par un tissu pendant qu'il la sodomise."
-        ];
-
-        let objectDatabase = {
-            'obj-bandeau': [ "Bandez les yeux de [target] et imposez-lui 3 caresses mystérieuses sans qu'il/elle ne devine avec quoi.", "Utilisez le bandeau sur [target] pour le/la guider dans une posture de soumission pendant 1 minute." ],
-            'obj-huile': [ "Versez quelques gouttes d'huile de massage tiédie et étalez-la langoureusement sur le corps de [target].", "Massez le dos et les hanches de [target] avec l'huile en effectuant des pressions sensuelles." ],
-            'obj-lingerie': [ "Inspectez minutieusement la lingerie fine de [target] en y déposant des baisers brûlants.", "Exigez que [target] prenne une pose ultra-sexy en mettant en valeur sa lingerie." ]
-        };
-
-        let gameState = {
-            man: "Lui",
-            woman: "Elle",
-            totalTurns: 50,
-            currentTurn: 1,
-            currentPlayer: null,
-            activeObjects: []
-        };
-
-        let currentTimerInterval = null;
-
-        function startGame() {
-            gameState.man = document.getElementById('man-name').value || "Lui";
-            gameState.woman = document.getElementById('woman-name').value || "Elle";
-            gameState.totalTurns = parseInt(document.getElementById('game-duration').value);
-            
-            gameState.activeObjects = [];
-            ['obj-alcool', 'obj-appareil', 'obj-bandeau', 'obj-god', 'obj-huile', 'obj-lingerie', 'obj-menottes', 'obj-plumes', 'obj-ring', 'obj-bougie', 'obj-glacon'].forEach(id => {
-                if(document.getElementById(id) && document.getElementById(id).checked) {
-                    gameState.activeObjects.push(id);
-                }
-            });
-
-            gameState.currentTurn = 0;
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('top-quit-btn').classList.remove('hidden');
-            
-            nextTurn();
+        function saveDefis() {
+            localStorage.setItem('planifiedDefisLui', JSON.stringify(planifiedDefisLui));
+            localStorage.setItem('planifiedDefisElle', JSON.stringify(planifiedDefisElle));
         }
 
-        function getHeatLevel(currentTurn, total) {
-            let ratio = currentTurn / total;
-            if (ratio < 0.4) return 1;
-            if (ratio < 0.75) return 2;
-            if (ratio < 0.95) return 3;
-            return 4;
-        }
-
-        function getTurnsRemainingInLevel(currentTurn, total) {
-            let threshold1 = Math.floor(total * 0.4);
-            let threshold2 = Math.floor(total * 0.75);
-            let threshold3 = Math.floor(total * 0.95);
-            if (currentTurn <= threshold1) return threshold1 - currentTurn + 1;
-            if (currentTurn <= threshold2) return threshold2 - currentTurn + 1;
-            if (currentTurn <= threshold3) return threshold3 - currentTurn + 1;
-            return total - currentTurn + 1;
-        }
-
-        function nextTurn() {
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-            gameState.currentTurn++;
-            if (gameState.currentTurn > gameState.totalTurns) {
-                endGameEarly();
-                return;
-            }
-
-            let heat = getHeatLevel(gameState.currentTurn, gameState.totalTurns);
-            document.getElementById('progress-indicator').innerText = `Tour ${gameState.currentTurn} / ${gameState.totalTurns}`;
+        function startLevel(level) {
+            currentLevel = level;
+            document.getElementById('levels-container').style.display = 'none';
+            document.getElementById('card-display').style.display = 'flex';
             
-            let remainingForNext = getTurnsRemainingInLevel(gameState.currentTurn, gameState.totalTurns);
-            let countdownEl = document.getElementById('level-countdown-text');
-            if (heat < 4) {
-                countdownEl.innerText = `Niveau ${heat} — ${remainingForNext} tour(s) avant le niveau suivant`;
-            } else {
-                countdownEl.innerText = `Niveau Max — Apothéose Finale`;
-            }
+            // Mélanger les questions pour éviter les répétitions
+            activeQuestions = [...questionsDB[level]].sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            displayCard();
+        }
 
-            let flames = document.querySelectorAll('.flame');
-            flames.forEach((flame, index) => {
-                if (index < heat) {
-                    flame.classList.add('active');
+        function displayCard() {
+            const cardText = document.getElementById('card-text');
+            
+            // Toutes les 5 questions, insérer un défi aléatoire (soit pour lui, soit pour elle)
+            if (currentIndex > 0 && currentIndex % 5 === 0) {
+                const isLui = Math.random() < 0.5;
+                const sourceList = isLui ? planifiedDefisLui : planifiedDefisElle;
+                
+                if (sourceList.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * sourceList.length);
+                    const selectedDefi = sourceList[randomIndex];
+                    cardText.innerHTML = `<strong>⚡ DÉFI EXCLUSIF (${isLui ? 'Pour lui ♂️' : 'Pour elle ♀️'}) :</strong><br><br>${selectedDefi}`;
                 } else {
-                    flame.classList.remove('active');
+                    cardText.innerHTML = activeQuestions[currentIndex % activeQuestions.length];
                 }
-            });
-
-            gameState.currentPlayer = (Math.random() < 0.5) ? gameState.man : gameState.woman;
-            let partner = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
-            
-            document.getElementById('target-display').innerText = gameState.currentPlayer;
-
-            let questionText = "";
-            let freqObj = parseInt(document.getElementById('object-frequency').value);
-
-            // Toutes les 5 questions, affichage d'un défi / découverte aléatoire
-            if (gameState.currentTurn % 5 === 0 && discoveryList.length > 0) {
-                let randomIndex = Math.floor(Math.random() * discoveryList.length);
-                questionText = `<span class="special-title">✨ Défi Découverte / Inédit ✨</span>` + discoveryList[randomIndex];
-            } else if (freqObj !== 999 && gameState.currentTurn % freqObj === 0 && gameState.activeObjects.length > 0) {
-                let randomObjId = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
-                let specificObjText = objectDatabase[randomObjId] ? objectDatabase[randomObjId][Math.floor(Math.random() * objectDatabase[randomObjId].length)] : "Utilise un accessoire avec audace.";
-                questionText = `<span class="special-title">🔥 Objet : [ ${randomObjId.replace('obj-', '')} ] 🔥</span>` + specificObjText;
             } else {
-                if (heat === 1) {
-                    questionText = `${gameState.currentPlayer} doit caresser sensuellement le cou et les épaules de ${partner} pendant 45 secondes.`;
-                } else if (heat === 2) {
-                    questionText = `${gameState.currentPlayer} doit murmurer un fantasme ou un mot très cru à l'oreille de ${partner}.`;
-                } else if (heat === 3) {
-                    questionText = `${gameState.currentPlayer} doit prendre l'entière initiative d'une stimulation intime poussée sur ${partner} pendant 1 minute.`;
-                } else {
-                    questionText = `Apothéose ! ${gameState.currentPlayer} et ${partner}, passez à l'acte final sans aucune retenue !`;
-                }
-            }
-
-            questionText = questionText.replace(/\[target\]/g, partner);
-            document.getElementById('question-container').innerHTML = questionText;
-
-            // Reset Chrono
-            document.getElementById('timer-countdown').innerText = "01:00";
-            let btn = document.getElementById('timer-btn');
-            btn.disabled = false;
-        }
-
-        function startTimer() {
-            let seconds = 60;
-            let display = document.getElementById('timer-countdown');
-            let btn = document.getElementById('timer-btn');
-            btn.disabled = true;
-
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-
-            currentTimerInterval = setInterval(() => {
-                seconds--;
-                display.innerText = formatTime(seconds);
-
-                if (seconds <= 0) {
-                    clearInterval(currentTimerInterval);
-                    playBipSound();
-                    display.innerText = "FIN ! 🔔";
-                    btn.disabled = false;
-                }
-            }, 1000);
-        }
-
-        function formatTime(sec) {
-            let m = Math.floor(sec / 60);
-            let s = sec % 60;
-            return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
-        }
-
-        function playBipSound() {
-            try {
-                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let oscillator = audioCtx.createOscillator();
-                let gainNode = audioCtx.createGain();
-                
-                oscillator.type = 'sine';
-                oscillator.frequency.value = 587.33;
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.5);
-            } catch (e) {
-                console.log("Audio non supporté");
+                cardText.innerHTML = activeQuestions[currentIndex % activeQuestions.length];
             }
         }
 
-        function endGameEarly() {
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('top-quit-btn').classList.add('hidden');
-            document.getElementById('top-defis-btn').style.display = 'none';
-            document.getElementById('end-screen').classList.remove('hidden');
+        function nextCard() {
+            currentIndex++;
+            displayCard();
         }
 
-        function resetGame() {
-            document.getElementById('end-screen').classList.add('hidden');
-            document.getElementById('setup-screen').classList.remove('hidden');
-            document.getElementById('top-defis-btn').style.display = 'inline-flex';
-        }
-
-        // --- GESTION DU POPUP "DÉFIS DU JOUR" & ÉCRANS DÉDIÉS ---
-        function openDefisMenu() {
-            let overlay = document.createElement('div');
-            overlay.className = 'modal-overlay';
-            overlay.id = 'modal-overlay';
-            
-            overlay.innerHTML = `
-                <div class="modal-content">
-                    <h3>Défis du Jour à planifier</h3>
-                    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Pour qui souhaitez-vous consulter les défis ?</p>
-                    <div class="modal-btn-group">
-                        <button class="btn-him" onclick="showPlanifiedList('lui')">Pour Lui ♂️</button>
-                        <button class="btn-her" onclick="showPlanifiedList('elle')">Pour Elle ♀️</button>
-                    </div>
-                    <button class="secondary-btn" style="margin-top:15px;" onclick="closeModal()">Fermer</button>
-                </div>
-            `;
-            document.body.appendChild(overlay);
+        // Gestion Modals
+        function openDailyChallengeModal() {
+            document.getElementById('modal-daily').style.display = 'flex';
         }
 
         function closeModal() {
-            let overlay = document.getElementById('modal-overlay');
-            if (overlay) overlay.remove();
+            document.getElementById('modal-daily').style.display = 'none';
+            document.getElementById('modal-generic').style.display = 'none';
+            document.getElementById('levels-container').style.display = 'grid';
+            document.getElementById('card-display').style.display = 'none';
+        }
+
+        function drawDaily(target) {
+            const list = target === 'lui' ? planifiedDefisLui : planifiedDefisElle;
+            const title = target === 'lui' ? 'Défi du jour - Pour lui ♂️' : 'Défi du jour - Pour elle ♀️';
+            
+            let content = `<h3 style="color:var(--accent-pink);">${title}</h3>`;
+            if (list.length === 0) {
+                content += `<p>Félicitations, tous les défis de cette catégorie ont été réalisés !</p>`;
+            } else {
+                const randomDefi = list[Math.floor(Math.random() * list.length)];
+                content += `<p style="font-size: 1.1rem; line-height: 1.5; margin: 20px 0;">${randomDefi}</p>`;
+            }
+            content += `<button class="action-btn" onclick="closeModal()">Fermer</button>`;
+
+            document.getElementById('modal-daily').style.display = 'none';
+            document.getElementById('modal-generic-content').innerHTML = content;
+            document.getElementById('modal-generic').style.display = 'flex';
         }
 
         function showPlanifiedList(targetPerson) {
-            let overlay = document.getElementById('modal-overlay');
-            if (!overlay) return;
+            document.getElementById('levels-container').style.display = 'none';
+            document.getElementById('card-display').style.display = 'none';
 
-            let list = (targetPerson === 'lui') ? planifiedDefisLui : planifiedDefisElle;
-            let title = (targetPerson === 'lui') ? "50 Défis pour lui" : "50 Défis pour elle";
-
+            const list = targetPerson === 'lui' ? planifiedDefisLui : planifiedDefisElle;
+            const title = "Suivi des Défis Kinky";
+            
             let itemsHtml = '';
             if (list.length === 0) {
-                itemsHtml = `<p style="color:var(--text-muted); text-align:center; padding:20px;">Tous les défis de cette catégorie ont été réalisés ! 🔥</p>`;
+                itemsHtml = `<p style="color:var(--text-muted); text-align:center; padding: 20px;">Aucun défi en attente dans cette catégorie.</p>`;
             } else {
                 list.forEach((defi, index) => {
                     itemsHtml += `
@@ -1149,19 +562,20 @@
                 });
             }
 
+            const overlay = document.getElementById('modal-generic-content');
             overlay.innerHTML = `
-                <div class="modal-content" style="max-width: 550px;">
-                    <h3>${title}</h3>
-                    <div class="tab-buttons">
-                        <button class="tab-btn ${targetPerson === 'lui' ? 'active' : ''}" onclick="showPlanifiedList('lui')">Pour Lui</button>
-                        <button class="tab-btn ${targetPerson === 'elle' ? 'active' : ''}" onclick="showPlanifiedList('elle')">Pour Elle</button>
-                    </div>
-                    <div class="defis-list-container">
-                        ${itemsHtml}
-                    </div>
-                    <button class="secondary-btn" style="margin-top:15px;" onclick="closeModal()">Fermer</button>
+                <h3>${title}</h3>
+                <div class="tab-buttons">
+                    <button class="tab-btn ${targetPerson === 'lui' ? 'active' : ''}" onclick="showPlanifiedList('lui')">Pour Lui ♂️</button>
+                    <button class="tab-btn ${targetPerson === 'elle' ? 'active' : ''}" onclick="showPlanifiedList('elle')">Pour Elle ♀️</button>
                 </div>
+                <div class="defis-list-container">
+                    ${itemsHtml}
+                </div>
+                <button class="action-btn" style="margin-top:15px;" onclick="closeModal()">Fermer</button>
             `;
+
+            document.getElementById('modal-generic').style.display = 'flex';
         }
 
         function removeDefi(targetPerson, index) {
@@ -1170,6 +584,7 @@
             } else {
                 planifiedDefisElle.splice(index, 1);
             }
+            saveDefis();
             showPlanifiedList(targetPerson);
         }
     </script>
