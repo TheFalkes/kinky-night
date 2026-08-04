@@ -7,8 +7,9 @@
 <style>
 :root{--bg:#0d0d11;--bg2:#15121e;--elle:#d946ef;--elle2:#c084fc;--lui:#06b6d4;--lui2:#3b82f6;--gold:#f59e0b;--txt:#f3eefb;--mut:#9b93ad;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
-body{background:radial-gradient(1200px 800px at 50% -10%, #1c1230 0%, var(--bg) 55%);color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;overflow-x:hidden;}
+html,body{height:100%;touch-action:manipulation;overscroll-behavior:none;-webkit-text-size-adjust:100%;}
+body{background:radial-gradient(1200px 800px at 50% -10%, #1c1230 0%, var(--bg) 55%);color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;overflow-x:hidden;position:relative;width:100%;}
+button,.chip,.card,.hbtn,.banner,.lvlbadge,.seg,.tabs,.toolbtn,.toolres,.logo{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
 .hidden{display:none!important;}
 /* ============ HEADER ============ */
 header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(13,13,17,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(217,70,239,.25);}
@@ -71,6 +72,7 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
 .btn{padding:16px;border:none;border-radius:16px;font-size:15px;font-weight:800;letter-spacing:1px;color:#fff;cursor:pointer;transition:.2s;}
 .btn:active{transform:scale(.97);}
 .btn.chrono{background:linear-gradient(90deg,#b45309,var(--gold));box-shadow:0 0 18px rgba(245,158,11,.45);}
+.btn.skip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);color:#d8d2e6;}
 .btn.next.tLui{background:linear-gradient(90deg,var(--lui2),var(--lui));box-shadow:0 0 18px rgba(6,182,212,.45);}
 .btn.next.tElle{background:linear-gradient(90deg,#a21caf,var(--elle));box-shadow:0 0 18px rgba(217,70,239,.45);}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--mut);font-weight:600;padding:12px;}
@@ -105,6 +107,15 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
 .gempty{text-align:center;color:var(--mut);font-size:14px;padding:30px 10px;}
 .spark{position:absolute;font-size:16px;pointer-events:none;animation:sp .8s ease-out forwards;color:var(--gold);text-shadow:0 0 8px var(--gold);}
 @keyframes sp{from{opacity:1;transform:translate(0,0) scale(1);}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3);}}
+/* tools */
+.toolzone{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin-top:12px;}
+.toolbtn{padding:12px 16px;border:1px solid var(--gold);border-radius:14px;background:rgba(245,158,11,.1);color:var(--gold);font-weight:800;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 0 12px rgba(245,158,11,.25);transition:.2s;}
+.toolbtn:active{transform:scale(.94);}
+.toolres{min-width:80px;text-align:center;font-size:24px;font-weight:800;color:var(--gold);text-shadow:0 0 14px rgba(245,158,11,.8);}
+.toolres.big{font-size:42px;margin:8px 0 4px;}
+.toolres.pop{animation:toolpop .45s ease;}
+@keyframes toolpop{0%{transform:scale(.4);opacity:0;}60%{transform:scale(1.25);}100%{transform:scale(1);opacity:1;}}
+.btn.tool{background:rgba(245,158,11,.12);border:1px solid var(--gold);color:var(--gold);}
 /* end screen */
 .endwrap{text-align:center;padding:50px 10px;}
 .endwrap .flame{font-size:64px;animation:pulse 1.5s infinite;display:inline-block;border-radius:50%;}
@@ -116,6 +127,8 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
 <header>
   <div class="logo" id="logo-home">🔥 Kinky<span>Night</span></div>
   <div class="hbtns">
+    <button class="hbtn" id="btn-timer" title="Chronomètre">⏱️</button>
+    <button class="hbtn" id="btn-tools" title="Pièce / Dé / Nombre">🪙</button>
     <button class="hbtn" id="btn-daily" title="Défis du Jour">📸</button>
     <button class="hbtn" id="btn-gallery" title="Galerie / Suivi">🖼️</button>
   </div>
@@ -126,13 +139,13 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
   <h1 class="title">Kinky Night</h1>
   <p class="subtitle">La soirée qui monte en température, tour après tour…</p>
   <div class="panel lui">
-    <h2>♂ Joueur « Lui »</h2>
-    <input type="text" id="name-lui" placeholder="Prénom de Lui (ex : Marc)">
+    <h2>♂ Prénom du Maître</h2>
+    <input type="text" id="name-lui" placeholder="Prénom du Maître (ex : Marc)">
     <div class="chips" id="opts-lui"></div>
   </div>
   <div class="panel">
-    <h2>♀ Joueuse « Elle »</h2>
-    <input type="text" id="name-elle" placeholder="Prénom d'Elle (ex : Sophie)">
+    <h2>♀ Prénom de la Salope</h2>
+    <input type="text" id="name-elle" placeholder="Prénom de la Salope (ex : Sophie)">
     <div class="chips" id="opts-elle"></div>
   </div>
   <div class="panel">
@@ -141,6 +154,14 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
       <button data-r="20">20 tours</button>
       <button data-r="25" class="on">25 tours</button>
       <button data-r="35">35 tours</button>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>🎲 Fréquence des objets & accessoires</h2>
+    <div class="seg" id="seg-freq">
+      <button data-f="low" data-testid="freq-low">Peu</button>
+      <button data-f="mid" data-testid="freq-mid" class="on">Modéré</button>
+      <button data-f="high" data-testid="freq-high">Beaucoup</button>
     </div>
   </div>
   <div class="panel">
@@ -158,6 +179,7 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
     <span class="lvlbadge" id="lvl-badge"></span>
   </div>
   <div class="card" id="challenge-card"></div>
+  <div class="toolzone hidden" id="tool-zone"></div>
   <div class="timerwrap hidden" id="timer-wrap">
     <div class="tcircle">
       <svg width="150" height="150"><circle class="track" cx="75" cy="75" r="66" fill="none" stroke-width="9"/><circle class="prog" id="timer-prog" cx="75" cy="75" r="66" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="0"/></svg>
@@ -166,6 +188,7 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
   </div>
   <div class="gbtns">
     <button class="btn chrono" id="btn-chrono">⏱️ LANCER LE CHRONO</button>
+    <button class="btn skip" id="btn-skip">🔄 CHANGER DE DÉFI</button>
     <button class="btn next" id="btn-next">✅ DÉFI RÉALISÉ / TOUR SUIVANT</button>
     <button class="btn ghost" id="btn-quit">Quitter la partie</button>
   </div>
@@ -176,10 +199,40 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
     <span class="flame">🔥</span>
     <h2>La soirée est terminée…</h2>
     <p id="end-text">Le jeu s'arrête ici, mais la nuit ne fait que commencer.<br>À vous de jouer.</p>
+    <div class="dcard" id="final-pos" style="margin-bottom:26px;text-align:left;">
+      <span class="ph">🔥 POSITION FINALE POUR COMMENCER L'ACTE</span>
+      <div class="txt" id="final-pos-text"></div>
+    </div>
     <button class="bigbtn" id="btn-replay">REJOUER UNE SOIRÉE</button>
   </div>
 </section>
 </main>
+<!-- ================= MANUAL TIMER MODAL ================= -->
+<div class="overlay hidden" id="ov-timer">
+  <div class="modal">
+    <h3>⏱️ CHRONOMÈTRE</h3>
+    <div class="toolres big" id="mt-display">1:00</div>
+    <div class="chips" id="mt-presets" style="justify-content:center;"></div>
+    <div class="mrow">
+      <button class="btn chrono" id="mt-start">▶ LANCER</button>
+      <button class="btn redraw" id="mt-stop">■ STOP</button>
+    </div>
+    <div class="mrow"><button class="btn close" id="mt-close">Fermer</button></div>
+  </div>
+</div>
+<!-- ================= TOOLS MODAL ================= -->
+<div class="overlay hidden" id="ov-tools">
+  <div class="modal">
+    <h3>🪙 PIÈCE · DÉ · NOMBRE</h3>
+    <div class="toolres big" id="tools-result">—</div>
+    <div class="mrow">
+      <button class="btn tool" id="tools-coin">🪙 Pile ou Face</button>
+      <button class="btn tool" id="tools-dice">🎲 Dé</button>
+      <button class="btn tool" id="tools-num">🔢 1-20</button>
+    </div>
+    <div class="mrow"><button class="btn close" id="tools-close">Fermer</button></div>
+  </div>
+</div>
 <!-- ================= DAILY MODAL ================= -->
 <div class="overlay hidden" id="ov-daily">
   <div class="modal">
@@ -222,7 +275,8 @@ input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,
    ===================================================================== */
 "use strict";
 /* ---------- Catégories & accessoires ---------- */
-const CATS=[["g","Faire des gâteries"],["r","Recevoir des gâteries"],["m","Mémoire"],["d","Domination"],["t","Dirty Talk"],["h","Jeux très coquins"],["o","Jeux de rôle"],["b","Morsures & griffures"]];
+const CATS=[["g","Faire des gâteries"],["r","Recevoir des gâteries"],["m","Souvenirs & Questions"],["d","Domination"],["u","Soumission"],["t","Dirty Talk"],["h","Jeux très coquins"],["o","Jeux de rôle"],["b","Morsures & griffures"],["a","Anal"]];
+const CATS_E=[["s","Testicules"]];
 const ACCS=[["y","Bandeau / Masque"],["l","Liens / Menottes"],["u","Huile de massage"],["v","Vibromasseur / Plug"],["p","Plumes / Glace"],["c","Cockring"],["f","Appareil photo"],["w","Caméra"],["q","Lubrifiant"]];
 /* ---------- Base de défis en jeu ----------
    C(niveau, joueur qui joue: 'L'=Lui / 'E'=Elle, texte, catégories, accessoires) */
@@ -327,20 +381,20 @@ C(2,"L","Presse son corps contre le tien et fais bouger tes hanches lentement co
 C(2,"L","Joue un court scénario : vous êtes deux inconnus qui viennent de se rencontrer dans un bar, séduis-la pendant 2 minutes.","o");
 C(2,"L","Griffe très doucement l'intérieur de ses cuisses en remontant, sans jamais atteindre le sommet.","b");
 /* ===== NIVEAU 3 — Elle joue ===== */
-C(3,"E","Le soin des testicules : joue doucement avec ses testicules avec tes doigts huilés pendant 1 minute 30.","g","u");
-C(3,"E","La caresse buccale ciblée : lèche ses testicules avec de longues caresses de langue tiède.","g");
-C(3,"E","La fellation masquée : bande-lui les yeux avec un foulard avant de commencer une fellation lente.","gd","y");
-C(3,"E","La soumission par les liens : attache-lui les poignets au lit avant de le sucer doucement.","gd","l");
+C(3,"E","Le soin des testicules : joue doucement avec ses testicules avec tes doigts huilés pendant 1 minute 30.","gs","u");
+C(2,"E","La caresse buccale ciblée : lèche ses testicules avec de longues caresses de langue tiède.","gs");
+C(2,"E","La fellation masquée : bande-lui les yeux avec un foulard avant de commencer une fellation lente.","gd","y");
+C(2,"E","La soumission par les liens : attache-lui les poignets au lit avant de le sucer doucement.","gd","l");
 C(3,"E","Le teasing des pinces : pose 2 pinces à linge douces sur ses cuisses ou ses tétons puis retire-les avec tes dents.","db");
 C(3,"E","Le glaçon glissé sous le slip : coince un glaçon dans son boxer et fais-le fondre uniquement par frottement extérieur.","h","p");
-C(3,"E","La douche au glaçon : promène un glaçon le long de sa colonne vertébrale jusqu'à ses bourses.","h","p");
+C(3,"E","La douche au glaçon : promène un glaçon le long de sa colonne vertébrale jusqu'à ses bourses.","hs","p");
 C(3,"E","Le masochisme doux : inflige-lui 5 claques appuyées sur les cuisses pour faire monter sa tension.","d");
 C(3,"E","La cire tiède : laisse couler quelques gouttes de cire de bougie de massage tiède juste au-dessus de son érection.","dh","u");
-C(3,"E","L'exploration du périnée : caresse et lèche la zone entre ses testicules et son anus pendant 1 minute.","gh");
-C(3,"E","La succion alternée : aspire délicatement une bourse après l'autre dans ta bouche.","g");
-C(3,"E","Le massage prostatique guidé : avec du lubrifiant, caresse très doucement l'entrée de son anus avec le bout du doigt.","h","q");
+C(2,"E","L'exploration du périnée : caresse et lèche la zone entre ses testicules et son anus pendant 1 minute.","ghas");
+C(2,"E","La succion alternée : aspire délicatement une bourse après l'autre dans ta bouche.","gs");
+C(3,"E","Le massage prostatique guidé : avec du lubrifiant, caresse très doucement l'entrée de son anus avec le bout du doigt.","ha","q");
 C(3,"E","La fellation rythmée : effectue une fellation intense pendant 2 minutes sans t'arrêter.","g");
-C(3,"E","Le travail des mains et de la bouche : alterne caresse manuelle sur la verge et léchage des testicules.","g");
+C(3,"E","Le travail des mains et de la bouche : alterne caresse manuelle sur la verge et léchage des testicules.","gs");
 C(3,"E","L'écriture érotique : écris un mot explicite sur son bas-ventre avec du rouge à lèvres ou avec la pointe de ta langue.","t");
 C(3,"E","L'anneau de plaisir : enfile-lui délicatement un cockring puis caresse sa verge tendue pendant 1 minute.","h","c");
 C(3,"E","La photo trophée : prends une photo artistique et suggestive de son corps (cadrée comme TU le décides).","d","f");
@@ -350,7 +404,7 @@ C(3,"E","Décris-lui crûment, mot pour mot, ce que sa langue devra te faire au 
 C(3,"E","Fais vibrer un vibromasseur sur l'intérieur de ses cuisses et son périnée sans toucher sa verge.","h","v");
 C(3,"E","Jeu de rôle : tu es une infirmière très consciencieuse qui doit « examiner » son patient en détail pendant 2 minutes.","oh");
 /* ===== NIVEAU 3 — Lui joue ===== */
-C(3,"L","L'exploration anale douce : caresse très doucement l'entrée de son anus avec du lubrifiant et un doigt très léger.","h","q");
+C(3,"L","L'exploration anale douce : caresse très doucement l'entrée de son anus avec du lubrifiant et un doigt très léger.","ha","q");
 C(3,"L","L'attachement et cunnilingus : attache-lui les poignets au lit avec un ruban et lèche son sexe intensément.","gd","l");
 C(3,"L","L'ordre de caresse : oblige-la à se caresser elle-même devant toi en suivant précisément toutes tes directives orales.","rdt");
 C(3,"L","Le cunnilingus glacé : prends un glaçon en bouche quelques secondes puis lèche son clitoris avec ardeur.","g","p");
@@ -362,7 +416,7 @@ C(3,"L","Le travail des tétons : tète et mords délicatement ses tétons en al
 C(3,"L","Le cunnilingus en profondeur : prends tout ton temps pour un cunnilingus de 3 minutes minimum en restant concentré sur son plaisir.","g");
 C(3,"L","Le guidage manuel : prends sa main et guide-la sur ton érection tout en lui léchant le cou.","r");
 C(3,"L","Le martinet ou la main : inflige-lui de légers tapotements rythmés sur les fesses à l'aide d'un accessoire doux ou de ta paume.","d");
-C(3,"L","La succion des lèvres intimes : aspire doucement ses lèvres intimes une par une.","g");
+C(2,"L","La succion des lèvres intimes : aspire doucement ses lèvres intimes une par une.","g");
 C(3,"L","La dénudation totale : retire-lui son tout dernier sous-vêtement avec les dents.");
 C(3,"L","L'effleurage intime continu : caresse la fente de son sexe du bas vers le haut avec un doigt imbibé de lubrifiant.","h","q");
 C(3,"L","Le vibro découverte : fais glisser un vibromasseur en vibration douce le long de ses lèvres intimes sans pénétration.","h","v");
@@ -373,43 +427,43 @@ C(3,"L","Jeu de rôle : tu es son professeur particulier très strict, elle doit
 C(3,"L","Le dirty talk anatomique : décris-lui à voix haute et sans détour tout ce que tu observes et adores de son intimité.","t");
 C(3,"L","Plume et glace : alterne une plume et un glaçon sur ses tétons et son bas-ventre pendant 1 minute 30.","h","p");
 /* ===== NIVEAU 4 — Elle joue ===== */
-C(4,"E","La fellation guidée aux ordres : suce-le en obéissant à ses indications d'intensité et de vitesse pendant 3 minutes.","g");
+C(3,"E","La fellation guidée aux ordres : suce-le en obéissant à ses indications d'intensité et de vitesse pendant 3 minutes.","gu");
 C(4,"E","La chevauchée dominante : mène la pénétration en te plaçant au-dessus de lui et impose ton rythme sans qu'il ne puisse bouger les hanches.","dh");
 C(4,"E","La double stimulation : utilise ta main sur sa verge tout en stimulant son anus avec un doigt lubrifié.","h","q");
-C(4,"E","Le contrôle de l'éjaculation (edging) : amène-le au bord de l'éjaculation par une fellation ou caresse intense, puis stoppe net 30 secondes. Répète 2 fois.","gdh");
-C(4,"E","La sodomie active : guide un plug anal ou un vibromasseur dans son anus avec beaucoup de lubrifiant avant d'enchaîner sur une caresse.","h","vq");
-C(4,"E","La fellation en position inversée : suce-le pendant qu'il est allongé au bord du lit, la tête légèrement basculée vers le bas.","gh");
-C(4,"E","Le bondage de la chaise : attache-le fermement sur une chaise et donne-lui du plaisir uniquement avec ta bouche sans qu'il puisse se libérer.","gd","l");
+C(3,"E","Le contrôle de l'éjaculation (edging) : amène-le au bord de l'éjaculation par une fellation ou caresse intense, puis stoppe net 30 secondes. Répète 2 fois.","gdh");
+C(4,"E","La sodomie active : guide un plug anal ou un vibromasseur dans son anus avec beaucoup de lubrifiant avant d'enchaîner sur une caresse.","ha","vq");
+C(3,"E","La fellation en position inversée : suce-le pendant qu'il est allongé au bord du lit, la tête légèrement basculée vers le bas.","gh");
+C(3,"E","Le bondage de la chaise : attache-le fermement sur une chaise et donne-lui du plaisir uniquement avec ta bouche sans qu'il puisse se libérer.","gd","l");
 C(4,"E","Le dirty talk explicite : décris-lui de manière très crue et détaillée tout ce que tu ressens au moment précis où vous le faites.","t");
 C(4,"E","La chevauchée inversée : mets-toi au-dessus de lui en lui tournant le dos (cowgirl inversée) tout en lui caressant les cuisses.","h");
 C(4,"E","La domination complète : prends les commandes absolues du lit — il n'a le droit de faire aucun geste sans ton autorisation explicite.","d");
 C(4,"E","Le cockring d'endurance : enfile-lui un cockring, puis chevauche-le lentement en lui interdisant de jouir tant que tu n'as pas dit « maintenant ».","dh","c");
 C(4,"E","La caméra complice : filme 1 minute de vos ébats sous l'angle que tu choisis — visionnage immédiat ensemble ensuite.","h","w");
-C(4,"E","Ordonne-lui de te faire un cunnilingus exactement comme tu le décris à voix haute, phrase après phrase.","rdt");
+C(3,"E","Ordonne-lui de te faire un cunnilingus exactement comme tu le décris à voix haute, phrase après phrase.","rdt");
 C(4,"E","Marque-le : pendant la pénétration, griffe son dos et mords son épaule au rythme de tes vagues de plaisir.","bh");
 C(4,"E","Jeu de rôle final : tu es sa dominatrice d'un soir — impose-lui trois gages explicites qu'il doit exécuter immédiatement.","od");
 C(4,"E","Les yeux bandés : bande-lui les yeux et fais l'amour avec lui en le guidant uniquement à la voix.","dth","y");
 C(4,"E","La lenteur insoutenable : chevauche-le au ralenti extrême pendant 2 minutes — interdiction formelle d'accélérer, quoi qu'il supplie.","dh");
-C(4,"E","Le 69 : installe-vous en 69, toi au-dessus, et donnez-vous du plaisir mutuellement pendant 3 minutes.","grh");
+C(3,"E","Le 69 : installez-vous en 69, toi au-dessus, et donnez-vous du plaisir mutuellement pendant 3 minutes.","grh");
 /* ===== NIVEAU 4 — Lui joue ===== */
-C(4,"L","La pénétration anale progressive : avec beaucoup de lubrifiant et de douceur, réalise une pénétration anale lente et contrôlée.","h","q");
+C(4,"L","La pénétration anale progressive : avec beaucoup de lubrifiant et de douceur, réalise une pénétration anale lente et contrôlée.","ha","q");
 C(4,"L","Le blocage des poignets : maintiens ses deux bras au-dessus de sa tête avec une seule main pendant que tu la pénètres vigoureusement.","dh");
-C(4,"L","Le déni d'orgasme (edging) : stimule son clitoris et son sexe jusqu'à la limite de la jouissance, puis stoppe tout mouvement pendant 30 secondes.","dh");
-C(4,"L","Le cunnilingus surélevé : place un coussin sous ses fesses pour surélever son bassin et lèche-la avec ardeur jusqu'à ce qu'elle gémisse fort.","g");
+C(3,"L","Le déni d'orgasme (edging) : stimule son clitoris et son sexe jusqu'à la limite de la jouissance, puis stoppe tout mouvement pendant 30 secondes.","dh");
+C(3,"L","Le cunnilingus surélevé : place un coussin sous ses fesses pour surélever son bassin et lèche-la avec ardeur jusqu'à ce qu'elle gémisse fort.","g");
 C(4,"L","La position du missionnaire profond : pénètre-la en lui repliant les jambes sur la poitrine pour aller le plus profond possible.","h");
 C(4,"L","L'utilisation simultanée du vibro : pénètre-la tout en appliquant un vibromasseur directement sur son clitoris.","h","v");
 C(4,"L","La levrette avec prise de cheveux : prends-la par l'arrière tout en attrapant doucement sa chevelure pour lui maintenir la tête relevée.","dh");
-C(4,"L","La pénétration avec doigt : pénètre-la vaginalement tout en massant son anus avec un doigt bien lubrifié.","h","q");
+C(4,"L","La pénétration avec doigt : pénètre-la vaginalement tout en massant son anus avec un doigt bien lubrifié.","ha","q");
 C(4,"L","Les ordres crus : donne-lui des ordres précis et explicites sur la façon dont elle doit bouger son bassin sous toi.","dt");
 C(4,"L","L'orgasme guidé : choisis la position dans laquelle elle jouit le plus facilement et donne tout ce que tu as pour la faire jouir dans les 3 minutes.","h");
 C(4,"L","L'attachement intégral : attache ses poignets à la tête de lit, puis fais-lui l'amour en variant les rythmes sans qu'elle puisse te toucher.","dh","l");
 C(4,"L","Le bandeau du lâcher-prise : bande-lui les yeux, pénètre-la lentement et décris-lui à voix basse chaque sensation.","dth","y");
-C(4,"L","Exige une fellation dominante : assieds-toi confortablement et guide sa tête au rythme exact que tu désires.","rd");
+C(3,"L","Exige une fellation dominante : assieds-toi confortablement et guide sa tête au rythme exact que tu désires.","rd");
 C(4,"L","La caméra complice : filme 1 minute de vos ébats sous l'angle que tu choisis — visionnage immédiat ensemble ensuite.","h","w");
 C(4,"L","Marque-la : pendant l'acte, mords son épaule et griffe le bas de son dos au moment où le plaisir monte.","bh");
 C(4,"L","Jeu de rôle final : tu es un inconnu autoritaire qui vient de la « capturer » — joue la scène jusqu'au bout avec son accord complice.","odh");
 C(4,"L","L'endurance imposée : pénètre-la avec des mouvements très lents pendant 2 minutes sans jamais accélérer, quoi qu'elle demande.","dh");
-C(4,"L","Le double plaisir : pendant que tu la pénètres, glisse un plug ou un vibromasseur en douceur pour une double stimulation.","h","vq");
+C(4,"L","Le double plaisir : pendant que tu la pénètres, glisse un plug ou un vibromasseur en douceur pour une double stimulation.","ha","vq");
 /* ===== DÉFIS CRÉATIFS & MINI-JEUX — 100% inédits ===== */
 /* --- Niveau 1 --- */
 C(1,"E","Jeu des 3 vérités : fais 3 confidences coquines sur toi, dont une fausse. Il doit deviner laquelle est le mensonge.","m");
@@ -467,14 +521,14 @@ C(2,"L","Karaoké sensuel : chante-lui 15 secondes d'une chanson en la rendant s
 C(2,"L","Photo mystère : photographie 3 cm² de ta peau en très gros plan. Elle doit deviner où. Si elle échoue, elle retire un vêtement.","","f");
 C(2,"L","Slow motion : rejouez votre premier baiser exactement comme il s'est passé… mais 4 fois plus lentement.","m");
 C(2,"L","Le tailleur : rhabille-la d'un seul vêtement à toi, en prenant tout ton temps pour « ajuster » chaque centimètre.","o");
-C(2,"L","Twister coquin : elle te donne 3 instructions précises de placement de mains sur son corps. Obéis et ne bouge plus pendant 30 secondes.");
+C(2,"L","Twister coquin : elle te donne 3 instructions précises de placement de mains sur son corps. Obéis et ne bouge plus pendant 30 secondes.","u");
 C(2,"L","Compte ses battements : pose la main sur son cœur, embrasse-la fougueusement. Si elle dépasse les 80 battements, tu gagnes un gage de ton choix.");
 C(2,"L","Body-lecture : écris « ce soir » quelque part sur son corps avec la pointe de ta langue. Elle doit dire où et quoi.");
 C(2,"L","Le garde du corps : porte-la (princesse, épaule ou dos) jusqu'au canapé ou au lit et « fouille-la » consciencieusement.","od");
 C(2,"L","Marchandage : chaque vêtement que tu lui retires « coûte » un aveu coquin de ta part. Négocie ferme, retires-en au moins deux.","mt");
 C(2,"L","Le sculpteur : modèle sa pose comme une œuvre d'art (bras, jambes, cambrure), recule, admire, et embrasse ton « chef-d'œuvre » là où il le mérite.","d");
 /* --- Niveau 3 --- */
-C(3,"E","La télécommande humaine : il commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","hd");
+C(3,"E","La télécommande humaine : il commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","hu");
 C(3,"E","Le silence imposé : donne-lui du plaisir avec les mains. S'il gémit, tu t'arrêtes 10 secondes. Durée : 2 minutes.","hd");
 C(3,"E","Dégustation à l'aveugle : yeux bandés, il doit deviner ce que tu poses sur ses lèvres (doigt, téton, langue, glaçon…). 5 manches.","h","y");
 C(3,"E","Le compte imposé : caresse-le intimement pendant 1 minute. Il doit compter à voix haute jusqu'à 60 sans se tromper… sinon tout recommence.","hd");
@@ -489,12 +543,12 @@ C(3,"E","Note vocale torride : enregistre 20 secondes de ta voix décrivant ce q
 C(3,"E","Le distributeur : il tire 3 « tickets » imaginaires. À chaque ticket, annonce la surprise intime qu'il vient de gagner et exécute la première.","oh");
 C(3,"E","Marque ton territoire : dépose morsures et griffures légères sur 3 zones de son corps que tu revendiques à voix haute comme « à toi ».","bd");
 C(3,"E","La croupière : joue une partie de « plus ou moins » (nombre entre 1 et 20). Chaque erreur de sa part = tu descends ta bouche un peu plus bas.","go");
-C(3,"L","La télécommande humaine : elle commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","h");
+C(3,"L","La télécommande humaine : elle commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","hu");
 C(3,"L","Le silence imposé : donne-lui du plaisir avec les mains. Si elle gémit, tu t'arrêtes 10 secondes. Durée : 2 minutes.","hd");
 C(3,"L","Dégustation à l'aveugle : yeux bandés, elle doit deviner ce que tu poses sur ses lèvres (doigt, torse, langue, glaçon…). 5 manches.","h","y");
 C(3,"L","Le compte imposé : caresse-la intimement pendant 1 minute. Elle doit compter à voix haute jusqu'à 60 sans se tromper… sinon tout recommence.","hd");
 C(3,"L","Face au miroir : place-la devant le miroir et caresse-la en exigeant qu'elle se regarde ELLE, pas toi.","hd");
-C(3,"L","La sculpture : elle place tes mains exactement où elle les veut sur son corps. Tu es sa statue : interdiction de bouger pendant 1 minute.","h");
+C(3,"L","La sculpture : elle place tes mains exactement où elle les veut sur son corps. Tu es sa statue : interdiction de bouger pendant 1 minute.","hu");
 C(3,"L","Pile ou face intime : face, tu la gâtes 1 minute avec ta bouche ; pile, c'est elle qui dicte exactement ce que tu fais.","gd");
 C(3,"L","L'enchère : elle « achète » du plaisir buccal en compliments très crus. 1 compliment = 10 secondes. Elle fixe le budget, tu tiens la caisse.","gt");
 C(3,"L","Le labyrinthe : trace un chemin de baisers de son cou à son bas-ventre en suivant SES instructions « gauche / droite / plus bas ».","g");
@@ -516,14 +570,14 @@ C(4,"E","La dictée : raconte-lui une scène torride, phrase par phrase — il d
 C(4,"E","Position inconnue : inventez ensemble une position jamais testée et tenez-la 2 minutes, fous rires autorisés, abandon interdit.","h");
 C(4,"E","Le mot de passe : choisis un mot secret. Chaque fois que tu le prononces pendant l'acte, il doit changer de rythme immédiatement.","dth");
 C(4,"E","Roi et Reine du silence : faites l'amour dans le silence TOTAL. Le premier qui émet un son exécute sur-le-champ un ordre de l'autre.","dh");
-C(4,"E","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour le faire jouir. Tous les moyens sont permis.","gh");
+C(4,"E","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour le faire jouir. Toutes les positions sont permises.","gh");
 C(4,"E","La croisée des sens : bande-lui les yeux ET impose le silence — il ne lui reste que le toucher. Fais-lui l'amour dans ce noir absolu.","dh","y");
 C(4,"E","Le tribunal : condamne-le à « réparer » une frustration de la semaine (vaisselle oubliée, retard…) par le nombre de minutes de plaisir de TON choix.","od");
 C(4,"E","Marathon des lieux : commencez dans une pièce, terminez dans une autre — minimum 3 étapes, chacune avec sa position.","h");
 C(4,"L","La pièce décide : pile = doux et lent, face = intense et profond. Lance la pièce 3 fois pendant l'acte et obéissez au verdict.","h");
-C(4,"L","Le métronome : elle claque des doigts et ton rythme obéit instantanément : lent, rapide, arrêt total… Tu es son instrument.","h");
+C(4,"L","Le métronome : elle claque des doigts et ton rythme obéit instantanément : lent, rapide, arrêt total… Tu es son instrument.","hu");
 C(4,"L","Le pari : chacun parie (en secret) sur le temps qu'elle tiendra avant de gémir. Le perdant devra un défi du jour demain.","dh");
-C(4,"L","Les 3 interdits : elle choisit 3 choses que tu n'as pas le droit de faire pendant l'acte. Tiens jusqu'au bout ou paie un gage.","h");
+C(4,"L","Les 3 interdits : elle choisit 3 choses que tu n'as pas le droit de faire pendant l'acte. Tiens jusqu'au bout ou paie un gage.","hu");
 C(4,"L","L'échange scellé : murmure ton fantasme le plus inavouable à son oreille PENDANT l'acte — elle doit répondre par le sien.","th");
 C(4,"L","La minute de pouvoir : toutes les minutes, le pouvoir change de mains. Au signal, l'autre décide de tout. Durée totale : 4 minutes.","dh");
 C(4,"L","Le juke-box : lance une chanson et calez STRICTEMENT votre rythme dessus, breaks et refrains compris.","h");
@@ -531,10 +585,153 @@ C(4,"L","La dictée : elle raconte une scène torride, phrase par phrase — tu 
 C(4,"L","Position inconnue : inventez ensemble une position jamais testée et tenez-la 2 minutes, fous rires autorisés, abandon interdit.","h");
 C(4,"L","Le mot de passe : elle choisit un mot secret. Chaque fois qu'elle le prononce pendant l'acte, change de rythme immédiatement.","th");
 C(4,"L","Roi et Reine du silence : faites l'amour dans le silence TOTAL. Le premier qui émet un son exécute sur-le-champ un ordre de l'autre.","dh");
-C(4,"L","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour la faire jouir. Tous les moyens sont permis.","gh");
+C(4,"L","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour la faire jouir. Toutes les positions sont permises.","gh");
 C(4,"L","La croisée des sens : bande-lui les yeux ET impose le silence — il ne lui reste que le toucher. Fais-lui l'amour dans ce noir absolu.","dh","y");
 C(4,"L","Le naufragé : vous êtes les deux derniers humains sur Terre et c'est votre dernière nuit — joue la scène jusqu'au bout, répliques comprises.","oh");
 C(4,"L","Marathon des lieux : commencez dans une pièce, terminez dans une autre — minimum 3 étapes, chacune avec sa position.","h");
+/* ===== NOUVEAUX THÈMES PAR NIVEAU =====
+   N1: Confidences / Sensorialité & Teasing / Murmures / Désir asynchrone
+   N2: Effeuillage / Dominance légère / Jeux de températures
+   N3: Contrôle & Edging / Stimulation manuelle / Ordres directs / Teasing chronométré
+   N4: Positions imposées / Emprise totale / Marquage / Orgasme dirigé */
+/* --- N1 · Intimité & Confidences --- */
+C(1,"E","Quel est le souvenir de nous deux qui te donne encore des frissons ?","m");
+C(1,"E","Quel désir secret n'as-tu jamais osé me confier ? Dis-en au moins la moitié ce soir.","m");
+C(1,"E","Décris l'endroit public où tu as déjà fantasmé de m'embrasser… ou plus.","m");
+C(1,"E","Quelle partie de ton propre corps aimerais-tu que j'explore davantage ?","m");
+C(1,"L","Quel est le souvenir de nous deux qui te donne encore des frissons ?","m");
+C(1,"L","Quel désir secret n'as-tu jamais osé me confier ? Dis-en au moins la moitié ce soir.","m");
+C(1,"L","Décris l'endroit public où tu as déjà fantasmé de m'embrasser… ou plus.","m");
+C(1,"L","Quelle partie de ton propre corps aimerais-tu que j'explore davantage ?","m");
+/* --- N1 · Sensorialité & Teasing --- */
+C(1,"E","Le balayage à la plume : balaye très lentement ses zones érogènes encore habillées avec une plume, pendant 1 minute.","","p");
+C(1,"E","Glaçon fantôme : fais glisser un glaçon à 1 cm de sa peau, le long de son bras et de son cou, sans jamais le poser.","","p");
+C(1,"E","Caresse textile : caresse-le uniquement à travers le tissu de ses vêtements, des épaules aux hanches, pendant 45 secondes.");
+C(1,"E","Bande-lui les yeux et fais-lui deviner 3 matières différentes posées sur sa joue (tissu, métal, peau…).","","y");
+C(1,"L","Le balayage à la plume : balaye très lentement ses zones érogènes encore habillées avec une plume, pendant 1 minute.","","p");
+C(1,"L","Glaçon fantôme : fais glisser un glaçon à 1 cm de sa peau, le long de son bras et de son décolleté, sans jamais le poser.","","p");
+C(1,"L","Caresse textile : caresse-la uniquement à travers le tissu de ses vêtements, des épaules aux hanches, pendant 45 secondes.");
+C(1,"L","Bande-lui les yeux et fais-lui deviner 3 matières différentes posées sur sa joue (tissu, métal, peau…).","","y");
+/* --- N1 · Dirty Talk & Murmures --- */
+C(1,"E","Murmure-lui à l'oreille, d'une voix très basse, exactement ce que tu espères pour la fin de la soirée.","t");
+C(1,"E","Fais-lui trois compliments explicites sur trois parties différentes de son corps, sans rire.","t");
+C(1,"L","Murmure-lui à l'oreille, d'une voix très basse, exactement ce que tu espères pour la fin de la soirée.","t");
+C(1,"L","Fais-lui trois compliments explicites sur trois parties différentes de son corps, sans rire.","t");
+/* --- N1 · Désir Asynchrone & Anticipation --- */
+C(1,"E","Envoie-lui maintenant un SMS torride… qu'il ne devra ouvrir que demain en pleine journée. Interdiction d'y jeter un œil avant.","t");
+C(1,"E","Fais-lui une promesse érotique précise pour demain matin — et note-la dans son téléphone pour qu'il ne puisse pas « oublier ».","t");
+C(1,"E","Décris-lui le message coquin que tu aurais adoré recevoir de lui aujourd'hui, mot pour mot.","t");
+C(1,"L","Envoie-lui maintenant un SMS torride… qu'elle ne devra ouvrir que demain en pleine journée. Interdiction d'y jeter un œil avant.","t");
+C(1,"L","Fais-lui une promesse érotique précise pour demain matin — et note-la dans son téléphone pour qu'elle ne puisse pas « oublier ».","t");
+C(1,"L","Décris-lui le message coquin que tu aurais adoré recevoir d'elle aujourd'hui, mot pour mot.","t");
+/* --- N2 · Effeuillage & Strip-tease --- */
+C(2,"E","Strip-chrono : tu as exactement 30 secondes pour lui retirer deux vêtements, avec style et sans précipitation apparente.");
+C(2,"E","Effeuillage dicté : il choisit le vêtement que tu lui retires, toi la manière (dents, une seule main, au ralenti…).");
+C(2,"E","Strip-question : pose-lui une question sur vous deux. Mauvaise réponse = il choisit un de TES vêtements à retirer lui-même.","m");
+C(2,"L","Strip-chrono : tu as exactement 30 secondes pour lui retirer deux vêtements, avec style et sans précipitation apparente.");
+C(2,"L","Effeuillage dicté : elle choisit le vêtement que tu lui retires, toi la manière (dents, une seule main, au ralenti…).");
+C(2,"L","Strip-question : pose-lui une question sur vous deux. Mauvaise réponse = elle choisit un de TES vêtements à retirer elle-même.","m");
+/* --- N2 · Dominance & Soumission Légère --- */
+C(2,"E","Impose-lui l'immobilité totale : mains à plat sur les genoux pendant que tu l'embrasses où tu veux, 1 minute. S'il bouge, on recommence.","d");
+C(2,"E","Attache ses poignets devant lui avec un foulard doux et embrasse-le partout sans qu'il puisse te toucher, pendant 1 minute.","d","l");
+C(2,"E","Impose le regard fixe : il doit garder les yeux dans les tiens pendant que tes mains explorent son corps, 1 minute. Chaque regard fuyant = un gage.","d");
+C(2,"L","Impose-lui l'immobilité totale : mains à plat sur les genoux pendant que tu l'embrasses où tu veux, 1 minute. Si elle bouge, on recommence.","d");
+C(2,"L","Attache ses poignets devant elle avec un foulard doux et embrasse-la partout sans qu'elle puisse te toucher, pendant 1 minute.","d","l");
+C(2,"L","Impose le regard fixe : elle doit garder les yeux dans les tiens pendant que tes mains explorent son corps, 1 minute. Chaque regard fuyant = un gage.","d");
+/* --- N2 · Jeux de Températures & Sensations --- */
+C(2,"E","Glaçon sur les lèvres : fais fondre un glaçon sur ses lèvres, puis suis les gouttes jusqu'au torse avec ta langue.","","p");
+C(2,"E","Huile tiède : verse un filet d'huile tiède entre ses omoplates et étale-la très lentement jusqu'au creux des reins.","","u");
+C(2,"E","Contraste : alterne ton souffle brûlant et un glaçon sur sa nuque pendant 45 secondes.","","p");
+C(2,"L","Glaçon sur les lèvres : fais fondre un glaçon sur ses lèvres, puis suis les gouttes jusqu'à son décolleté avec ta langue.","","p");
+C(2,"L","Huile tiède : verse un filet d'huile tiède entre ses omoplates et étale-la très lentement jusqu'au creux des reins.","","u");
+C(2,"L","Contraste : alterne ton souffle brûlant et un glaçon sur l'intérieur de ses cuisses pendant 45 secondes.","","p");
+/* --- N3 · Contrôle & Edging --- */
+C(3,"E","Supplice de l'attente : stimule-le manuellement et stoppe net dès qu'il ferme les yeux de plaisir. 3 arrêts obligatoires minimum.","dh");
+C(3,"E","Interdiction de jouir : caresse-le intimement pendant 2 minutes — il n'a formellement pas le droit de craquer avant la fin du chrono.","dh");
+C(3,"E","Le baromètre : il annonce son excitation de 1 à 10 toutes les 20 secondes pendant que tu le caresses. Interdiction de dépasser 8 : à toi de doser. 2 minutes.","dh");
+C(3,"L","Supplice de l'attente : stimule-la manuellement et stoppe net dès qu'elle ferme les yeux de plaisir. 3 arrêts obligatoires minimum.","dh");
+C(3,"L","Interdiction de jouir : caresse-la intimement pendant 2 minutes — elle n'a formellement pas le droit de craquer avant la fin du chrono.","dh");
+C(3,"L","Le baromètre : elle annonce son excitation de 1 à 10 toutes les 20 secondes pendant que tu la caresses. Interdiction de dépasser 8 : à toi de doser. 2 minutes.","dh");
+/* --- N3 · Caresses Intimes & Stimulation Manuelle --- */
+C(3,"E","Massage des fesses à l'huile : pétris fermement ses fesses pendant 1 minute 30 — sans jamais toucher ailleurs, c'est la règle.","","u");
+C(3,"E","Stimulation à une main : donne-lui du plaisir d'une seule main, l'autre restant croisée dans ton dos, pendant 1 minute 30.","h");
+C(3,"L","Massage des fesses à l'huile : pétris fermement ses fesses pendant 1 minute 30 — sans jamais toucher ailleurs, c'est la règle.","","u");
+C(3,"L","Stimulation à une main : donne-lui du plaisir d'une seule main, l'autre restant croisée dans ton dos, pendant 1 minute 30.","h");
+/* --- N3 · Ordres Directs --- */
+C(3,"E","Ordre direct : impose-lui la posture exacte dans laquelle il doit s'installer et se caresser pendant 1 minute. Corrige chaque détail à voix haute.","rdt");
+C(3,"L","Ordre direct : impose-lui la posture exacte dans laquelle elle doit s'installer et se caresser pendant 1 minute. Corrige chaque détail à voix haute.","rdt");
+/* --- N3 · Défis Chronométrés de Teasing --- */
+C(3,"E","Teasing chronométré : chuchote des phrases très crues à son oreille en le caressant par-dessus le sous-vêtement pendant exactement 1 minute 30. Pas une seconde de plus.","th");
+C(3,"E","Stimulation continue : maintiens une caresse intime au même rythme exact, sans jamais accélérer ni ralentir, pendant 2 minutes chrono.","h");
+C(3,"L","Teasing chronométré : chuchote des phrases très crues à son oreille en la caressant par-dessus le sous-vêtement pendant exactement 1 minute 30. Pas une seconde de plus.","th");
+C(3,"L","Stimulation continue : maintiens une caresse intime au même rythme exact, sans jamais accélérer ni ralentir, pendant 2 minutes chrono.","h");
+/* --- N4 · Pénétration & Positions Imposées --- */
+C(4,"E","Position imposée : annonce la position de TON choix et fais-le s'installer sans un mot. Il n'a pas voix au chapitre.","dh");
+C(4,"E","Enchaînement réglé : imposez-vous 3 positions différentes, 1 minute chacune, changement au signal du chrono.","h");
+C(4,"E","Debout contre le mur : exige qu'il te prenne debout, plaquée contre le mur — c'est toi qui choisis le mur.","h");
+C(4,"L","Position imposée : prends-la par l'arrière — elle ne choisit rien, toi tout, du premier au dernier mouvement.","dh");
+C(4,"L","Enchaînement réglé : imposez-vous 3 positions différentes, 1 minute chacune, changement au signal du chrono.","h");
+C(4,"L","La suspendue : fais-lui l'amour debout en la portant, ou plaquée contre le mur si les bras fatiguent.","h");
+/* --- N4 · Domination & Emprise Totale --- */
+C(4,"E","Emprise totale : yeux bandés ET poignets liés — il s'abandonne complètement pendant que tu le chevauches à ton rythme.","dh","yl");
+C(4,"E","Soumission active : il doit demander la permission à voix haute avant CHAQUE geste pendant l'acte. Refuse au moins une fois.","dth");
+C(4,"L","Emprise totale : yeux bandés ET poignets liés — elle s'abandonne complètement pendant que tu la pénètres à ton rythme.","dh","yl");
+C(4,"L","Soumission active : elle doit demander la permission à voix haute avant CHAQUE geste pendant l'acte. Refuse au moins une fois.","dth");
+/* --- N4 · Marquage & Sensations Fortes --- */
+C(4,"E","Marquage final : pendant l'acte, alterne morsures contrôlées sur son épaule et griffures dans son dos, au rythme du plaisir.","bh");
+C(4,"E","Fessées cadencées : ponctue chaque changement de rythme d'une fessée appuyée bien sonore.","dbh");
+C(4,"L","Marquage final : pendant l'acte, alterne morsures contrôlées sur son épaule et griffures dans le bas de son dos, au rythme du plaisir.","bh");
+C(4,"L","Fessées cadencées : ponctue chaque changement de rythme d'une fessée appuyée bien sonore.","dbh");
+/* --- N4 · Orgasme Dirigé & Finales Thématisées --- */
+C(4,"E","Orgasme dirigé : décide de la position, du rythme et de l'instant EXACT où il a le droit de jouir — annonce-le à voix haute.","dh");
+C(4,"E","Finale thématisée : choisis le thème de la fin (tendre, sauvage, silencieuse, très vocale) et imposez-le jusqu'au bout, sans dévier.","h");
+C(4,"E","La dernière vague : après son orgasme, impose 30 secondes de caresses très douces — interdiction de se dérober.","dh");
+C(4,"L","Orgasme dirigé : décide de la position, du rythme et de l'instant EXACT où elle a le droit de jouir — annonce-le à voix haute.","dh");
+C(4,"L","Finale thématisée : elle choisit le thème de la fin (tendre, sauvage, silencieuse, très vocale) et tu l'exécutes jusqu'au bout, sans dévier.","hu");
+C(4,"L","La dernière vague : après son orgasme, impose 30 secondes de caresses très douces — interdiction de se dérober.","dh");
+/* ===== ANAL (option dédiée) ===== */
+C(3,"E","Massage anal externe : dessine de lents cercles autour de son anus avec un doigt bien lubrifié pendant 1 minute, sans pénétration.","ha","q");
+C(3,"L","Préparation en douceur : embrasse ses fesses puis caresse son anus avec le pouce lubrifié pendant 1 minute.","ha","q");
+C(4,"E","Plug sous contrôle : insère-lui délicatement un plug lubrifié, puis chevauche-le en gardant le contrôle total du rythme.","dha","vq");
+C(4,"E","Doigté pendant la chevauchée : pendant que tu le chevauches, glisse un doigt lubrifié dans son anus au rythme de tes hanches.","ha","q");
+C(4,"L","Sodomie en cuillère : allongés sur le côté, pénètre-la analement très lentement pendant que ta main caresse son clitoris.","ha","q");
+C(4,"L","Double sensation : pénètre-la vaginalement avec un plug anal en place — chaque mouvement compte double.","ha","vq");
+/* ===== TESTICULES (option d'Elle) ===== */
+C(2,"E","Pluie de baisers sur les bourses : dépose des baisers très doux sur ses testicules pendant 45 secondes.","gs");
+C(3,"E","Le jongleur : fais rouler délicatement ses testicules dans ta paume tiède en le fixant droit dans les yeux, pendant 1 minute.","hs");
+C(3,"E","Langue et main : lèche ses testicules pendant que ta main caresse sa verge au ralenti, pendant 1 minute 30.","gs");
+/* ===== MAÎTRE & SALOPE ===== */
+C(3,"L","Le Maître ordonne : fais mettre ta Salope à genoux devant toi — elle doit demander la permission avant chaque caresse qu'elle veut te donner.","dt");
+C(3,"E","Bonne Salope : présente-toi devant ton Maître et demande-lui, avec les mots les plus crus, ce que tu veux qu'il te fasse.","ut");
+C(3,"L","L'inspection du Maître : ordonne à ta Salope de se déshabiller et de prendre 3 poses de ton choix pendant que tu l'inspectes sans la toucher.","dt");
+C(3,"E","Au rapport : décris à ton Maître, en détail et sans rougir, tout ce que ton corps ressent à cet instant précis.","ut");
+C(4,"L","Dressage : donne trois ordres explicites à ta Salope — elle doit répondre « oui Maître » et obéir immédiatement à chacun.","dth");
+C(4,"E","Au service du Maître : offre-toi dans la position qu'il exige et remercie-le à voix haute pendant l'acte.","uth");
+C(4,"L","Le Maître décide : choisis comment, où et à quel rythme tu prends ta Salope — elle n'a droit qu'à un seul mot : « encore ».","dth");
+C(4,"E","La Salope réclame : supplie ton Maître de te prendre en détaillant crûment ce que tu veux — il ne cède qu'à la troisième supplique.","uth");
+/* ===== DÉFIS AU DÉ ===== */
+C(2,"E","Le dé du strip : lance le dé intégré — de 1 à 3 : tu retires un vêtement ; de 4 à 6 : c'est lui.");
+C(2,"L","Le dé du strip : lance le dé intégré — de 1 à 3 : tu retires un vêtement ; de 4 à 6 : c'est elle.");
+C(4,"E","Le dé des positions : définissez 6 positions, une par face, puis lance le dé — le verdict est sans appel.","h");
+C(4,"L","Le dé des positions : définissez 6 positions, une par face, puis lance le dé — le verdict est sans appel.","h");
+/* ===== SOUMISSION (option dédiée) ===== */
+C(2,"E","Offre tes poignets : tends tes mains jointes vers lui et laisse-le décider quoi en faire pendant 1 minute.","u");
+C(2,"L","Offre tes poignets : tends tes mains jointes vers elle et laisse-la décider quoi en faire pendant 1 minute.","u");
+C(3,"E","À sa merci : mets-toi dans la position qu'il t'ordonne et n'en bouge plus tant qu'il n'a pas fini de te caresser.","u");
+C(3,"L","À sa merci : mets-toi dans la position qu'elle t'ordonne et n'en bouge plus tant qu'elle n'a pas fini de te caresser.","u");
+C(4,"E","Abandon total : allonge-toi, offre-toi, et laisse-le disposer de toi pendant 2 minutes — tu n'as le droit de rien décider.","uh");
+C(4,"L","Abandon total : allonge-toi, offre-toi, et laisse-la disposer de toi pendant 2 minutes — tu n'as le droit de rien décider.","uh");
+/* ===== N4 : CARESSES GÉNITALES & PÉNÉTRATIONS ===== */
+C(4,"E","Caresses sexe contre sexe : frotte lentement ton sexe contre le sien, sans jamais le laisser entrer, jusqu'à ce qu'il supplie.","h");
+C(4,"E","Chevauchée sauvage : chevauche-le avec toute l'intensité dont tu es capable pendant 1 minute, sans jamais ralentir.","h");
+C(4,"E","La descente infinie : laisse-le entrer en toi millimètre par millimètre, puis remonte — répète 5 fois avant de céder complètement.","h");
+C(4,"E","Le lotus : assieds-toi sur lui face à face, jambes nouées autour de lui, et ondulez très lentement pendant 2 minutes.","h");
+C(4,"E","Alternance dictée : impose 30 secondes de pénétration très douce puis 30 secondes intenses, 3 cycles — c'est toi qui annonces chaque changement.","dh");
+C(4,"L","Pénétration sauvage : prends-la avec force et profondeur pendant 1 minute, puis stoppe net et termine le tour tout en douceur.","h");
+C(4,"L","Douceur extrême : pénètre-la le plus lentement possible pendant 2 minutes, millimètre par millimètre, sans jamais céder à l'accélération.","h");
+C(4,"L","Caresses sexe contre sexe : fais glisser ton sexe contre le sien, sans jamais entrer, jusqu'à ce qu'elle le réclame à voix haute.","h");
+C(4,"L","La presse : replie ses jambes sur tes épaules et pénètre-la puissamment — elle contrôle la profondeur avec ses mains sur tes hanches.","h");
+C(4,"L","Le bord du lit : allonge-la au bord du lit, toi debout, et enchaîne trois rythmes différents : lent, profond, intense.","h");
 /* =====================================================================
    GÉNÉRATEUR DE VARIANTES — porte le catalogue à plus de 1000 défis
    ===================================================================== */
@@ -567,7 +764,7 @@ C(4,"L","Marathon des lieux : commencez dans une pièce, terminez dans une autre
     z3L.forEach(z=>C(3,"E",a[0]+" "+z+" "+d+".",a[1],a[2],"f3a"+ai));
     z3E.forEach(z=>C(3,"L",a[0]+" "+z+" "+d+".",a[1],a[2],"f3a"+ai));
   });});
-  const orders=[["Ordonne-lui de changer de position toutes les 30 secondes, à ton signal, pendant 2 minutes.","dh"],["Impose un rythme très lent pendant 1 minute, puis très intense pendant 30 secondes, en donnant tes ordres à voix haute.","dth"],["Interdis-lui de te toucher avec les mains pendant 2 minutes : seule sa bouche est autorisée.","dh"],["Fais-lui répéter à voix haute une phrase très crue de ton invention avant chaque nouveau geste, pendant 2 minutes.","dt"]];
+  const orders=[["Ordonne-lui de changer de position toutes les 30 secondes, à ton signal, pendant 2 minutes.","dh"],["Impose un rythme très lent pendant 1 minute, puis très intense pendant 30 secondes, en donnant tes ordres à voix haute.","dth"],["Interdis-lui de te toucher avec les mains pendant 2 minutes : seul le contact de vos corps est autorisé.","dh"],["Fais-lui répéter à voix haute une phrase très crue de ton invention avant chaque nouveau geste, pendant 2 minutes.","dt"]];
   const styles=["en le fixant droit dans les yeux","en chuchotant à son oreille","d'une voix autoritaire qui ne laisse aucun choix"];
   orders.forEach((o,oi)=>{styles.forEach(s=>{
     C(4,"E",o[0]+" Le tout, "+s+".",o[1],"","f4o"+oi);
@@ -633,6 +830,13 @@ DL(5,"Fantasme avoué : réalise ce soir LE fantasme qu'elle t'a avoué un jour 
 DL(5,"Jeu des interdits : établis 3 interdits pour elle ce soir (parler, toucher, jouir) — chaque infraction se paie en fessées.");
 DL(5,"Nuit blanche : interdiction de dormir avant qu'elle ait joui au moins deux fois.");
 DL(5,"Maître du vibro : garde la télécommande de son toy toute la soirée Netflix et joue avec sans prévenir.");
+DL(3,"Cuni surprise : surprends-la dans la journée avec un cunnilingus improvisé, là où elle se trouve, sans un mot d'explication.");
+DL(3,"Cuni cadeau : offre-lui un cunnilingus jusqu'au bout… mais aucun sexe ensuite. Juste pour elle.");
+DL(2,"Balcon complice : attire-la sur le balcon à la nuit tombée pour un moment torride en plein air, discrétion de rigueur.");
+DL(3,"Cuisine torride : prends-la dans la cuisine pendant la préparation du dîner — le plat peut attendre.");
+DL(2,"Salle de bain : rejoins-la dans la salle de bain pendant qu'elle se prépare et déshabille-la entièrement.");
+DL(3,"Sous la douche : lave-la des pieds à la tête, puis laisse tes mains improviser la suite sous l'eau chaude.");
+DL(2,"Photo/vidéo au travail : envoie-lui une photo ou une courte vidéo suggestive depuis ton lieu de travail.");
 /* ----- Pour Elle ----- */
 DE(1,"SMS Coquin : envoie-lui une photo de ta lingerie ou de ton décolleté pendant sa pause déjeuner.");
 DE(2,"Pas de culotte au ciné/resto : rends-toi à votre rendez-vous en enlevant ta culotte dans la voiture.");
@@ -684,16 +888,41 @@ DE(5,"Jeu des interdits : impose-lui 3 interdits ce soir (parler, toucher, jouir
 DE(5,"Sodomie offerte : propose-lui ce que tu réserves aux très grandes occasions, à ton rythme, avec beaucoup de douceur.");
 DE(5,"La panthère : réveille-le en pleine nuit pour un round dont il se souviendra au réveil.");
 DE(5,"Contrôle total 24h : pendant 24 heures, chacun de ses orgasmes ne dépend que de toi.");
+DE(4,"Fellation jusqu'à jouir : offre-lui une fellation complète jusqu'à ce qu'il jouisse, sans rien attendre en retour.");
+DE(3,"Fellation par surprise : surprends-le à un moment inattendu de la journée et ne le laisse même pas finir sa phrase.");
+DE(2,"Balcon complice : attire-le sur le balcon à la nuit tombée pour un moment torride en plein air, discrétion de rigueur.");
+DE(3,"Cuisine torride : assieds-toi sur le plan de travail et attire-le entre tes jambes — le dîner attendra.");
+DE(2,"Salle de bain : rejoins-le dans la salle de bain pendant qu'il se prépare et prends les choses en main.");
+DE(3,"Sous la douche : savonne-le entièrement, puis termine à genoux sous l'eau chaude.");
+DE(2,"Photo/vidéo au travail : envoie-lui une photo ou une courte vidéo très suggestive depuis ton lieu de travail.");
 /* =====================================================================
    ÉTAT & PERSISTANCE
    ===================================================================== */
 const $=id=>document.getElementById(id);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
-let setup=store.get("kn_setup",{nL:"",nE:"",rounds:25,optsL:Object.fromEntries(CATS.map(c=>[c[0],true])),optsE:Object.fromEntries(CATS.map(c=>[c[0],true])),accs:Object.fromEntries(ACCS.map(a=>[a[0],true]))});
+let setup=store.get("kn_setup",{nL:"",nE:"",rounds:25,optsL:Object.fromEntries(CATS.map(c=>[c[0],true])),optsE:Object.fromEntries(CATS.concat(CATS_E).map(c=>[c[0],true])),accs:Object.fromEntries(ACCS.map(a=>[a[0],true]))});
+/* migration : les options ajoutées après coup sont activées par défaut */
+CATS.concat(CATS_E).forEach(c=>{if(setup.optsL[c[0]]===undefined)setup.optsL[c[0]]=true;if(setup.optsE[c[0]]===undefined)setup.optsE[c[0]]=true;});
+if(setup.objFreq===undefined)setup.objFreq="mid";
 let gallery=store.get("kn_gallery",{L:[],E:[]});
 let game=null; /* {plan,turn,idx,used:{}} */
 const LVL_NAMES={1:"NIVEAU 1 · ÉCHAUFFEMENT",2:"NIVEAU 2 · TENSION SENSUELLE",3:"NIVEAU 3 · PULSION & PLAISIR",4:"NIVEAU 4 · CLIMAX & LÂCHER-PRISE"};
 const LVL_SPLIT={20:[3,5,7,5],25:[4,6,9,6],35:[5,9,12,9]}; /* N1 courte < N2 < N3 la plus longue, N4 = N2 */
+/* Positions finales proposées à la fin de la partie pour passer à l'acte */
+const FINALES=[
+"Le missionnaire profond : jambes repliées sur sa poitrine, au plus profond, les yeux dans les yeux.",
+"La levrette cambrée : elle s'offre à quatre pattes, dos creusé, lui tenant fermement ses hanches.",
+"L'amazone : elle le chevauche face à lui et impose son rythme jusqu'au bout.",
+"L'amazone inversée : elle le chevauche dos à lui, il admire et caresse le creux de ses reins.",
+"La cuillère profonde : allongés sur le côté, il la prend par l'arrière, une main posée sur son ventre.",
+"Le lotus : assis face à face, jambes nouées, ondulations lentes et baisers profonds.",
+"Debout contre le mur : elle plaquée, jambes autour de sa taille, intensité maximale.",
+"Le bord du lit : elle allongée au bord, lui debout, maître total du rythme.",
+"Les ciseaux : jambes entrecroisées, mouvements profonds et lents.",
+"La presse : ses jambes à elle sur ses épaules à lui, pénétration puissante et profonde.",
+"L'union douce : missionnaire très lent, corps collés, jusqu'au bout dans un même souffle.",
+"La levrette plaquée : elle à plat ventre, lui allongé sur elle, mouvements profonds et appuyés."
+];
 /* ---------- Setup UI ---------- */
 function chip(label,on,cls,cb,tid){const el=document.createElement("div");el.className="chip "+cls+(on?" on":"");el.setAttribute("data-testid",tid);el.innerHTML='<span class="dot"></span>'+label;el.onclick=()=>{el.classList.toggle("on");cb(el.classList.contains("on"));};return el;}
 function buildSetup(){
@@ -703,10 +932,15 @@ function buildSetup(){
     ol.appendChild(chip(c[1],setup.optsL[c[0]],"pLui",v=>{setup.optsL[c[0]]=v;save();},"opt-lui-"+c[0]));
     oe.appendChild(chip(c[1],setup.optsE[c[0]],"pElle",v=>{setup.optsE[c[0]]=v;save();},"opt-elle-"+c[0]));
   });
+  CATS_E.forEach(c=>oe.appendChild(chip(c[1],setup.optsE[c[0]],"pElle",v=>{setup.optsE[c[0]]=v;save();},"opt-elle-"+c[0])));
   ACCS.forEach(a=>oa.appendChild(chip(a[1],setup.accs[a[0]],"pAcc",v=>{setup.accs[a[0]]=v;save();},"acc-"+a[0])));
   document.querySelectorAll("#seg-rounds button").forEach(b=>{
     b.classList.toggle("on",+b.dataset.r===setup.rounds);
     b.onclick=()=>{setup.rounds=+b.dataset.r;save();document.querySelectorAll("#seg-rounds button").forEach(x=>x.classList.toggle("on",x===b));};
+  });
+  document.querySelectorAll("#seg-freq button").forEach(b=>{
+    b.classList.toggle("on",b.dataset.f===setup.objFreq);
+    b.onclick=()=>{setup.objFreq=b.dataset.f;save();document.querySelectorAll("#seg-freq button").forEach(x=>x.classList.toggle("on",x===b));};
   });
   $("db-count").textContent=DB.length+DAILY.L.length+DAILY.E.length;
 }
@@ -729,6 +963,10 @@ function pickChallenge(lvl,p){
   let avail=pool.filter(i=>!game.used[key].includes(i)&&!game.fams.includes(DB[i].f));
   if(!avail.length)avail=pool.filter(i=>!game.used[key].includes(i));
   if(!avail.length){game.used[key]=[];avail=pool;}
+  /* fréquence des défis avec objets/accessoires : peu / modéré / beaucoup */
+  const P={low:0.08,mid:0.35,high:0.75}[setup.objFreq||"mid"];
+  const withO=avail.filter(i=>DB[i].a),noO=avail.filter(i=>!DB[i].a);
+  if(withO.length&&noO.length)avail=Math.random()<P?withO:noO;
   /* privilégie très fortement les défis 100% uniques (non issus de gabarits) */
   const uniq=avail.filter(i=>DB[i].f[0]==="u");
   if(uniq.length&&Math.random()<0.85)avail=uniq;
@@ -757,16 +995,83 @@ function showTurn(){
   card.style.animation="none";void card.offsetWidth;card.style.animation="";
   const nb=$("btn-next");nb.className="btn next "+theme;
   stopTimer();
-  game.dur=parseDuration(ch.t)||60;
-  $("btn-chrono").textContent="⏱️ LANCER LE CHRONO ("+fmt(game.dur)+")";
-  $("btn-chrono").classList.remove("hidden");
+  game.dur=parseDuration(ch.t);
+  if(game.dur){
+    $("btn-chrono").textContent="⏱️ LANCER LE CHRONO ("+fmt(game.dur)+")";
+    $("btn-chrono").classList.remove("hidden");
+  }else{
+    $("btn-chrono").classList.add("hidden");
+  }
   $("timer-wrap").classList.add("hidden");
 }
 function fmt(s){const m=Math.floor(s/60),r=s%60;return m>0?(m+":"+String(r).padStart(2,"0")):(r+"s");}
+/* ---------- Outils : pièce, dé, nombre ---------- */
+function toolVal(kind){
+  if(kind==="coin")return Math.random()<0.5?"PILE":"FACE";
+  if(kind==="dice")return ["⚀ 1","⚁ 2","⚂ 3","⚃ 4","⚄ 5","⚅ 6"][Math.floor(Math.random()*6)];
+  return String(1+Math.floor(Math.random()*20));
+}
+function runTool(kind,el){
+  let n=0;
+  const iv=setInterval(()=>{
+    el.textContent=toolVal(kind);n++;
+    if(n>=8){clearInterval(iv);el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
+  },70);
+}
+function buildToolZone(text){
+  const tz=$("tool-zone");tz.innerHTML="";
+  const low=text.toLowerCase();
+  const defs=[];
+  if(/pile ou face|lance la pièce|la pièce décide/.test(low))defs.push(["coin","🪙 LANCER LA PIÈCE"]);
+  if(/(le|un|du) dé(?![a-zà-ÿ])/.test(low))defs.push(["dice","🎲 LANCER LE DÉ"]);
+  if(/plus ou moins|nombre entre/.test(low))defs.push(["num","🔢 TIRER UN NOMBRE"]);
+  if(!defs.length){tz.classList.add("hidden");return;}
+  tz.classList.remove("hidden");
+  const res=document.createElement("div");res.className="toolres";res.setAttribute("data-testid","tool-result");
+  defs.forEach(d=>{
+    const b=document.createElement("button");b.className="toolbtn";
+    b.setAttribute("data-testid","tool-"+d[0]+"-btn");b.textContent=d[1];
+    b.onclick=()=>runTool(d[0],res);tz.appendChild(b);
+  });
+  tz.appendChild(res);
+}
+$("btn-tools").onclick=()=>{$("ov-tools").classList.remove("hidden");$("tools-result").textContent="—";};
+$("tools-coin").onclick=()=>runTool("coin",$("tools-result"));
+$("tools-dice").onclick=()=>runTool("dice",$("tools-result"));
+$("tools-num").onclick=()=>runTool("num",$("tools-result"));
+$("tools-close").onclick=()=>$("ov-tools").classList.add("hidden");
+/* ---------- Chronomètre manuel (onglet ⏱️) ---------- */
+const MT_PRESETS=[15,30,45,60,90,120,180,300];
+let mtSel=60,mtIv=null,mtEnd=0;
+(function(){
+  const wrap=$("mt-presets");
+  MT_PRESETS.forEach(s=>{
+    const el=document.createElement("div");
+    el.className="chip pAcc"+(s===mtSel?" on":"");
+    el.setAttribute("data-testid","mt-preset-"+s);
+    el.innerHTML='<span class="dot"></span>'+fmt(s);
+    el.onclick=()=>{
+      mtSel=s;mtStop();$("mt-display").textContent=fmt(s);
+      wrap.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===el));
+    };
+    wrap.appendChild(el);
+  });
+})();
+function mtStop(){if(mtIv){clearInterval(mtIv);mtIv=null;}}
+function mtTick(){
+  const left=Math.max(0,(mtEnd-Date.now())/1000);
+  $("mt-display").textContent=fmt(Math.ceil(left));
+  if(left<=0){mtStop();$("mt-display").textContent="🔥";beep();}
+}
+$("mt-start").onclick=()=>{unlockAudio();mtStop();mtEnd=Date.now()+mtSel*1000;mtIv=setInterval(mtTick,200);mtTick();};
+$("mt-stop").onclick=()=>{mtStop();$("mt-display").textContent=fmt(mtSel);};
+$("btn-timer").onclick=()=>{$("ov-timer").classList.remove("hidden");if(!mtIv)$("mt-display").textContent=fmt(mtSel);};
+$("mt-close").onclick=()=>$("ov-timer").classList.add("hidden");
 /* ---------- Chrono ---------- */
 let tHandle=null,tEnd=0,tTotal=0;
 const CIRC=414.7;
 function startTimer(){
+  if(!game||!game.dur)return;
   stopTimer();unlockAudio();
   tTotal=game.dur;tEnd=Date.now()+tTotal*1000;
   $("timer-wrap").classList.remove("hidden");
@@ -814,10 +1119,12 @@ function endGame(){
   stopTimer();
   $("game").classList.add("hidden");$("end").classList.remove("hidden");
   $("end-text").innerHTML=(setup.nL||"Lui")+" &amp; "+(setup.nE||"Elle")+", les "+setup.rounds+" tours sont écoulés…<br>Le jeu s'arrête ici, mais la nuit ne fait que commencer. 🔥";
+  $("final-pos-text").textContent=FINALES[Math.floor(Math.random()*FINALES.length)];
 }
 function quitGame(){stopTimer();game=null;$("game").classList.add("hidden");$("end").classList.add("hidden");$("setup").classList.remove("hidden");buildSetup();}
 $("btn-start").onclick=startGame;
 $("btn-next").onclick=nextTurn;
+$("btn-skip").onclick=()=>{if(game)showTurn();};
 $("btn-chrono").onclick=startTimer;
 $("btn-quit").onclick=quitGame;
 $("btn-replay").onclick=()=>{$("end").classList.add("hidden");$("setup").classList.remove("hidden");buildSetup();};
@@ -885,7 +1192,7 @@ $("tab-elle").onclick=()=>{galTab="E";renderGallery();};
 $("gallery-close").onclick=()=>$("ov-gallery").classList.add("hidden");
 document.querySelectorAll(".overlay").forEach(ov=>ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hidden");}));
 /* ---------- testids statiques ---------- */
-[["name-lui","input-name-lui"],["name-elle","input-name-elle"],["btn-start","start-game-btn"],["btn-next","next-turn-btn"],["btn-chrono","start-timer-btn"],["btn-quit","quit-game-btn"],["btn-replay","replay-btn"],["btn-daily","daily-challenge-btn"],["btn-gallery","gallery-btn"],["daily-lui","daily-for-lui-btn"],["daily-elle","daily-for-elle-btn"],["daily-save","daily-save-btn"],["daily-redraw","daily-redraw-btn"],["daily-close","daily-close-btn"],["gallery-close","gallery-close-btn"],["tab-lui","gallery-tab-lui"],["tab-elle","gallery-tab-elle"],["turn-banner","turn-banner"],["challenge-card","challenge-card"],["lvl-badge","level-badge"],["timer-val","timer-value"],["db-count","db-count"]].forEach(([id,tid])=>{const el=$(id);if(el)el.setAttribute("data-testid",tid);});
+[["name-lui","input-name-lui"],["name-elle","input-name-elle"],["btn-start","start-game-btn"],["btn-next","next-turn-btn"],["btn-chrono","start-timer-btn"],["btn-quit","quit-game-btn"],["btn-replay","replay-btn"],["btn-daily","daily-challenge-btn"],["btn-gallery","gallery-btn"],["btn-skip","skip-challenge-btn"],["final-pos-text","final-position"],["btn-timer","timer-tool-btn"],["mt-display","mt-display"],["mt-start","mt-start-btn"],["mt-stop","mt-stop-btn"],["mt-close","mt-close-btn"],["btn-tools","tools-btn"],["tools-coin","tools-coin-btn"],["tools-dice","tools-dice-btn"],["tools-num","tools-num-btn"],["tools-result","tools-result"],["tools-close","tools-close-btn"],["daily-lui","daily-for-lui-btn"],["daily-elle","daily-for-elle-btn"],["daily-save","daily-save-btn"],["daily-redraw","daily-redraw-btn"],["daily-close","daily-close-btn"],["gallery-close","gallery-close-btn"],["tab-lui","gallery-tab-lui"],["tab-elle","gallery-tab-elle"],["turn-banner","turn-banner"],["challenge-card","challenge-card"],["lvl-badge","level-badge"],["timer-val","timer-value"],["db-count","db-count"]].forEach(([id,tid])=>{const el=$(id);if(el)el.setAttribute("data-testid",tid);});
 document.querySelectorAll("#seg-rounds button").forEach(b=>b.setAttribute("data-testid","rounds-"+b.dataset.r));
 /* ---------- init ---------- */
 buildSetup();
