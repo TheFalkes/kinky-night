@@ -520,7 +520,7 @@
             </div>
 
             <div id="level-countdown-text" class="level-countdown">
-                Niveau 1 — 5 tours avant le niveau suivant
+                Niveau 1 — 3 tours avant le niveau suivant
             </div>
 
             <div id="target-display" class="target-box">
@@ -596,7 +596,7 @@
             activeObjects: [],
             objectFrequency: "normal",
             currentPlayer: "",
-            usedQuestions: new Set()
+            levelThresholds: []
         };
 
         const objectDatabase = {
@@ -680,7 +680,7 @@
             ];
             for(let i=0; i<standardL2.length; i++) db[2].push({ text: standardL2[i], isObject: false });
 
-            // NIVEAU 3 (Défis spécifiques homme et femme)
+            // NIVEAU 3
             let L3_man = [
                 "Masse fermement les fesses de ta partenaire avec des mouvements lents et puissants.",
                 "Lèche ses cuisses en remontant doucement vers son entrejambe sans y toucher tout de suite.",
@@ -704,7 +704,7 @@
             for(let text of L3_man) db[3].man.push({ text: text, isObject: false });
             for(let text of L3_woman) db[3].woman.push({ text: text, isObject: false });
 
-            // NIVEAU 4 (Spécial & Défis Intenses)
+            // NIVEAU 4
             let L4_man = [
                 "Attache-la au lit (ou immobilise ses poignets) et lèche-la passionnément partout sur le corps et le sexe.",
                 "Caresse délicatement et stimule son anus tout en la caressant sur son clitoris.",
@@ -731,15 +731,30 @@
 
         const massiveDatabase = generateMassiveLevelDatabase();
 
+        function calculateLevelThresholds(total) {
+            // Répartition progressive : Niveau 1 < Niveau 2 < Niveau 3 < Niveau 4
+            if (total === 20) {
+                // L1: 3 tours (1..3), L2: 4 tours (4..7), L3: 6 tours (8..13), L4: 7 tours (14..20)
+                return [3, 7, 13, 20];
+            } else if (total === 25) {
+                // L1: 4 tours (1..4), L2: 5 tours (5..9), L3: 7 tours (10..16), L4: 9 tours (17..25)
+                return [4, 9, 16, 25];
+            } else {
+                // Pour 35 tours : L1: 5 tours (1..5), L2: 8 tours (6..13), L3: 10 tours (14..23), L4: 12 tours (24..35)
+                return [5, 13, 23, 35];
+            }
+        }
+
         function startGame() {
             gameState.man = document.getElementById('man-name').value || "Lui";
             gameState.woman = document.getElementById('woman-name').value || "Elle";
             gameState.totalTurns = parseInt(document.getElementById('game-duration').value);
             gameState.currentTurn = 0;
             gameState.objectFrequency = document.getElementById('object-frequency').value;
+            gameState.levelThresholds = calculateLevelThresholds(gameState.totalTurns);
 
-            // Définition explicite de l'ordre d'alternance
-            gameState.currentPlayer = gameState.man; // Le premier tour commence avec Lui
+            // Alternance tour par tour
+            gameState.currentPlayer = gameState.man;
 
             gameState.activeObjects = [];
             document.querySelectorAll('#setup-screen .chips-grid input[type="checkbox"]:checked').forEach(cb => {
@@ -756,10 +771,11 @@
         }
 
         function getCurrentLevel() {
-            let turnsPerLevel = Math.floor(gameState.totalTurns / 4);
-            if (gameState.currentTurn <= turnsPerLevel) return 1;
-            if (gameState.currentTurn <= turnsPerLevel * 2) return 2;
-            if (gameState.currentTurn <= turnsPerLevel * 3) return 3;
+            let turn = gameState.currentTurn;
+            let t = gameState.levelThresholds;
+            if (turn <= t[0]) return 1;
+            if (turn <= t[1]) return 2;
+            if (turn <= t[2]) return 3;
             return 4;
         }
 
@@ -771,7 +787,7 @@
                 return;
             }
 
-            // Alternance tour par tour (Un coup Lui, un coup Elle)
+            // Alternance tour par tour
             if (gameState.currentTurn > 1) {
                 gameState.currentPlayer = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
             }
@@ -782,8 +798,10 @@
             let level = getCurrentLevel();
             updateFlames(level);
 
-            let turnsPerLevel = Math.floor(gameState.totalTurns / 4);
-            let turnsLeftInLevel = (turnsPerLevel * level) - gameState.currentTurn + 1;
+            let t = gameState.levelThresholds;
+            let currentLevelEnd = t[level - 1];
+            let turnsLeftInLevel = currentLevelEnd - gameState.currentTurn + 1;
+
             if (level === 4) {
                 document.getElementById('level-countdown-text').innerText = `Niveau Max 🔥 — Étape Finale !`;
             } else {
@@ -808,9 +826,7 @@
 
         function getRandomQuestion(level) {
             let isMan = (gameState.currentPlayer === gameState.man);
-            let questionObj;
 
-            // Tirage avec objet potentiel selon la fréquence sélectionnée
             let objectChance = 0.2;
             if (gameState.objectFrequency === 'peu') objectChance = 0.1;
             if (gameState.objectFrequency === 'beaucoup') objectChance = 0.4;
@@ -818,11 +834,10 @@
             if (gameState.activeObjects.length > 0 && Math.random() < objectChance) {
                 let randomObjKey = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
                 let objQuestions = objectDatabase[randomObjKey];
-                let text = objQuestions[Math.floor(Math.random() * objQuestions.length)];
-                return text;
+                return objQuestions[Math.floor(Math.random() * objQuestions.length)];
             }
 
-            // Tirage standard par niveau
+            let questionObj;
             if (level === 1 || level === 2) {
                 let pool = massiveDatabase[level];
                 questionObj = pool[Math.floor(Math.random() * pool.length)];
