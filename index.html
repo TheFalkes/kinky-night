@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinky Night - Édition 1000 Vraies Questions</title>
+    <title>Kinky Night - Édition Mise à Jour</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -395,18 +395,6 @@
             border-radius: 10px;
         }
 
-        .special-title {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-pink);
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff, var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .timer-container {
             text-align: center;
             margin: 15px 0;
@@ -436,7 +424,6 @@
     <div class="container" id="main-container">
         <button id="top-quit-btn" class="top-end-btn hidden" onclick="endGameEarly()">Fin de partie</button>
 
-        <!-- ÉCRAN DE CONFIGURATION -->
         <div id="setup-screen">
             <h1>Kinky Night</h1>
             
@@ -492,7 +479,6 @@
                 </div>
             </div>
 
-            <!-- NOUVELLE OPTION : FRÉQUENCE DES OBJETS -->
             <div class="form-group" style="margin-top: 25px;">
                 <label class="main-label">Fréquence des questions à objets</label>
                 <div class="custom-select-wrapper">
@@ -522,7 +508,6 @@
             <button class="primary-btn" onclick="startGame()">Lancer l'expérience</button>
         </div>
 
-        <!-- ÉCRAN DE JEU -->
         <div id="game-screen" class="hidden">
             <div class="game-header">
                 <span id="progress-indicator">Tour 1 / 20</span>
@@ -558,7 +543,6 @@
     </div>
 
     <script>
-        // Gestion du sélecteur de durée
         const customSelect = document.getElementById('custom-select-trigger');
         const hiddenInput = document.getElementById('game-duration');
 
@@ -579,7 +563,6 @@
             });
         });
 
-        // Gestion du sélecteur de fréquence d'objets
         const freqSelect = document.getElementById('custom-freq-trigger');
         const freqInput = document.getElementById('object-frequency');
 
@@ -618,311 +601,152 @@
 
         const objectDatabase = {
             'obj-bandeau': [
-                "Bandez les yeux de [target] et faites-lui deviner 3 parties de son corps que vous caressez avec vos lèvres.",
-                "Bandez les yeux de [target] et promenez un glaçon sur son torse ou son ventre en le/la faisant frissonner.",
-                "Utilisez le bandeau pour priver [target] de la vue pendant que vous explorez son corps avec une plume ou les doigts.",
-                "Bandez les yeux de [target] et faites-lui deviner des caresses alternées chaudes et froides."
+                "Bandez les yeux de votre partenaire et faites-lui deviner 3 parties de son corps que vous caressez avec vos lèvres.",
+                "Bandez les yeux de votre partenaire et promenez un glaçon sur son torse ou son ventre.",
+                "Utilisez le bandeau pour priver votre partenaire de la vue pendant que vous l'explorez de caresses.",
+                "Bandez-lui les yeux et prodiguez-lui des caresses surprises."
             ],
             'obj-huile': [
-                "Versez un peu d'huile de massage chaude et massez le torse ou le dos de [target] pendant 2 minutes.",
-                "Appliquez l'huile de massage sur les fesses et les cuisses de [target] en effectuant des pressions fermes et sensuelles.",
-                "Massez l'intégralité du corps de [target] à l'huile en insistant sur la cambrure des reins.",
-                "Glissez de l'huile de massage sur vos mains et frottez sensuellement le ventre de [target] jusqu'à pénétration de la chaleur."
+                "Versez un peu d'huile de massage chaude et massez le corps de votre partenaire pendant 2 minutes.",
+                "Appliquez l'huile de massage sur les fesses et les cuisses de votre partenaire en effectuant des pressions fermes.",
+                "Massez l'intégralité du corps de votre partenaire à l'huile avec sensualité."
             ],
             'obj-menottes': [
-                "Menottez délicatement [target] et prenez le contrôle total de ses sensations pendant 1 minute et demie.",
-                "Attachez les mains de [target] au lit et provoquez-le/la sans qu'il/elle ne puisse vous toucher.",
-                "Mettez les menottes à [target] et imposez-lui de rester immobile pendant que vous l'embrassez partout.",
-                "Menottez [target] en position allongée et dictez-lui des ordres de soumission totale."
+                "Attachez délicatement votre partenaire et prenez le contrôle total de ses sensations pendant 1 minute et demie.",
+                "Attachez les mains de votre partenaire au lit et provoquez-le/la sans qu'il/elle ne puisse vous toucher.",
+                "Menottez votre partenaire en position allongée et exigez une soumission totale."
             ],
             'obj-lubrifiant': [
-                "Appliquez du lubrifiant avec sensualité sur les zones intimes de [target] en préparant la suite avec gourmandise.",
-                "Utilisez le lubrifiant pour intensifier des caresses glissantes et fluides sur l'intimité de [target].",
-                "Faites couler quelques gouttes de lubrifiant sur le bas-ventre de [target] et étalez-les du bout de la langue."
+                "Appliquez du lubrifiant avec sensualité sur les zones intimes de votre partenaire.",
+                "Utilisez le lubrifiant pour intensifier des caresses glissantes sur l'intimité de votre partenaire."
             ],
             'obj-god': [
-                "Utilisez le vibro/god pour stimuler [target] tout en l'embrassant goulûment pendant 1 minute et demie.",
-                "Faites vibrer le god contre les zones érogènes de [target] en contrôlant strictement son rythme.",
-                "Intégrez le vibro/god lors d'une stimulation intense de [target] en position allongée."
+                "Utilisez le vibro/god pour stimuler votre partenaire tout en l'embrassant goulûment.",
+                "Faites vibrer le god contre les zones érogènes de votre partenaire en contrôlant le rythme."
             ],
             'obj-alcool': [
-                "Prenez une gorgée d'alcool et partagez un baiser passionné avec [target] en faisant passer le liquide de bouche en bouche.",
-                "Versez une goutte d'alcool sur le cou de [target], léchez-la goulûment puis embrassez-le/la."
+                "Prenez une gorgée d'alcool et partagez un baiser passionné en faisant passer le liquide.",
+                "Versez une goutte d'alcool sur le cou de votre partenaire, léchez-la goulûment."
             ],
             'obj-ring': [
-                "Installez le cock ring avec sensualité pour intensifier les sensations à venir et embrassez [target] langoureusement.",
-                "Portez ou faites porter le cock ring en pratiquant des caresses très appuyées sur les zones sensibles."
+                "Installez le cock ring avec sensualité pour intensifier les sensations à venir.",
+                "Utilisez le cock ring lors d'une stimulation intense."
             ],
             'obj-appareil': [
-                "Prenez une photo polaroïd ou numérique très suggestive de [target] dans cette posture.",
-                "Imortalisez l'instant avec une photo coquine de [target] en position dominante ou soumise."
+                "Prenez une photo très suggestive de votre partenaire dans cette posture.",
+                "Immortalisez l'instant avec une photo coquine de votre partenaire."
             ],
             'obj-camera': [
-                "Filmez 30 secondes de caresses sensuelles et torrides sur [target].",
-                "Enregistrez une courte vidéo de [target] en train de prononcer une phrase ultra-coquine pour vous."
+                "Filmez 30 secondes de caresses sensuelles et torrides.",
+                "Enregistrez une courte vidéo de votre partenaire en train de prononcer une phrase ultra-coquine."
             ],
             'obj-des': [
-                "Lancez les dés coquins et réalisez immédiatement la combinaison de gages qui s'affiche.",
-                "Laissez les dés coquins décider de votre prochaine action érotique mutuelle."
+                "Lancez les dés coquins et réalisez immédiatement la combinaison qui s'affiche.",
+                "Laissez les dés coquins décider de votre prochaine action érotique."
             ]
         };
 
         function generateMassiveLevelDatabase() {
-            let db = { 1: [], 2: [], 3: [], 4: [] };
+            let db = { 
+                1: [], 
+                2: [], 
+                3: { man: [], woman: [] }, 
+                4: { man: [], woman: [] } 
+            };
 
-            // Construction de listes de base sans objets (100 questions pures par niveau pour 1, 2, 3)
-            // et 100 questions avec objets intégrées si cochés.
-            
-            // --- NIVEAU 1 ---
+            // NIVEAU 1
             let standardL1 = [
-                "Dépose un baiser très délicat sur le front de [target] en fermant les yeux.",
-                "Murmure à l'oreille de [target] la première chose qui t'a attiré chez lui/elle.",
-                "Passe tes doigts lentement dans les cheveux de [target] pendant 30 secondes.",
-                "Embrasse la paume de la main de [target] en la caressant du bout du pouce.",
-                "Fais un compliment très intime à [target] sur une partie de son corps que tu adores.",
-                "Trace des cercles invisibles sur le dos de [target] du bout des doigts pendant 45 secondes.",
-                "Regarde [target] droit dans les yeux en silence pendant 30 secondes sans rire.",
-                "Inspire profondément le parfum de [target] dans son cou en frôlant sa peau.",
-                "Masse doucement les épaules de [target] pour évacuer toute tension.",
-                "Pose ta tête contre la poitrine de [target] et écoute battre son cœur pendant 30 secondes."
+                "Dépose un baiser très délicat sur le front de votre partenaire.",
+                "Murmure à l'oreille de votre partenaire la première chose qui t'a attiré chez lui/elle.",
+                "Passe tes doigts lentement dans ses cheveux pendant 30 secondes.",
+                "Embrasse la paume de sa main en la caressant du bout du pouce.",
+                "Fais un compliment très intime sur une partie de son corps que tu adores.",
+                "Trace des cercles invisibles sur son dos du bout des doigts.",
+                "Regarde-le/la droit dans les yeux en silence pendant 30 secondes sans rire.",
+                "Inspire profondément son parfum dans son cou en frôlant sa peau.",
+                "Masse doucement ses épaules pour évacuer toute tension."
             ];
-            let templatesL1 = [
-                "Prends 20 secondes pour caresser doucement le cou de [target] avec tes lèvres (Variante [index]).",
-                "Trace une ligne imaginaire avec ton index depuis le front jusqu'aux lèvres de [target] (Variante [index]).",
-                "Masse délicatement chaque phalange des mains de [target] pendant 30 secondes (Variante [index]).",
-                "Regarde [target] avec tendresse et décris son plus beau sourire en 5 mots (Variante [index]).",
-                "Dépose un baiser papillon sur la paupière fermée de [target] (Variante [index]).",
-                "Chuchote 'Je t'aime' d'une voix extrêmement sensuelle à l'oreille gauche de [target] (Variante [index]).",
-                "Passe tes mains sous les vêtements de [target] pour simplement réchauffer sa peau pendant 30 secondes (Variante [index]).",
-                "Embrasse tendrement le creux du poignet de [target] (Variante [index]).",
-                "Masse le cuir chevelu de [target] pour lui procurer une détente absolue pendant 40 secondes (Variante [index]).",
-                "Serre [target] fort contre toi en respirant au même rythme pendant 30 secondes (Variante [index]).",
-                "Dépose un baiser très léger dans le creux de l'épaule de [target] (Variante [index]).",
-                "Flatte [target] sur la douceur de sa peau en caressant son bras (Variante [index]).",
-                "Masse le haut du dos de [target] avec des mouvements lents et circulaires (Variante [index]).",
-                "Regarde fixement la bouche de [target] pendant 20 secondes sans rien dire (Variante [index]).",
-                "Offre un baiser chaleureux et prolongé sur les joues de [target] (Variante [index]).",
-                "Fais glisser tes doigts sur la nuque de [target] de haut en bas pendant 30 secondes (Variante [index]).",
-                "Dis à [target] quel vêtement lui va le mieux selon toi (Variante [index]).",
-                "Appuie ton front contre celui de [target] en fermant les yeux pendant 20 secondes (Variante [index]).",
-                "Caresse le menton de [target] du bout des doigts avec une infinie douceur (Variante [index]).",
-                "Masse lentement la voûte plantaire ou la cheville de [target] pendant 30 secondes (Variante [index])."
-            ];
-            
-            // On remplit jusqu'à 100 sans objets
             for(let i=0; i<standardL1.length; i++) db[1].push({ text: standardL1[i], isObject: false });
-            let idx1 = 1;
-            while(db[1].filter(q => !q.isObject).length < 100) {
-                let t = templatesL1[(idx1 - 1) % templatesL1.length];
-                db[1].push({ text: t.replace("[index]", idx1), isObject: false });
-                idx1++;
-            }
-            // Et 100 avec objets potentiels
-            let objIdx1 = 1;
-            while(db[1].filter(q => q.isObject).length < 100) {
-                db[1].push({ text: `[Objet] Utilise un objet disponible pour caresser [target] avec sensualité (Déclinaison [index]).`, isObject: true });
-                objIdx1++;
-            }
 
-
-            // --- NIVEAU 2 ---
+            // NIVEAU 2
             let standardL2 = [
-                "Embrasse goulûment [target] sur la bouche pendant 45 secondes sans t'arrêter.",
-                "Masse sensuellement le bas-ventre et les hanches de [target] en glissant sous ses vêtements.",
-                "Murmure du dirty talk très cru et excitant directement à l'oreille de [target].",
-                "Mordille doucement le cou de [target] en laissant des marques de baisers chauds.",
-                "Passe la langue sur le lobe de l'oreille de [target] en lui soufflant une proposition coquine.",
-                "Allonge [target] sur le dos et dépose des baisers ardents de son nombril jusqu'à son cou.",
-                "Fais une stimulation manuelle rythmée et sensuelle à [target] par-dessus ses sous-vêtements.",
-                "Laisse [target] attacher tes poignets avec un foulard ou une ceinture pendant 1 minute.",
-                "Exige que [target] se mette à genoux devant toi et embrasse l'intérieur de tes cuisses.",
-                "Exécute un strip-tease provocant de 1 minute en fixant [target] dans les yeux."
+                "Embrasse goulûment votre partenaire sur la bouche pendant 45 secondes.",
+                "Masse sensuellement le bas-ventre et les hanches de votre partenaire.",
+                "Pince délicatement ses tétons tout en lui murmurant une envie coquine.",
+                "Fais glisser ta langue le long de son cou jusqu'à sa clavicule.",
+                "Déshabille un vêtement de ton partenaire avec tes seules dents.",
+                "Mords doucement son bas de lèvre en le/la fixant intensément.",
+                "Donne trois petites fessées ludiques sur son fessier nus."
             ];
-            let templatesL2 = [
-                "Embrasse le cou de [target] en mordillant légèrement la peau pendant 30 secondes (Variante [index]).",
-                "Passe tes mains sous le t-shirt de [target] pour caresser frénétiquement sa poitrine (Variante [index]).",
-                "Dis à [target] une phrase ultra-coquine qui te fait bander/mouiller instantanément (Variante [index]).",
-                "Laisse [target] lécher le cou ou le lobe de ton oreille pendant 40 secondes (Variante [index]).",
-                "Exerce des pressions fermes sur les fesses de [target] à travers ses vêtements (Variante [index]).",
-                "Glisse ta main dans les sous-vêtements de [target] et explore ses zones intimes pendant 45 secondes (Variante [index]).",
-                "Exige un baiser sauvage et mordilleur de [target] pendant 45 secondes (Variante [index]).",
-                "Masse vigoureusement les cuisses de [target] en te rapprochant centimètre par centimètre de son intimité (Variante [index]).",
-                "Souffle un ordre très coquin et dominant à l'oreille de [target] qu'il/elle doit répéter (Variante [index]).",
-                "Embrasse goulûment [target] en lui agrippant fermement les cheveux (Variante [index])."
-            ];
-
             for(let i=0; i<standardL2.length; i++) db[2].push({ text: standardL2[i], isObject: false });
-            let idx2 = 1;
-            while(db[2].filter(q => !q.isObject).length < 100) {
-                let t = templatesL2[(idx2 - 1) % templatesL2.length];
-                db[2].push({ text: t.replace("[index]", idx2), isObject: false });
-                idx2++;
-            }
-            let objIdx2 = 1;
-            while(db[2].filter(q => q.isObject).length < 100) {
-                db[2].push({ text: `[Objet] Saisis un de tes accessoires pour intensifier l'excitation de [target] pendant 1 minute (Déclinaison [index]).`, isObject: true });
-                objIdx2++;
-            }
 
-
-            // --- NIVEAU 3 ---
-            let standardL3 = [
-                "Passe à des caresses intimes très poussées, déshabille partiellement [target] et explore son corps avec frénésie pendant 1 minute et demie.",
-                "Allonge [target] sur le dos, positionne-toi au-dessus pour des baisers sauvages et une stimulation orale ou manuelle rythmée.",
-                "Pratique une stimulation buccale ou manuelle intense sur [target] en le/la regardant supplier pendant 1 minute.",
-                "Prends une position de domination où [target] est immobilisé(e) sous toi pendant que tu explores son corps nu.",
-                "Exige que [target] te fasse une stimulation buccale ou manuelle rythmée en te fixant dans les yeux.",
-                "Pénètre partiellement ou frotte intensément tes zones intimes contre celles de [target] en position debout contre un mur pendant 1 minute.",
-                "Allonge [target] sur le ventre, masse ses fesses et son dos à l'huile tout en le/la mordillant le long de la colonne.",
-                "Laisse [target] te déshabiller entièrement le haut du corps et t'embrasser la poitrine avec passion pendant 1 minute.",
-                "Exécute des va-et-vient rapides et profonds avec tes doigts ou ta langue sur la zone intime de [target] en contrôlant son rythme.",
-                "Positionne [target] à genoux et prends le contrôle total de son haut du corps et de son cou avec des baisers mordilleurs."
-            ];
-            let templatesL3 = [
-                "Déshabille complètement [target] et explore chaque recoin de son corps avec ta langue pendant 1 minute et demie (Variante [index]).",
-                "Prends le contrôle total de [target] en l'attachant ou en le/la maintenant fermement pour une stimulation intense de 1 minute (Variante [index]).",
-                "Exige que [target] te lèche goulûment et frénétiquement pendant 1 minute en te suppliant (Variante [index]).",
-                "Pratique un cunnilingus ou une fellation passionnée et rythmée sur [target] pendant 1 minute et demie (Variante [index]).",
-                "Allonge [target] sur le bord du lit et pratique une pénétration ou stimulation des plus sauvages pendant 1 minute (Variante [index])."
+            // NIVEAU 3 (Défis spécifiques homme et femme)
+            let L3_man = [
+                "Masse fermement les fesses de ta partenaire avec des mouvements lents et puissants.",
+                "Lèche ses cuisses en remontant doucement vers son entrejambe sans y toucher tout de suite.",
+                "Suce un de ses doigts avec passion tout en la fixant dans les yeux.",
+                "Donne de petites fessées appuyées sur ses fesses.",
+                "Caresse délicatement son anus du bout des doigts mouillés pendant 1 minute.",
+                "Fais-lui un massage intense du bas du dos et du fessier en insistant sur ses zones sensibles.",
+                "Embrasse passionnément son entrejambe par-dessus ses sous-vêtements."
             ];
 
-            for(let i=0; i<standardL3.length; i++) db[3].push({ text: standardL3[i], isObject: false });
-            let idx3 = 1;
-            while(db[3].filter(q => !q.isObject).length < 100) {
-                let t = templatesL3[(idx3 - 1) % templatesL3.length];
-                db[3].push({ text: t.replace("[index]", idx3), isObject: false });
-                idx3++;
-            }
-            let objIdx3 = 1;
-            while(db[3].filter(q => q.isObject).length < 100) {
-                db[3].push({ text: `[Objet] Intègre un objet de ta sélection pour porter [target] au paroxysme du plaisir sans relâche (Déclinaison [index]).`, isObject: true });
-                objIdx3++;
-            }
-
-
-            // --- NIVEAU 4 (Apothéose - 200 éléments) ---
-            let baseL4 = [
-                "Apothéose ! Position choisie : **La cuillère sensuelle sur le côté**. En route pour l'acte final sans aucune limite ni retenue !",
-                "Apothéose ! Position choisie : **[target] sur le dos au bord du lit**, l'autre debout face à lui/elle. Lâchez totalement prise !",
-                "Apothéose ! Position choisie : **En levrette face au bord du lit ou du canapé**. Donnez tout ce que vous avez jusqu'à l'extase !",
-                "Apothéose ! Position choisie : **L'amazone** ([target] est sur le dessus et prend le contrôle total). En route vers l'orgasme partagé !",
-                "Apothéose ! Position choisie : **Face à face enlacés**, en fusion totale et regards dans les yeux jusqu'au bouquet final."
+            let L3_woman = [
+                "Joue délicatement avec ses testicules en les caressant avec douceur du bout des doigts.",
+                "Masse son torse et descend doucement tes mains jusqu'à la racine de son érection.",
+                "Lèche doucement le long de son entrejambe et caresse son fessier.",
+                "Pince délicatement ses tétons et mords doucement son torse.",
+                "Suce délicatement le bout de sa verge sans la prendre entièrement en bouche pendant 1 minute.",
+                "Lèche ses couilles doucement en lui apportant une sensation de chaleur intense.",
+                "Caresse la base de son érection tout en déposant des baisers sur son bas-ventre."
             ];
-            let templatesL4 = [
-                "Apothéose suprême ! Fusion totale et orgasme simultané en position du missionnaire sauvage (Variante [index]).",
-                "Apothéose torride ! [target] sur le dos, jambes relevées, pénétration ou stimulation profonde jusqu'à l'extase (Variante [index]).",
-                "Apothéose sauvage ! En position debout contre le mur, donnez vos derniers efforts pour jouir ensemble (Variante [index]).",
-                "Apothéose charnelle ! L'amazone déchaînée : [target] prend les commandes et dicte le rythme final jusqu'à l'orgasme (Variante [index]).",
-                "Apothéose fusionnelle ! En levrette profonde et passionnée, lâchez tous vos cris et vivez l'apothéose (Variante [index])."
+
+            for(let text of L3_man) db[3].man.push({ text: text, isObject: false });
+            for(let text of L3_woman) db[3].woman.push({ text: text, isObject: false });
+
+            // NIVEAU 4 (Spécial & Défis Intenses)
+            let L4_man = [
+                "Attache-la au lit (ou immobilise ses poignets) et lèche-la passionnément partout sur le corps et le sexe.",
+                "Caresse délicatement et stimule son anus tout en la caressant sur son clitoris.",
+                "Prends le contrôle total : impose-lui la position de ton choix et lèche-la jusqu'à ce qu'elle frémisse.",
+                "Bandez-lui les yeux et procure-lui un buccalingus intense pendant 2 minutes sans qu'elle ne s'y attende.",
+                "Attache ses mains au-dessus de sa tête et fais-lui vivre un supplice de caresses torrides.",
+                "Lèche son sexe de manière soutenue et rythmée tout en lui caressant l'anus du bout du doigt."
             ];
-            for(let i=0; i<baseL4.length; i++) db[4].push({ text: baseL4[i], isObject: false });
-            let v4 = 1;
-            while(db[4].length < 200) {
-                let t = templatesL4[(v4 - 1) % templatesL4.length];
-                db[4].push({ text: t.replace("[index]", v4), isObject: false });
-                v4++;
-            }
+
+            let L4_woman = [
+                "Lèche ses couilles goulûment et entoure-les de tes lèvres avec passion pendant 1 minute et demie.",
+                "Bande-lui les yeux et suce-le intensément en alternant mouvements lents et rapides.",
+                "Attache-le au lit pour le sucer en prenant tout ton temps, sans qu'il ne puisse bouger.",
+                "Prends ses testicules dans ta main, masse-les doucement tout en lui prodiguant une fellation très chaude.",
+                "Fais jouer tes lèvres et ta langue sur ses couilles puis remonte doucement pour le sucer jusqu'au bout.",
+                "Domine-le complètement : immobilise ses bras et suce-le en lui dictant des paroles très coquines."
+            ];
+
+            for(let text of L4_man) db[4].man.push({ text: text, isObject: false });
+            for(let text of L4_woman) db[4].woman.push({ text: text, isObject: false });
 
             return db;
         }
 
-        const database = generateMassiveLevelDatabase();
-
-        function generatePenaltyDatabase() {
-            let penalties = [
-                "[player] doit accomplir 15 caresses sensuelles là où [partner] le désire.",
-                "[player] doit embrasser [partner] goulûment pendant 1 minute sans utiliser les mains.",
-                "[player] doit se laisser attacher les mains pendant 1 minute pendant que [partner] le/la taquine.",
-                "[player] doit murmurer 3 compliments très crus et sensuels à l'oreille de [partner].",
-                "[player] doit faire un massage érotique de 1 minute sur la zone de [partner] au choix.",
-                "[player] doit exécuter une danse provocante et déshabillée de 45 secondes face à [partner]."
-            ];
-            let baseTemplates = [
-                "[player] doit lécher lentement le cou de [partner] pendant 30 secondes (Gage [index]).",
-                "[player] doit faire 20 allers-retours de caresses sur le corps nu de [partner] (Gage [index]).",
-                "[player] doit dire à [partner] tout ce qui l'excite le plus chez lui/elle (Gage [index]).",
-                "[player] doit se mettre à genoux et embrasser les pieds de [partner] (Gage [index]).",
-                "[player] doit masser le dos de [partner] en utilisant des baisers chauds (Gage [index])."
-            ];
-            let idx = 1;
-            while(penalties.length < 200) {
-                let t = baseTemplates[(idx - 1) % baseTemplates.length];
-                penalties.push(t.replace("[index]", idx));
-                idx++;
-            }
-            return penalties;
-        }
-
-        const penaltyDatabase = generatePenaltyDatabase();
-
-        // ----------------------------------------------------
-        // BASE DE 200 QUESTIONS / GAGES SPÉCIAUX AXÉS SUR LA DÉCOUVERTE
-        // ----------------------------------------------------
-        function generateSpecialDiscoveryDatabase() {
-            let specials = [
-                { title: "Question Spéciale Découverte", text: "Tu accepterais qu'on teste la sodomie lors d'une prochaine session ?" },
-                { title: "Question Spéciale Découverte", text: "Quel fantasme inavoué n'oses-tu pas me demander par timidité ?" },
-                { title: "Gage Spécial Découverte", text: "[player], attache les mains de [target] et prends le contrôle total de son corps en silence pendant 2 minutes." },
-                { title: "Apothéose Spéciale Découverte", text: "Lâchez totalement le contrôle : réalisez vos envies les plus sauvages et inavouées sans aucune barrière." }
-            ];
-
-            let qTemplates = [
-                "Aimerais-tu essayer le bondage ou l'attachement serré lors de notre prochaine session coquine ? (Découverte #[index])",
-                "Seriez-vous prêt(e) à intégrer un sextoy vibro-commandé à distance pendant que nous sommes en public ? (Découverte #[index])",
-                "As-tu déjà eu envie de tenter une expérience de soumission totale où tu ne peux rien décider pendant 10 minutes ? (Découverte #[index])",
-                "Qu'penses-tu d'essayer la douche érotique ou le bain moussant avec des caresses intimes poussées ? (Découverte #[index])",
-                "Aimerais-tu qu'on teste le jeu de rôle de l'inconnu(e) rencontré(e) dans un bar ? (Découverte #[index])",
-                "As-tu envie qu'on explore le cunnilingus ou la fellation prolongée jusqu'à l'orgasme sans pénétration préalable ? (Découverte #[index])",
-                "Accepterais-tu de te faire bander les yeux pendant tout un acte sexuel pour décupler tes autres sens ? (Découverte #[index])",
-                "Aimerais-tu qu'on teste l'échange de rôles complet où tu prends une posture dominante stricte ? (Découverte #[index])",
-                "Quel tabou sexuel n'as-tu jamais osé formuler par peur du jugement, et aimerais-tu qu'on en discute ? (Découverte #[index])",
-                "As-tu envie d'essayer la position inversée (amazone) où tu diriges l'intégralité du rythme de l'acte ? (Découverte #[index])"
-            ];
-
-            let gTemplates = [
-                "Gage Découverte : [target] doit se mettre à genoux et lécher chaque centimètre de l'intérieur des cuisses de son/sa partenaire pendant 1 minute. (Découverte #[index])",
-                "Gage Découverte : [player] doit attacher les poignets de [target] et explorer son corps avec un glaçon ou des plumes. (Découverte #[index])",
-                "Gage Découverte : [target] doit guider les doigts de [player] exactement là où il/elle a le plus envie d'être touché(e), en silence. (Découverte #[index])",
-                "Gage Découverte : [player] doit pratiquer une stimulation orale lente et ininterrompue sur [target] pendant 1 minute et demie. (Découverte #[index])",
-                "Gage Découverte : [target] doit murmurer un scénario ultra-cru et coquin à l'oreille de [player] en décrivant chaque geste. (Découverte #[index])"
-            ];
-
-            let counter = 5;
-            while(specials.length < 200) {
-                if (counter % 2 === 0) {
-                    let t = qTemplates[(counter - 5) % qTemplates.length];
-                    specials.push({
-                        title: "Question Spéciale Découverte",
-                        text: t.replace(/\[index\]/g, counter)
-                    });
-                } else {
-                    let t = gTemplates[(counter - 5) % gTemplates.length];
-                    specials.push({
-                        title: "Gage Spécial Découverte",
-                        text: t.replace(/\[index\]/g, counter)
-                    });
-                }
-                counter++;
-            }
-            return specials;
-        }
-
-        const specialDatabase = generateSpecialDiscoveryDatabase();
+        const massiveDatabase = generateMassiveLevelDatabase();
 
         function startGame() {
-            gameState.man = document.getElementById('man-name').value.trim() || "Lui";
-            gameState.woman = document.getElementById('woman-name').value.trim() || "Elle";
-            gameState.totalTurns = parseInt(hiddenInput.value);
-            gameState.objectFrequency = freqInput.value;
+            gameState.man = document.getElementById('man-name').value || "Lui";
+            gameState.woman = document.getElementById('woman-name').value || "Elle";
+            gameState.totalTurns = parseInt(document.getElementById('game-duration').value);
             gameState.currentTurn = 0;
-            gameState.usedQuestions.clear();
+            gameState.objectFrequency = document.getElementById('object-frequency').value;
+
+            // Définition explicite de l'ordre d'alternance
+            gameState.currentPlayer = gameState.man; // Le premier tour commence avec Lui
 
             gameState.activeObjects = [];
-            for (let id in objectDatabase) {
-                if (document.getElementById(id) && document.getElementById(id).checked) {
-                    gameState.activeObjects.push(id);
+            document.querySelectorAll('#setup-screen .chips-grid input[type="checkbox"]:checked').forEach(cb => {
+                if (cb.id.startsWith('obj-')) {
+                    gameState.activeObjects.push(cb.id);
                 }
-            }
+            });
 
             document.getElementById('setup-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
@@ -931,221 +755,145 @@
             nextTurn();
         }
 
-        function getHeatLevel(turn, total) {
-            let ratio = turn / total;
-            if (ratio < 0.4) return 1;
-            if (ratio < 0.75) return 2;
-            if (ratio < 0.95) return 3;
+        function getCurrentLevel() {
+            let turnsPerLevel = Math.floor(gameState.totalTurns / 4);
+            if (gameState.currentTurn <= turnsPerLevel) return 1;
+            if (gameState.currentTurn <= turnsPerLevel * 2) return 2;
+            if (gameState.currentTurn <= turnsPerLevel * 3) return 3;
             return 4;
         }
 
-        function getTurnsRemainingInLevel(currentTurn, total) {
-            let threshold1 = Math.floor(total * 0.4);
-            let threshold2 = Math.floor(total * 0.75);
-            let threshold3 = Math.floor(total * 0.95);
-
-            if (currentTurn <= threshold1) return threshold1 - currentTurn + 1;
-            if (currentTurn <= threshold2) return threshold2 - currentTurn + 1;
-            if (currentTurn <= threshold3) return threshold3 - currentTurn + 1;
-            return total - currentTurn + 1;
-        }
-
-        let currentTimerInterval = null;
-
         function nextTurn() {
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-
             gameState.currentTurn++;
 
             if (gameState.currentTurn > gameState.totalTurns) {
-                endGameEarly();
+                endGame();
                 return;
             }
 
-            let heat = getHeatLevel(gameState.currentTurn, gameState.totalTurns);
-            document.getElementById('progress-indicator').innerText = `Tour ${gameState.currentTurn} / ${gameState.totalTurns}`;
-            
-            let remainingForNext = getTurnsRemainingInLevel(gameState.currentTurn, gameState.totalTurns);
-            let countdownEl = document.getElementById('level-countdown-text');
-            if (heat < 4) {
-                countdownEl.innerText = `Niveau ${heat} — ${remainingForNext} tour(s) avant le niveau suivant`;
-            } else {
-                countdownEl.innerText = `Niveau Max — Apothéose Finale`;
+            // Alternance tour par tour (Un coup Lui, un coup Elle)
+            if (gameState.currentTurn > 1) {
+                gameState.currentPlayer = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
             }
 
-            let flames = document.querySelectorAll('.flame');
-            flames.forEach((flame, index) => {
-                if (index < heat) {
+            document.getElementById('progress-indicator').innerText = `Tour ${gameState.currentTurn} / ${gameState.totalTurns}`;
+            document.getElementById('current-player-name').innerText = gameState.currentPlayer;
+
+            let level = getCurrentLevel();
+            updateFlames(level);
+
+            let turnsPerLevel = Math.floor(gameState.totalTurns / 4);
+            let turnsLeftInLevel = (turnsPerLevel * level) - gameState.currentTurn + 1;
+            if (level === 4) {
+                document.getElementById('level-countdown-text').innerText = `Niveau Max 🔥 — Étape Finale !`;
+            } else {
+                document.getElementById('level-countdown-text').innerText = `Niveau ${level} — ${turnsLeftInLevel} tour(s) avant le niveau suivant`;
+            }
+
+            let question = getRandomQuestion(level);
+            displayQuestion(question);
+            resetTimer();
+        }
+
+        function updateFlames(level) {
+            let flames = document.querySelectorAll('#flames-container .flame');
+            flames.forEach((flame, idx) => {
+                if (idx < level) {
                     flame.classList.add('active');
                 } else {
                     flame.classList.remove('active');
                 }
             });
-
-            gameState.currentPlayer = (Math.random() < 0.5) ? gameState.man : gameState.woman;
-            document.getElementById('current-player-name').innerText = gameState.currentPlayer;
-
-            generateQuestion(heat);
         }
 
-        function generateQuestion(heat) {
-            let partner = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
-            let questionBox = document.getElementById('question-text');
-            let isSpecial = (gameState.currentTurn % 5 === 0);
+        function getRandomQuestion(level) {
+            let isMan = (gameState.currentPlayer === gameState.man);
+            let questionObj;
 
-            if (isSpecial) {
-                let availableSpecials = specialDatabase.filter(s => !gameState.usedQuestions.has(s.text));
-                if (availableSpecials.length === 0) availableSpecials = specialDatabase;
-                let special = availableSpecials[Math.floor(Math.random() * availableSpecials.length)];
-                gameState.usedQuestions.add(special.text);
+            // Tirage avec objet potentiel selon la fréquence sélectionnée
+            let objectChance = 0.2;
+            if (gameState.objectFrequency === 'peu') objectChance = 0.1;
+            if (gameState.objectFrequency === 'beaucoup') objectChance = 0.4;
 
-                let specialText = special.text.replace(/\[target\]/g, partner)
-                                              .replace(/\[player\]/g, gameState.currentPlayer)
-                                              .replace(/\[partner\]/g, partner);
-
-                questionBox.innerHTML = `
-                    <div class="special-title">⭐ ${special.title} ⭐</div>
-                    <div>${specialText}</div>
-                `;
-                document.getElementById('target-display').style.display = 'block';
-                document.getElementById('skip-btn').style.display = 'block';
-                setupTimerBox(specialText);
-                return;
+            if (gameState.activeObjects.length > 0 && Math.random() < objectChance) {
+                let randomObjKey = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
+                let objQuestions = objectDatabase[randomObjKey];
+                let text = objQuestions[Math.floor(Math.random() * objQuestions.length)];
+                return text;
             }
 
-            let pool = database[heat];
-            let targetIsObject = false;
-
-            // Gestion de la fréquence des objets et de leur présence dans les 200 questions par niveau
-            if (heat < 4 && gameState.activeObjects.length > 0) {
-                let proba = 0.5; // Normal
-                if (gameState.objectFrequency === "peu") proba = 0.25;
-                if (gameState.objectFrequency === "beaucoup") proba = 0.75;
-
-                if (Math.random() < proba) {
-                    targetIsObject = true;
-                }
-            }
-
-            let filteredPool = pool.filter(q => q.isObject === targetIsObject);
-            if (filteredPool.length === 0) filteredPool = pool;
-
-            let availablePool = filteredPool.filter(q => !gameState.usedQuestions.has(q.text));
-            if (availablePool.length === 0) availablePool = filteredPool;
-
-            let selectedItem = availablePool[Math.floor(Math.random() * availablePool.length)];
-            gameState.usedQuestions.add(selectedItem.text);
-
-            let questionText = selectedItem.text;
-
-            // Si c'est une question étiquetée objet, on pioche un objet réel de la liste de l'utilisateur
-            if (selectedItem.isObject && gameState.activeObjects.length > 0) {
-                let randomObjId = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
-                let objQuestions = objectDatabase[randomObjId];
-                let specificObjText = objQuestions[Math.floor(Math.random() * objQuestions.length)];
-                questionText = `<span style="color:var(--accent-pink); font-size:0.8rem; display:block; margin-bottom:4px; text-transform:uppercase; letter-spacing:1px;">Objets : Utilisation de [ ${randomObjId.replace('obj-', '')} ]</span>` + specificObjText;
-            }
-
-            questionText = questionText.replace(/\[target\]/g, partner);
-
-            if (heat === 4) {
-                document.getElementById('target-display').style.display = 'none';
-                document.getElementById('next-btn').innerText = "Terminer la partie";
-                document.getElementById('skip-btn').style.display = 'none';
-                document.getElementById('level-countdown-text').style.display = 'none';
+            // Tirage standard par niveau
+            if (level === 1 || level === 2) {
+                let pool = massiveDatabase[level];
+                questionObj = pool[Math.floor(Math.random() * pool.length)];
             } else {
-                document.getElementById('target-display').style.display = 'block';
-                document.getElementById('skip-btn').style.display = 'block';
+                let pool = isMan ? massiveDatabase[level].man : massiveDatabase[level].woman;
+                questionObj = pool[Math.floor(Math.random() * pool.length)];
             }
 
-            questionBox.innerHTML = questionText;
-            questionBox.scrollTop = 0;
-
-            setupTimerBox(questionText);
+            return questionObj.text;
         }
 
-        function skipQuestion() {
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-
-            let partner = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
-            
-            let availablePenalties = penaltyDatabase.filter(p => !gameState.usedQuestions.has(p));
-            if (availablePenalties.length === 0) availablePenalties = penaltyDatabase;
-            let randomPenalty = availablePenalties[Math.floor(Math.random() * availablePenalties.length)];
-            gameState.usedQuestions.add(randomPenalty);
-            
-            randomPenalty = randomPenalty.replace(/\[player\]/g, gameState.currentPlayer)
-                                       .replace(/\[partner\]/g, partner)
-                                       .replace(/le\/la/g, (gameState.currentPlayer === gameState.man) ? "la" : "le");
-
-            let questionBox = document.getElementById('question-text');
-            questionBox.innerHTML = `<span style="color: var(--accent-pink); font-weight: 600; display:block; margin-bottom:6px;">⚡ QUESTION PASSÉE (GAGE) !</span>${randomPenalty}`;
-            questionBox.scrollTop = 0;
-
-            document.getElementById('timer-box').style.display = "none";
+        function displayQuestion(qText) {
+            document.getElementById('question-text').innerText = qText;
         }
 
-        function endGameEarly() {
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
-            document.getElementById('top-quit-btn').classList.add('hidden');
-            document.getElementById('game-screen').innerHTML = `
-                <h1 style="font-size:1.8rem; margin-bottom:15px;">Fin de la partie</h1>
-                <p style="text-align:center; font-size: 1rem; line-height: 1.6; color: var(--text-muted); margin-bottom:30px;">J'espère que cette session vous a bien chauffés ! Vous pouvez relancer une partie à l'infini avec de nouvelles combinaisons.</p>
-                <button class="primary-btn" onclick="location.reload()">Recommencer une partie</button>
-            `;
-        }
-
-        function setupTimerBox(text) {
-            let timerBox = document.getElementById('timer-box');
-            let matchSec = text.match(/(\d+)\s*secondes/);
-            let matchMin = text.match(/(\d+)\s*minute/);
-
-            let seconds = 0;
-            if (matchSec) {
-                seconds = parseInt(matchSec[1]);
-            } else if (matchMin) {
-                seconds = parseInt(matchMin[1]) * 60;
-            }
-
-            let display = document.getElementById('timer-countdown');
+        let timerInterval = null;
+        function resetTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('timer-countdown').innerText = "01:00";
             let btn = document.getElementById('timer-btn');
-
-            if (seconds > 0) {
-                timerBox.style.display = "flex";
-                display.innerText = formatTime(seconds);
-                btn.style.display = "block";
-                btn.disabled = false;
-                window.targetSeconds = seconds;
-            } else {
-                timerBox.style.display = "none";
-            }
-        }
-
-        function formatTime(totalSeconds) {
-            let m = Math.floor(totalSeconds / 60);
-            let s = totalSeconds % 60;
-            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            btn.disabled = false;
+            btn.innerText = "Lancer le chrono";
         }
 
         function startTimer() {
-            let seconds = window.targetSeconds;
+            let seconds = 60;
             let display = document.getElementById('timer-countdown');
             let btn = document.getElementById('timer-btn');
             btn.disabled = true;
 
-            if (currentTimerInterval) clearInterval(currentTimerInterval);
+            if (timerInterval) clearInterval(timerInterval);
 
-            currentTimerInterval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 seconds--;
-                display.innerText = formatTime(seconds);
+                let mins = Math.floor(seconds / 60);
+                let secs = seconds % 60;
+                display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 
                 if (seconds <= 0) {
-                    clearInterval(currentTimerInterval);
+                    clearInterval(timerInterval);
                     playBipSound();
                     display.innerText = "FIN ! 🔔";
                     btn.disabled = false;
                 }
             }, 1000);
+        }
+
+        function skipQuestion() {
+            alert(`${gameState.currentPlayer} passe son tour et écope d'un gage défini par son partenaire !`);
+            nextTurn();
+        }
+
+        function endGameEarly() {
+            if (confirm("Voulez-vous vraiment terminer la partie maintenant ?")) {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('top-quit-btn').classList.add('hidden');
+            
+            let setup = document.getElementById('setup-screen');
+            setup.classList.remove('hidden');
+            setup.innerHTML = `
+                <h1>Partie Terminée ! 🔥</h1>
+                <p style="text-align: center; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+                    La session est terminée. Vous avez exploré toutes les étapes avec succès. Laissez parler le reste de vos envies...
+                </p>
+                <button class="primary-btn" onclick="location.reload()">Recommencer une partie</button>
+            `;
         }
 
         function playBipSound() {
