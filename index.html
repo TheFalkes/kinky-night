@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinky Night - Édition Mise à Jour</title>
+    <title>Kinky Night - Édition Ultime Sans Répétition</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -599,30 +599,44 @@
             levelThresholds: []
         };
 
+        // HISTORIQUE DE TIRAGE SANS RÉPÉTITION
+        let drawnQuestionsHistory = {
+            1: [],
+            2: [],
+            3: { man: [], woman: [] },
+            4: { man: [], woman: [] },
+            objects: {}
+        };
+
         const objectDatabase = {
             'obj-bandeau': [
                 "Bandez les yeux de votre partenaire et faites-lui deviner 3 parties de son corps que vous caressez avec vos lèvres.",
                 "Bandez les yeux de votre partenaire et promenez un glaçon sur son torse ou son ventre.",
                 "Utilisez le bandeau pour priver votre partenaire de la vue pendant que vous l'explorez de caresses.",
-                "Bandez-lui les yeux et prodiguez-lui des caresses surprises."
+                "Bandez-lui les yeux et prodiguez-lui des caresses surprises.",
+                "Bander les yeux de votre partenaire et lui ordonner de ne pas bouger sous peine de punition."
             ],
             'obj-huile': [
                 "Versez un peu d'huile de massage chaude et massez le corps de votre partenaire pendant 2 minutes.",
                 "Appliquez l'huile de massage sur les fesses et les cuisses de votre partenaire en effectuant des pressions fermes.",
-                "Massez l'intégralité du corps de votre partenaire à l'huile avec sensualité."
+                "Massez l'intégralité du corps de votre partenaire à l'huile avec sensualité.",
+                "Le massage des fesses à l'huile : Pétrissez fermement ses fesses avec de l'huile parfumée."
             ],
             'obj-menottes': [
                 "Attachez délicatement votre partenaire et prenez le contrôle total de ses sensations pendant 1 minute et demie.",
                 "Attachez les mains de votre partenaire au lit et provoquez-le/la sans qu'il/elle ne puisse vous toucher.",
-                "Menottez votre partenaire en position allongée et exigez une soumission totale."
+                "Menottez votre partenaire en position allongée et exigez une soumission totale.",
+                "Attaché(e) au lit : Immobilisez ses poignets et profitez de son corps sans restriction."
             ],
             'obj-lubrifiant': [
                 "Appliquez du lubrifiant avec sensualité sur les zones intimes de votre partenaire.",
-                "Utilisez le lubrifiant pour intensifier des caresses glissantes sur l'intimité de votre partenaire."
+                "Utilisez le lubrifiant pour intensifier des caresses glissantes sur l'intimité de votre partenaire.",
+                "Appliquez du lubrifiant sur vos doigts et caressez tout doucement les zones les plus sensibles."
             ],
             'obj-god': [
                 "Utilisez le vibro/god pour stimuler votre partenaire tout en l'embrassant goulûment.",
-                "Faites vibrer le god contre les zones érogènes de votre partenaire en contrôlant le rythme."
+                "Faites vibrer le god contre les zones érogènes de votre partenaire en contrôlant le rythme.",
+                "Laissez votre partenaire contrôler la vitesse du god/vibro sur votre corps."
             ],
             'obj-alcool': [
                 "Prenez une gorgée d'alcool et partagez un baiser passionné en faisant passer le liquide.",
@@ -654,21 +668,24 @@
                 4: { man: [], woman: [] } 
             };
 
-            // NIVEAU 1
+            // NIVEAU 1 (Échauffement & Douceur)
             let standardL1 = [
                 "Dépose un baiser très délicat sur le front de votre partenaire.",
                 "Murmure à l'oreille de votre partenaire la première chose qui t'a attiré chez lui/elle.",
                 "Passe tes doigts lentement dans ses cheveux pendant 30 secondes.",
-                "Embrasse la paume de sa main en la caressant du bout du pouce.",
+                "Embrasse la paume de sa main en la caressant du bout du thumb.",
                 "Fais un compliment très intime sur une partie de son corps que tu adores.",
                 "Trace des cercles invisibles sur son dos du bout des doigts.",
                 "Regarde-le/la droit dans les yeux en silence pendant 30 secondes sans rire.",
                 "Inspire profondément son parfum dans son cou en frôlant sa peau.",
-                "Masse doucement ses épaules pour évacuer toute tension."
+                "Masse doucement ses épaules pour évacuer toute tension.",
+                "Le baiser de 30 secondes : Embrasse doucement son cou sans utiliser les mains.",
+                "La domination du regard : Fixez-vous droit dans les yeux pendant 1 minute.",
+                "Raconte un souvenir érotique ou un frisson marquant partagé ensemble."
             ];
-            for(let i=0; i<standardL1.length; i++) db[1].push({ text: standardL1[i], isObject: false });
+            for(let text of standardL1) db[1].push(text);
 
-            // NIVEAU 2
+            // NIVEAU 2 (Tension & Excitation)
             let standardL2 = [
                 "Embrasse goulûment votre partenaire sur la bouche pendant 45 secondes.",
                 "Masse sensuellement le bas-ventre et les hanches de votre partenaire.",
@@ -676,11 +693,14 @@
                 "Fais glisser ta langue le long de son cou jusqu'à sa clavicule.",
                 "Déshabille un vêtement de ton partenaire avec tes seules dents.",
                 "Mords doucement son bas de lèvre en le/la fixant intensément.",
-                "Donne trois petites fessées ludiques sur son fessier nus."
+                "Donne trois petites fessées ludiques sur son fessier.",
+                "Le glaçon sur les lèvres : Fais glisser un glaçon sur ses lèvres délicatement.",
+                "Masse les cuisses de ton partenaire en remontant très près de son entrejambe.",
+                "Pose tes mains sur sa taille et attire son corps contre le tien avec fermeté."
             ];
-            for(let i=0; i<standardL2.length; i++) db[2].push({ text: standardL2[i], isObject: false });
+            for(let text of standardL2) db[2].push(text);
 
-            // NIVEAU 3
+            // NIVEAU 3 (Audace & Délices orientés)
             let L3_man = [
                 "Masse fermement les fesses de ta partenaire avec des mouvements lents et puissants.",
                 "Lèche ses cuisses en remontant doucement vers son entrejambe sans y toucher tout de suite.",
@@ -688,43 +708,49 @@
                 "Donne de petites fessées appuyées sur ses fesses.",
                 "Caresse délicatement son anus du bout des doigts mouillés pendant 1 minute.",
                 "Fais-lui un massage intense du bas du dos et du fessier en insistant sur ses zones sensibles.",
-                "Embrasse passionnément son entrejambe par-dessus ses sous-vêtements."
+                "Embrasse passionnément son entrejambe par-dessus ses sous-vêtements.",
+                "Le suçon sur l'épaule : Pose-lui un suçon bien visible sur l'épaule ou le col.",
+                "Le supplice de l'attente : Caresse-la intensément puis arrête-toi net pendant 1 minute."
             ];
 
             let L3_woman = [
-                "Joue délicatement avec ses testicules en les caressant avec douceur du bout des doigts.",
-                "Masse son torse et descend doucement tes mains jusqu'à la racine de son érection.",
+                "Joue délicatement avec les testicules de ton partenaire en les caressant avec douceur du bout des doigts.",
+                "Lèche les couilles de ton partenaire avec tendresse et passion pendant 1 minute.",
+                "Masse son torse et descends doucement tes mains jusqu'à la racine de son érection.",
                 "Lèche doucement le long de son entrejambe et caresse son fessier.",
                 "Pince délicatement ses tétons et mords doucement son torse.",
                 "Suce délicatement le bout de sa verge sans la prendre entièrement en bouche pendant 1 minute.",
-                "Lèche ses couilles doucement en lui apportant une sensation de chaleur intense.",
-                "Caresse la base de son érection tout en déposant des baisers sur son bas-ventre."
+                "Lèche ses testicules doucement en lui apportant une sensation de chaleur intense.",
+                "Caresse la base de son érection tout en déposant des baisers sur son bas-ventre.",
+                "L'ordre de caresse : Fais-toi caresser selon ses directives explicites."
             ];
 
-            for(let text of L3_man) db[3].man.push({ text: text, isObject: false });
-            for(let text of L3_woman) db[3].woman.push({ text: text, isObject: false });
+            for(let text of L3_man) db[3].man.push(text);
+            for(let text of L3_woman) db[3].woman.push(text);
 
-            // NIVEAU 4
+            // NIVEAU 4 (Passion Intoxiquante & Fantasmes Ultimes)
             let L4_man = [
-                "Attache-la au lit (ou immobilise ses poignets) et lèche-la passionnément partout sur le corps et le sexe.",
-                "Caresse délicatement et stimule son anus tout en la caressant sur son clitoris.",
+                "Attache-la au lit (ou immobilise ses poignets) et lèche-la passionnément sur tout le corps et le sexe.",
+                "Caresse délicatement son anus tout en la caressant sur son clitoris.",
                 "Prends le contrôle total : impose-lui la position de ton choix et lèche-la jusqu'à ce qu'elle frémisse.",
-                "Bandez-lui les yeux et procure-lui un buccalingus intense pendant 2 minutes sans qu'elle ne s'y attende.",
+                "Bandez-lui les yeux et procure-lui un buccalingus intense pendant 2 minutes.",
                 "Attache ses mains au-dessus de sa tête et fais-lui vivre un supplice de caresses torrides.",
-                "Lèche son sexe de manière soutenue et rythmée tout en lui caressant l'anus du bout du doigt."
+                "Lèche son sexe de manière soutenue et rythmée tout en lui caressant l'anus du bout du doigt.",
+                "Masse son fessier avec de l'huile puis glisse tes mains entre ses cuisses pour la soumettre à tes désirs."
             ];
 
             let L4_woman = [
-                "Lèche ses couilles goulûment et entoure-les de tes lèvres avec passion pendant 1 minute et demie.",
                 "Bande-lui les yeux et suce-le intensément en alternant mouvements lents et rapides.",
                 "Attache-le au lit pour le sucer en prenant tout ton temps, sans qu'il ne puisse bouger.",
+                "Lèche ses couilles goulûment et entoure-les de tes lèvres avec passion pendant 1 minute et demie.",
                 "Prends ses testicules dans ta main, masse-les doucement tout en lui prodiguant une fellation très chaude.",
                 "Fais jouer tes lèvres et ta langue sur ses couilles puis remonte doucement pour le sucer jusqu'au bout.",
-                "Domine-le complètement : immobilise ses bras et suce-le en lui dictant des paroles très coquines."
+                "Domine-le complètement : immobilise ses bras et suce-le en lui dictant des paroles très coquines.",
+                "Prends le contrôle absolu et guide son sexe là où tu le désires le plus."
             ];
 
-            for(let text of L4_man) db[4].man.push({ text: text, isObject: false });
-            for(let text of L4_woman) db[4].woman.push({ text: text, isObject: false });
+            for(let text of L4_man) db[4].man.push(text);
+            for(let text of L4_woman) db[4].woman.push(text);
 
             return db;
         }
@@ -732,15 +758,11 @@
         const massiveDatabase = generateMassiveLevelDatabase();
 
         function calculateLevelThresholds(total) {
-            // Répartition progressive : Niveau 1 < Niveau 2 < Niveau 3 < Niveau 4
             if (total === 20) {
-                // L1: 3 tours (1..3), L2: 4 tours (4..7), L3: 6 tours (8..13), L4: 7 tours (14..20)
                 return [3, 7, 13, 20];
             } else if (total === 25) {
-                // L1: 4 tours (1..4), L2: 5 tours (5..9), L3: 7 tours (10..16), L4: 9 tours (17..25)
                 return [4, 9, 16, 25];
             } else {
-                // Pour 35 tours : L1: 5 tours (1..5), L2: 8 tours (6..13), L3: 10 tours (14..23), L4: 12 tours (24..35)
                 return [5, 13, 23, 35];
             }
         }
@@ -753,7 +775,15 @@
             gameState.objectFrequency = document.getElementById('object-frequency').value;
             gameState.levelThresholds = calculateLevelThresholds(gameState.totalTurns);
 
-            // Alternance tour par tour
+            // Réinitialiser le système de suivi anti-répétition
+            drawnQuestionsHistory = {
+                1: [],
+                2: [],
+                3: { man: [], woman: [] },
+                4: { man: [], woman: [] },
+                objects: {}
+            };
+
             gameState.currentPlayer = gameState.man;
 
             gameState.activeObjects = [];
@@ -787,7 +817,7 @@
                 return;
             }
 
-            // Alternance tour par tour
+            // Alternance stricte tour par tour
             if (gameState.currentTurn > 1) {
                 gameState.currentPlayer = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
             }
@@ -824,6 +854,7 @@
             });
         }
 
+        // TIRAGE ALÉATOIRE SANS RÉPÉTITION
         function getRandomQuestion(level) {
             let isMan = (gameState.currentPlayer === gameState.man);
 
@@ -831,22 +862,57 @@
             if (gameState.objectFrequency === 'peu') objectChance = 0.1;
             if (gameState.objectFrequency === 'beaucoup') objectChance = 0.4;
 
+            // Question Objet
             if (gameState.activeObjects.length > 0 && Math.random() < objectChance) {
                 let randomObjKey = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
                 let objQuestions = objectDatabase[randomObjKey];
-                return objQuestions[Math.floor(Math.random() * objQuestions.length)];
+
+                if (!drawnQuestionsHistory.objects[randomObjKey]) {
+                    drawnQuestionsHistory.objects[randomObjKey] = [];
+                }
+
+                let availableObj = objQuestions.filter(q => !drawnQuestionsHistory.objects[randomObjKey].includes(q));
+                if (availableObj.length === 0) {
+                    drawnQuestionsHistory.objects[randomObjKey] = [];
+                    availableObj = objQuestions;
+                }
+
+                let selected = availableObj[Math.floor(Math.random() * availableObj.length)];
+                drawnQuestionsHistory.objects[randomObjKey].push(selected);
+                return selected;
             }
 
-            let questionObj;
+            // Question Classique du Niveau (1 à 4)
+            let pool = [];
+            let historyArray = null;
+
             if (level === 1 || level === 2) {
-                let pool = massiveDatabase[level];
-                questionObj = pool[Math.floor(Math.random() * pool.length)];
+                pool = massiveDatabase[level];
+                historyArray = drawnQuestionsHistory[level];
             } else {
-                let pool = isMan ? massiveDatabase[level].man : massiveDatabase[level].woman;
-                questionObj = pool[Math.floor(Math.random() * pool.length)];
+                pool = isMan ? massiveDatabase[level].man : massiveDatabase[level].woman;
+                historyArray = isMan ? drawnQuestionsHistory[level].man : drawnQuestionsHistory[level].woman;
             }
 
-            return questionObj.text;
+            let availableQuestions = pool.filter(q => !historyArray.includes(q));
+
+            // Si tout le catalogue du niveau a été tiré, réinitialiser l'historique
+            if (availableQuestions.length === 0) {
+                if (level === 1 || level === 2) {
+                    drawnQuestionsHistory[level] = [];
+                    historyArray = drawnQuestionsHistory[level];
+                } else {
+                    if (isMan) drawnQuestionsHistory[level].man = [];
+                    else drawnQuestionsHistory[level].woman = [];
+                    historyArray = isMan ? drawnQuestionsHistory[level].man : drawnQuestionsHistory[level].woman;
+                }
+                availableQuestions = pool;
+            }
+
+            let selectedQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+            historyArray.push(selectedQuestion);
+
+            return selectedQuestion;
         }
 
         function displayQuestion(qText) {
