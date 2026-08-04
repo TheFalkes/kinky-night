@@ -1,1001 +1,897 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinky Night - Édition Ultime Sans Répétition</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-
-        :root {
-            --bg-deep: #070609;
-            --bg-surface: #121017;
-            --bg-card: rgba(22, 19, 29, 0.88);
-            --border-subtle: rgba(255, 42, 117, 0.15);
-            --border-active: rgba(255, 42, 117, 0.6);
-            --accent-pink: #ff2a75;
-            --accent-red: #ff1744;
-            --accent-glow: rgba(255, 42, 117, 0.25);
-            --text-main: #f8f7fc;
-            --text-muted: #948fa3;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-deep);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 42, 117, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(120, 40, 200, 0.08) 0%, transparent 40%);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .container {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 28px;
-            padding: 40px;
-            width: 100%;
-            max-width: 620px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-subtle);
-            box-sizing: border-box;
-            max-height: 92vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .container::-webkit-scrollbar-thumb {
-            background: var(--border-active);
-            border-radius: 10px;
-        }
-
-        h1 {
-            text-align: center;
-            background: linear-gradient(135deg, #fff 20%, var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 35px;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        h2.section-title {
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--accent-pink);
-            margin-top: 30px;
-            margin-bottom: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label.main-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px 18px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background-color: var(--bg-surface);
-            color: var(--text-main);
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .custom-select-wrapper {
-            position: relative;
-            user-select: none;
-        }
-
-        .custom-select {
-            position: relative;
-            background-color: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 15px 18px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        .custom-select:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .custom-select.open {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 15px var(--accent-glow);
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .custom-select::after {
-            content: '▼';
-            font-size: 0.75rem;
-            color: var(--accent-pink);
-            transition: transform 0.3s ease;
-        }
-
-        .custom-select.open::after {
-            transform: rotate(180deg);
-        }
-
-        .custom-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--accent-pink);
-            border-top: none;
-            border-bottom-left-radius: 14px;
-            border-bottom-right-radius: 14px;
-            overflow: hidden;
-            display: none;
-            z-index: 10;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .custom-select.open + .custom-options {
-            display: block;
-        }
-
-        .custom-option {
-            padding: 14px 18px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .custom-option:hover {
-            background: linear-gradient(135deg, rgba(255, 42, 117, 0.15), rgba(255, 23, 68, 0.15));
-            color: var(--text-main);
-        }
-
-        .custom-option.selected {
-            color: var(--accent-pink);
-            font-weight: 600;
-        }
-
-        .chips-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .chip-checkbox {
-            display: none;
-        }
-
-        .chip-label {
-            background-color: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            user-select: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .chip-label:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--text-main);
-        }
-
-        .chip-checkbox:checked + .chip-label {
-            background: linear-gradient(135deg, rgba(255, 42, 117, 0.2), rgba(255, 23, 68, 0.2));
-            border-color: var(--accent-pink);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(255, 42, 117, 0.3);
-        }
-
-        button.primary-btn {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(135deg, var(--accent-pink), var(--accent-red));
-            color: white;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            box-shadow: 0 8px 25px rgba(255, 42, 117, 0.4);
-            font-family: inherit;
-            letter-spacing: 0.5px;
-        }
-
-        button.primary-btn:active {
-            transform: scale(0.98);
-        }
-
-        button.primary-btn:hover {
-            opacity: 0.95;
-            box-shadow: 0 12px 30px rgba(255, 42, 117, 0.6);
-        }
-
-        .secondary-btn {
-            width: 100%;
-            padding: 13px;
-            border-radius: 14px;
-            border: 1px solid var(--border-active);
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            font-family: inherit;
-        }
-
-        .secondary-btn:hover {
-            background: rgba(255, 42, 117, 0.1);
-            color: var(--text-main);
-            border-color: var(--accent-pink);
-        }
-
-        .top-end-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 23, 68, 0.15);
-            border: 1px solid rgba(255, 23, 68, 0.4);
-            color: var(--accent-red);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .top-end-btn:hover {
-            background: rgba(255, 23, 68, 0.3);
-            color: #fff;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding-bottom: 12px;
-        }
-
-        .level-countdown {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--accent-pink);
-            margin-bottom: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .flames-indicator {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            background: var(--bg-surface);
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .flame {
-            font-size: 1.1rem;
-            filter: grayscale(100%) brightness(40%);
-            transition: all 0.4s ease;
-            transform: scale(0.9);
-        }
-
-        .flame.active {
-            filter: grayscale(0%) brightness(100%);
-            transform: scale(1.15);
-            text-shadow: 0 0 10px rgba(255, 42, 117, 0.8);
-        }
-
-        .target-box {
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
-
-        .target-player {
-            display: block;
-            color: var(--accent-pink);
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: 0px;
-            margin-top: 4px;
-            text-transform: none;
-            text-shadow: 0 0 20px rgba(255, 42, 117, 0.4);
-        }
-
-        .question-box {
-            font-size: 1.15rem;
-            text-align: center;
-            margin: 20px 0;
-            line-height: 1.6;
-            height: 140px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-surface);
-            padding: 20px 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-            box-sizing: border-box;
-            word-break: break-word;
-        }
-
-        .question-box::-webkit-scrollbar {
-            width: 4px;
-        }
-        .question-box::-webkit-scrollbar-thumb {
-            background: var(--border-active);
-            border-radius: 10px;
-        }
-
-        .timer-container {
-            text-align: center;
-            margin: 15px 0;
-            background-color: var(--bg-surface);
-            padding: 15px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            height: 95px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
-
-        .timer-display {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-pink);
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Kinky Night</title>
+<style>
+:root{--bg:#0d0d11;--bg2:#15121e;--elle:#d946ef;--elle2:#c084fc;--lui:#06b6d4;--lui2:#3b82f6;--gold:#f59e0b;--txt:#f3eefb;--mut:#9b93ad;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{background:radial-gradient(1200px 800px at 50% -10%, #1c1230 0%, var(--bg) 55%);color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;overflow-x:hidden;}
+.hidden{display:none!important;}
+/* ============ HEADER ============ */
+header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:rgba(13,13,17,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(217,70,239,.25);}
+.logo{font-weight:800;font-size:19px;letter-spacing:1px;color:var(--elle);text-shadow:0 0 12px rgba(217,70,239,.8),0 0 30px rgba(217,70,239,.4);}
+.logo span{color:var(--gold);text-shadow:0 0 12px rgba(245,158,11,.8);}
+.hbtns{display:flex;gap:10px;}
+.hbtn{width:42px;height:42px;border-radius:13px;border:1px solid rgba(217,70,239,.4);background:rgba(255,255,255,.05);color:var(--txt);font-size:19px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;box-shadow:0 0 10px rgba(217,70,239,.15);}
+.hbtn:active{transform:scale(.92);background:rgba(217,70,239,.25);}
+main{max-width:520px;margin:0 auto;padding:76px 18px 40px;}
+/* ============ SETUP ============ */
+h1.title{text-align:center;font-size:30px;margin:8px 0 2px;color:var(--elle);text-shadow:0 0 18px rgba(217,70,239,.9),0 0 45px rgba(192,132,252,.5);}
+.subtitle{text-align:center;color:var(--mut);font-size:13px;margin-bottom:20px;}
+.panel{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:18px 16px;margin-bottom:16px;backdrop-filter:blur(8px);box-shadow:0 8px 30px rgba(0,0,0,.4);}
+.panel h2{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--elle2);margin-bottom:13px;text-shadow:0 0 8px rgba(192,132,252,.6);}
+.panel.lui h2{color:var(--lui);text-shadow:0 0 8px rgba(6,182,212,.6);}
+input[type=text]{width:100%;padding:13px 14px;border-radius:13px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.35);color:var(--txt);font-size:16px;outline:none;margin-bottom:10px;transition:.2s;}
+input[type=text]:focus{border-color:var(--elle);box-shadow:0 0 12px rgba(217,70,239,.4);}
+.panel.lui input[type=text]:focus{border-color:var(--lui);box-shadow:0 0 12px rgba(6,182,212,.4);}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{display:flex;align-items:center;gap:7px;padding:9px 13px;border-radius:22px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);font-size:13px;cursor:pointer;user-select:none;transition:.15s;color:var(--mut);}
+.chip.on{color:#fff;}
+.chip.pElle.on{border-color:var(--elle);background:rgba(217,70,239,.18);box-shadow:0 0 10px rgba(217,70,239,.35);}
+.chip.pLui.on{border-color:var(--lui);background:rgba(6,182,212,.16);box-shadow:0 0 10px rgba(6,182,212,.35);}
+.chip.pAcc.on{border-color:var(--gold);background:rgba(245,158,11,.14);box-shadow:0 0 10px rgba(245,158,11,.3);}
+.chip .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);}
+.chip.on .dot{background:currentColor;box-shadow:0 0 6px currentColor;}
+.chip.pElle.on .dot{color:var(--elle);}
+.chip.pLui.on .dot{color:var(--lui);}
+.chip.pAcc.on .dot{color:var(--gold);}
+.seg{display:flex;gap:10px;}
+.seg button{flex:1;padding:13px 0;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.3);color:var(--mut);font-size:16px;font-weight:700;cursor:pointer;transition:.2s;}
+.seg button.on{color:#fff;border-color:var(--gold);background:rgba(245,158,11,.15);box-shadow:0 0 14px rgba(245,158,11,.35);}
+.dbcount{text-align:center;color:var(--mut);font-size:12px;margin:4px 0 14px;}
+.dbcount b{color:var(--gold);}
+.bigbtn{display:block;width:100%;padding:18px;border:none;border-radius:18px;font-size:17px;font-weight:800;letter-spacing:2px;color:#fff;cursor:pointer;background:linear-gradient(90deg,var(--elle) 0%,#a21caf 100%);box-shadow:0 0 25px rgba(217,70,239,.55);animation:pulse 1.8s infinite;transition:.2s;}
+.bigbtn:active{transform:scale(.97);}
+@keyframes pulse{0%,100%{box-shadow:0 0 18px rgba(217,70,239,.45);}50%{box-shadow:0 0 40px rgba(217,70,239,.85);}}
+/* ============ GAME ============ */
+.banner{border-radius:18px;padding:14px;text-align:center;margin-bottom:14px;font-weight:800;font-size:18px;letter-spacing:1px;border:1px solid;transition:.4s;}
+.banner.tLui{color:var(--lui);border-color:var(--lui);background:rgba(6,182,212,.1);box-shadow:0 0 22px rgba(6,182,212,.35);text-shadow:0 0 10px rgba(6,182,212,.8);}
+.banner.tElle{color:var(--elle);border-color:var(--elle);background:rgba(217,70,239,.1);box-shadow:0 0 22px rgba(217,70,239,.35);text-shadow:0 0 10px rgba(217,70,239,.8);}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:13px;color:var(--mut);}
+.lvlbadge{padding:6px 13px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:1px;border:1px solid;}
+.lv1{color:#4ade80;border-color:#4ade80;box-shadow:0 0 10px rgba(74,222,128,.4);}
+.lv2{color:#fb923c;border-color:#fb923c;box-shadow:0 0 10px rgba(251,146,60,.4);}
+.lv3{color:#f43f5e;border-color:#f43f5e;box-shadow:0 0 10px rgba(244,63,94,.4);}
+.lv4{color:var(--gold);border-color:var(--gold);box-shadow:0 0 14px rgba(245,158,11,.6);}
+.card{border-radius:24px;padding:34px 22px;min-height:220px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px;line-height:1.55;font-weight:600;border:1px solid;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(0,0,0,.35));backdrop-filter:blur(10px);transition:.4s;animation:cardin .45s ease;}
+@keyframes cardin{from{opacity:0;transform:translateY(18px) scale(.96);}to{opacity:1;transform:none;}}
+.card.tLui{border-color:rgba(6,182,212,.6);box-shadow:0 0 30px rgba(6,182,212,.25),inset 0 0 40px rgba(6,182,212,.05);}
+.card.tElle{border-color:rgba(217,70,239,.6);box-shadow:0 0 30px rgba(217,70,239,.25),inset 0 0 40px rgba(217,70,239,.05);}
+/* timer */
+.timerwrap{display:flex;flex-direction:column;align-items:center;margin:18px 0 6px;}
+.tcircle{position:relative;width:150px;height:150px;}
+.tcircle svg{transform:rotate(-90deg);}
+.tcircle .track{stroke:rgba(255,255,255,.1);}
+.tcircle .prog{stroke:var(--gold);filter:drop-shadow(0 0 6px var(--gold));transition:stroke-dashoffset .2s linear;}
+.tval{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:var(--gold);text-shadow:0 0 14px rgba(245,158,11,.8);}
+.gbtns{display:flex;flex-direction:column;gap:11px;margin-top:16px;}
+.btn{padding:16px;border:none;border-radius:16px;font-size:15px;font-weight:800;letter-spacing:1px;color:#fff;cursor:pointer;transition:.2s;}
+.btn:active{transform:scale(.97);}
+.btn.chrono{background:linear-gradient(90deg,#b45309,var(--gold));box-shadow:0 0 18px rgba(245,158,11,.45);}
+.btn.next.tLui{background:linear-gradient(90deg,var(--lui2),var(--lui));box-shadow:0 0 18px rgba(6,182,212,.45);}
+.btn.next.tElle{background:linear-gradient(90deg,#a21caf,var(--elle));box-shadow:0 0 18px rgba(217,70,239,.45);}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--mut);font-weight:600;padding:12px;}
+/* ============ MODALS ============ */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(5,4,10,.8);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:18px;animation:fadein .25s;}
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
+.modal{width:100%;max-width:440px;max-height:82vh;overflow-y:auto;background:linear-gradient(170deg,#1a1426,#0f0d16);border:1px solid rgba(217,70,239,.4);border-radius:24px;padding:22px 18px;box-shadow:0 0 45px rgba(217,70,239,.3);animation:cardin .3s ease;}
+.modal h3{text-align:center;font-size:17px;color:var(--elle2);letter-spacing:1px;margin-bottom:16px;text-shadow:0 0 10px rgba(192,132,252,.7);}
+.pick2{display:flex;gap:12px;}
+.pick2 button{flex:1;padding:20px 8px;border:none;border-radius:16px;font-size:16px;font-weight:800;color:#fff;cursor:pointer;transition:.2s;}
+.pick2 .forLui{background:linear-gradient(135deg,var(--lui2),var(--lui));box-shadow:0 0 16px rgba(6,182,212,.5);}
+.pick2 .forElle{background:linear-gradient(135deg,#a21caf,var(--elle));box-shadow:0 0 16px rgba(217,70,239,.5);}
+.pick2 button:active{transform:scale(.95);}
+.dcard{border-radius:18px;border:1px solid rgba(245,158,11,.5);background:rgba(245,158,11,.07);padding:18px;margin-top:16px;text-align:center;box-shadow:0 0 18px rgba(245,158,11,.2);}
+.dcard .ph{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;color:var(--gold);border:1px solid var(--gold);border-radius:14px;padding:4px 11px;margin-bottom:10px;}
+.dcard .txt{font-size:16px;line-height:1.5;font-weight:600;}
+.mrow{display:flex;gap:10px;margin-top:16px;}
+.mrow .btn{flex:1;padding:13px;font-size:13px;}
+.btn.save{background:linear-gradient(90deg,#15803d,#22c55e);box-shadow:0 0 14px rgba(34,197,94,.4);}
+.btn.redraw{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);}
+.btn.close{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:var(--mut);}
+/* gallery */
+.tabs{display:flex;gap:8px;margin-bottom:14px;}
+.tabs button{flex:1;padding:11px;border-radius:13px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);color:var(--mut);font-weight:800;font-size:13px;letter-spacing:1px;cursor:pointer;transition:.2s;}
+.tabs button.on.tabLui{color:var(--lui);border-color:var(--lui);background:rgba(6,182,212,.12);box-shadow:0 0 12px rgba(6,182,212,.35);}
+.tabs button.on.tabElle{color:var(--elle);border-color:var(--elle);background:rgba(217,70,239,.12);box-shadow:0 0 12px rgba(217,70,239,.35);}
+.gitem{position:relative;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);padding:14px;margin-bottom:11px;overflow:hidden;transition:.4s;}
+.gitem .ph{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:1px;}
+.gitem .txt{font-size:14px;line-height:1.45;margin:7px 0 11px;}
+.gitem .done{width:100%;padding:11px;border:none;border-radius:12px;background:linear-gradient(90deg,#15803d,#22c55e);color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 0 12px rgba(34,197,94,.35);}
+.gitem.out{opacity:0;transform:translateX(60px) scale(.9);}
+.gempty{text-align:center;color:var(--mut);font-size:14px;padding:30px 10px;}
+.spark{position:absolute;font-size:16px;pointer-events:none;animation:sp .8s ease-out forwards;color:var(--gold);text-shadow:0 0 8px var(--gold);}
+@keyframes sp{from{opacity:1;transform:translate(0,0) scale(1);}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3);}}
+/* end screen */
+.endwrap{text-align:center;padding:50px 10px;}
+.endwrap .flame{font-size:64px;animation:pulse 1.5s infinite;display:inline-block;border-radius:50%;}
+.endwrap h2{color:var(--gold);font-size:26px;margin:16px 0 8px;text-shadow:0 0 18px rgba(245,158,11,.8);}
+.endwrap p{color:var(--mut);margin-bottom:26px;line-height:1.6;}
+</style>
 </head>
 <body>
-
-    <div class="container" id="main-container">
-        <button id="top-quit-btn" class="top-end-btn hidden" onclick="endGameEarly()">Fin de partie</button>
-
-        <div id="setup-screen">
-            <h1>Kinky Night</h1>
-            
-            <div class="form-group">
-                <label class="main-label">Nom du Maître</label>
-                <input type="text" id="man-name" value="Lui">
-                <h2 class="section-title">Ce qu'il aime :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="man-gateries-give" class="chip-checkbox" checked><label for="man-gateries-give" class="chip-label">Faire des gâteries</label>
-                    <input type="checkbox" id="man-gateries-recv" class="chip-checkbox" checked><label for="man-gateries-recv" class="chip-label">Recevoir des gâteries</label>
-                    <input type="checkbox" id="man-soumission" class="chip-checkbox" checked><label for="man-soumission" class="chip-label">Soumission</label>
-                    <input type="checkbox" id="man-domination" class="chip-checkbox" checked><label for="man-domination" class="chip-label">Domination</label>
-                    <input type="checkbox" id="man-dirty" class="chip-checkbox" checked><label for="man-dirty" class="chip-label">Dirty talk</label>
-                    <input type="checkbox" id="man-coquin" class="chip-checkbox" checked><label for="man-coquin" class="chip-label">Jeux très coquins</label>
-                    <input type="checkbox" id="man-roleplay" class="chip-checkbox" checked><label for="man-roleplay" class="chip-label">Jeux de rôle</label>
-                    <input type="checkbox" id="man-morsures" class="chip-checkbox" checked><label for="man-morsures" class="chip-label">Morsures & griffures</label>
-                    <input type="checkbox" id="man-sensuel" class="chip-checkbox" checked><label for="man-sensuel" class="chip-label">Caresses lentes</label>
-                    <input type="checkbox" id="man-exhibition" class="chip-checkbox" checked><label for="man-exhibition" class="chip-label">Exhibitionnisme</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="main-label">Nom de la Salope</label>
-                <input type="text" id="woman-name" value="Elle">
-                <h2 class="section-title">Ce qu'elle aime :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="woman-gateries-give" class="chip-checkbox" checked><label for="woman-gateries-give" class="chip-label">Faire des gâteries</label>
-                    <input type="checkbox" id="woman-gateries-recv" class="chip-checkbox" checked><label for="woman-gateries-recv" class="chip-label">Recevoir des gâteries</label>
-                    <input type="checkbox" id="woman-soumission" class="chip-checkbox" checked><label for="woman-soumission" class="chip-label">Soumission</label>
-                    <input type="checkbox" id="woman-domination" class="chip-checkbox" checked><label for="woman-domination" class="chip-label">Domination</label>
-                    <input type="checkbox" id="woman-dirty" class="chip-checkbox" checked><label for="woman-dirty" class="chip-label">Dirty talk</label>
-                    <input type="checkbox" id="woman-coquin" class="chip-checkbox" checked><label for="woman-coquin" class="chip-label">Jeux très coquins</label>
-                    <input type="checkbox" id="woman-roleplay" class="chip-checkbox" checked><label for="woman-roleplay" class="chip-label">Jeux de rôle</label>
-                    <input type="checkbox" id="woman-morsures" class="chip-checkbox" checked><label for="woman-morsures" class="chip-label">Morsures & griffures</label>
-                    <input type="checkbox" id="woman-sensuel" class="chip-checkbox" checked><label for="woman-sensuel" class="chip-label">Caresses lentes</label>
-                    <input type="checkbox" id="woman-exhibition" class="chip-checkbox" checked><label for="woman-exhibition" class="chip-label">Exhibitionnisme</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <h2 class="section-title">Objets à disposition :</h2>
-                <div class="chips-grid">
-                    <input type="checkbox" id="obj-alcool" class="chip-checkbox"><label for="obj-alcool" class="chip-label">Alcool</label>
-                    <input type="checkbox" id="obj-appareil" class="chip-checkbox"><label for="obj-appareil" class="chip-label">Appareil photo</label>
-                    <input type="checkbox" id="obj-bandeau" class="chip-checkbox"><label for="obj-bandeau" class="chip-label">Bandeau</label>
-                    <input type="checkbox" id="obj-god" class="chip-checkbox"><label for="obj-god" class="chip-label">God / Vibro</label>
-                    <input type="checkbox" id="obj-huile" class="chip-checkbox"><label for="obj-huile" class="chip-label">Huile massage</label>
-                    <input type="checkbox" id="obj-camera" class="chip-checkbox"><label for="obj-camera" class="chip-label">Camera</label>
-                    <input type="checkbox" id="obj-lubrifiant" class="chip-checkbox"><label for="obj-lubrifiant" class="chip-label">Lubrifiant</label>
-                    <input type="checkbox" id="obj-menottes" class="chip-checkbox"><label for="obj-menottes" class="chip-label">Menottes</label>
-                    <input type="checkbox" id="obj-ring" class="chip-checkbox"><label for="obj-ring" class="chip-label">Cock ring</label>
-                    <input type="checkbox" id="obj-des" class="chip-checkbox"><label for="obj-des" class="chip-label">Dés coquins</label>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 25px;">
-                <label class="main-label">Fréquence des questions à objets</label>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select" id="custom-freq-trigger">Normal</div>
-                    <div class="custom-options" id="custom-freq-options">
-                        <div class="custom-option" data-value="peu">Peu (+ rare)</div>
-                        <div class="custom-option selected" data-value="normal">Normal (Équilibré)</div>
-                        <div class="custom-option" data-value="beaucoup">Beaucoup (+ fréquent)</div>
-                    </div>
-                </div>
-                <input type="hidden" id="object-frequency" value="normal">
-            </div>
-
-            <div class="form-group" style="margin-top: 25px;">
-                <label class="main-label">Durée de la partie</label>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select" id="custom-select-trigger">30 minutes (20 tours)</div>
-                    <div class="custom-options">
-                        <div class="custom-option selected" data-value="20">30 minutes (20 tours)</div>
-                        <div class="custom-option" data-value="25">45 minutes (25 tours)</div>
-                        <div class="custom-option" data-value="35">1 heure (35 tours)</div>
-                    </div>
-                </div>
-                <input type="hidden" id="game-duration" value="20">
-            </div>
-
-            <button class="primary-btn" onclick="startGame()">Lancer l'expérience</button>
-        </div>
-
-        <div id="game-screen" class="hidden">
-            <div class="game-header">
-                <span id="progress-indicator">Tour 1 / 20</span>
-                <div class="flames-indicator" id="flames-container">
-                    <span class="flame active">🔥</span>
-                    <span class="flame">🔥</span>
-                    <span class="flame">🔥</span>
-                    <span class="flame">🔥</span>
-                </div>
-            </div>
-
-            <div id="level-countdown-text" class="level-countdown">
-                Niveau 1 — 3 tours avant le niveau suivant
-            </div>
-
-            <div id="target-display" class="target-box">
-                À qui de jouer ?
-                <span id="current-player-name" class="target-player"></span>
-            </div>
-
-            <div class="question-box" id="question-text">
-                Chargement...
-            </div>
-
-            <div id="timer-box" class="timer-container">
-                <div class="timer-display" id="timer-countdown">--:--</div>
-                <button class="primary-btn" id="timer-btn" onclick="startTimer()" style="margin-top: 0; padding: 6px; font-size: 0.9rem;">Lancer le chrono</button>
-            </div>
-
-            <button class="primary-btn" id="next-btn" onclick="nextTurn()">Tour suivant</button>
-            <button class="secondary-btn" id="skip-btn" onclick="skipQuestion()">Passer la question (Gage !)</button>
-        </div>
+<header>
+  <div class="logo" id="logo-home">🔥 Kinky<span>Night</span></div>
+  <div class="hbtns">
+    <button class="hbtn" id="btn-daily" title="Défis du Jour">📸</button>
+    <button class="hbtn" id="btn-gallery" title="Galerie / Suivi">🖼️</button>
+  </div>
+</header>
+<main>
+<!-- ================= SETUP ================= -->
+<section id="setup">
+  <h1 class="title">Kinky Night</h1>
+  <p class="subtitle">La soirée qui monte en température, tour après tour…</p>
+  <div class="panel lui">
+    <h2>♂ Joueur « Lui »</h2>
+    <input type="text" id="name-lui" placeholder="Prénom de Lui (ex : Marc)">
+    <div class="chips" id="opts-lui"></div>
+  </div>
+  <div class="panel">
+    <h2>♀ Joueuse « Elle »</h2>
+    <input type="text" id="name-elle" placeholder="Prénom d'Elle (ex : Sophie)">
+    <div class="chips" id="opts-elle"></div>
+  </div>
+  <div class="panel">
+    <h2>⏳ Longueur de la soirée</h2>
+    <div class="seg" id="seg-rounds">
+      <button data-r="20">20 tours</button>
+      <button data-r="25" class="on">25 tours</button>
+      <button data-r="35">35 tours</button>
     </div>
-
-    <script>
-        const customSelect = document.getElementById('custom-select-trigger');
-        const hiddenInput = document.getElementById('game-duration');
-
-        customSelect.addEventListener('click', function(e) {
-            e.stopPropagation();
-            customSelect.classList.toggle('open');
-            document.getElementById('custom-freq-trigger').classList.remove('open');
-        });
-
-        document.querySelectorAll('#setup-screen .custom-options:not(#custom-freq-options) .custom-option').forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.querySelectorAll('#setup-screen .custom-options:not(#custom-freq-options) .custom-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                customSelect.innerText = this.innerText;
-                hiddenInput.value = this.getAttribute('data-value');
-                customSelect.classList.remove('open');
-            });
-        });
-
-        const freqSelect = document.getElementById('custom-freq-trigger');
-        const freqInput = document.getElementById('object-frequency');
-
-        freqSelect.addEventListener('click', function(e) {
-            e.stopPropagation();
-            freqSelect.classList.toggle('open');
-            customSelect.classList.remove('open');
-        });
-
-        document.querySelectorAll('#custom-freq-options .custom-option').forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.querySelectorAll('#custom-freq-options .custom-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                freqSelect.innerText = this.innerText;
-                freqInput.value = this.getAttribute('data-value');
-                freqSelect.classList.remove('open');
-            });
-        });
-
-        window.addEventListener('click', () => {
-            customSelect.classList.remove('open');
-            freqSelect.classList.remove('open');
-        });
-
-        let gameState = {
-            man: "Lui",
-            woman: "Elle",
-            totalTurns: 20,
-            currentTurn: 0,
-            activeObjects: [],
-            objectFrequency: "normal",
-            currentPlayer: "",
-            levelThresholds: []
-        };
-
-        // HISTORIQUE DE TIRAGE SANS RÉPÉTITION
-        let drawnQuestionsHistory = {
-            1: [],
-            2: [],
-            3: { man: [], woman: [] },
-            4: { man: [], woman: [] },
-            objects: {}
-        };
-
-        const objectDatabase = {
-            'obj-bandeau': [
-                "Bandez les yeux de votre partenaire et faites-lui deviner 3 parties de son corps que vous caressez avec vos lèvres.",
-                "Bandez les yeux de votre partenaire et promenez un glaçon sur son torse ou son ventre.",
-                "Utilisez le bandeau pour priver votre partenaire de la vue pendant que vous l'explorez de caresses.",
-                "Bandez-lui les yeux et prodiguez-lui des caresses surprises.",
-                "Bander les yeux de votre partenaire et lui ordonner de ne pas bouger sous peine de punition."
-            ],
-            'obj-huile': [
-                "Versez un peu d'huile de massage chaude et massez le corps de votre partenaire pendant 2 minutes.",
-                "Appliquez l'huile de massage sur les fesses et les cuisses de votre partenaire en effectuant des pressions fermes.",
-                "Massez l'intégralité du corps de votre partenaire à l'huile avec sensualité.",
-                "Le massage des fesses à l'huile : Pétrissez fermement ses fesses avec de l'huile parfumée."
-            ],
-            'obj-menottes': [
-                "Attachez délicatement votre partenaire et prenez le contrôle total de ses sensations pendant 1 minute et demie.",
-                "Attachez les mains de votre partenaire au lit et provoquez-le/la sans qu'il/elle ne puisse vous toucher.",
-                "Menottez votre partenaire en position allongée et exigez une soumission totale.",
-                "Attaché(e) au lit : Immobilisez ses poignets et profitez de son corps sans restriction."
-            ],
-            'obj-lubrifiant': [
-                "Appliquez du lubrifiant avec sensualité sur les zones intimes de votre partenaire.",
-                "Utilisez le lubrifiant pour intensifier des caresses glissantes sur l'intimité de votre partenaire.",
-                "Appliquez du lubrifiant sur vos doigts et caressez tout doucement les zones les plus sensibles."
-            ],
-            'obj-god': [
-                "Utilisez le vibro/god pour stimuler votre partenaire tout en l'embrassant goulûment.",
-                "Faites vibrer le god contre les zones érogènes de votre partenaire en contrôlant le rythme.",
-                "Laissez votre partenaire contrôler la vitesse du god/vibro sur votre corps."
-            ],
-            'obj-alcool': [
-                "Prenez une gorgée d'alcool et partagez un baiser passionné en faisant passer le liquide.",
-                "Versez une goutte d'alcool sur le cou de votre partenaire, léchez-la goulûment."
-            ],
-            'obj-ring': [
-                "Installez le cock ring avec sensualité pour intensifier les sensations à venir.",
-                "Utilisez le cock ring lors d'une stimulation intense."
-            ],
-            'obj-appareil': [
-                "Prenez une photo très suggestive de votre partenaire dans cette posture.",
-                "Immortalisez l'instant avec une photo coquine de votre partenaire."
-            ],
-            'obj-camera': [
-                "Filmez 30 secondes de caresses sensuelles et torrides.",
-                "Enregistrez une courte vidéo de votre partenaire en train de prononcer une phrase ultra-coquine."
-            ],
-            'obj-des': [
-                "Lancez les dés coquins et réalisez immédiatement la combinaison qui s'affiche.",
-                "Laissez les dés coquins décider de votre prochaine action érotique."
-            ]
-        };
-
-        function generateMassiveLevelDatabase() {
-            let db = { 
-                1: [], 
-                2: [], 
-                3: { man: [], woman: [] }, 
-                4: { man: [], woman: [] } 
-            };
-
-            // NIVEAU 1 (Échauffement & Douceur)
-            let standardL1 = [
-                "Dépose un baiser très délicat sur le front de votre partenaire.",
-                "Murmure à l'oreille de votre partenaire la première chose qui t'a attiré chez lui/elle.",
-                "Passe tes doigts lentement dans ses cheveux pendant 30 secondes.",
-                "Embrasse la paume de sa main en la caressant du bout du thumb.",
-                "Fais un compliment très intime sur une partie de son corps que tu adores.",
-                "Trace des cercles invisibles sur son dos du bout des doigts.",
-                "Regarde-le/la droit dans les yeux en silence pendant 30 secondes sans rire.",
-                "Inspire profondément son parfum dans son cou en frôlant sa peau.",
-                "Masse doucement ses épaules pour évacuer toute tension.",
-                "Le baiser de 30 secondes : Embrasse doucement son cou sans utiliser les mains.",
-                "La domination du regard : Fixez-vous droit dans les yeux pendant 1 minute.",
-                "Raconte un souvenir érotique ou un frisson marquant partagé ensemble."
-            ];
-            for(let text of standardL1) db[1].push(text);
-
-            // NIVEAU 2 (Tension & Excitation)
-            let standardL2 = [
-                "Embrasse goulûment votre partenaire sur la bouche pendant 45 secondes.",
-                "Masse sensuellement le bas-ventre et les hanches de votre partenaire.",
-                "Pince délicatement ses tétons tout en lui murmurant une envie coquine.",
-                "Fais glisser ta langue le long de son cou jusqu'à sa clavicule.",
-                "Déshabille un vêtement de ton partenaire avec tes seules dents.",
-                "Mords doucement son bas de lèvre en le/la fixant intensément.",
-                "Donne trois petites fessées ludiques sur son fessier.",
-                "Le glaçon sur les lèvres : Fais glisser un glaçon sur ses lèvres délicatement.",
-                "Masse les cuisses de ton partenaire en remontant très près de son entrejambe.",
-                "Pose tes mains sur sa taille et attire son corps contre le tien avec fermeté."
-            ];
-            for(let text of standardL2) db[2].push(text);
-
-            // NIVEAU 3 (Audace & Délices orientés)
-            let L3_man = [
-                "Masse fermement les fesses de ta partenaire avec des mouvements lents et puissants.",
-                "Lèche ses cuisses en remontant doucement vers son entrejambe sans y toucher tout de suite.",
-                "Suce un de ses doigts avec passion tout en la fixant dans les yeux.",
-                "Donne de petites fessées appuyées sur ses fesses.",
-                "Caresse délicatement son anus du bout des doigts mouillés pendant 1 minute.",
-                "Fais-lui un massage intense du bas du dos et du fessier en insistant sur ses zones sensibles.",
-                "Embrasse passionnément son entrejambe par-dessus ses sous-vêtements.",
-                "Le suçon sur l'épaule : Pose-lui un suçon bien visible sur l'épaule ou le col.",
-                "Le supplice de l'attente : Caresse-la intensément puis arrête-toi net pendant 1 minute."
-            ];
-
-            let L3_woman = [
-                "Joue délicatement avec les testicules de ton partenaire en les caressant avec douceur du bout des doigts.",
-                "Lèche les couilles de ton partenaire avec tendresse et passion pendant 1 minute.",
-                "Masse son torse et descends doucement tes mains jusqu'à la racine de son érection.",
-                "Lèche doucement le long de son entrejambe et caresse son fessier.",
-                "Pince délicatement ses tétons et mords doucement son torse.",
-                "Suce délicatement le bout de sa verge sans la prendre entièrement en bouche pendant 1 minute.",
-                "Lèche ses testicules doucement en lui apportant une sensation de chaleur intense.",
-                "Caresse la base de son érection tout en déposant des baisers sur son bas-ventre.",
-                "L'ordre de caresse : Fais-toi caresser selon ses directives explicites."
-            ];
-
-            for(let text of L3_man) db[3].man.push(text);
-            for(let text of L3_woman) db[3].woman.push(text);
-
-            // NIVEAU 4 (Passion Intoxiquante & Fantasmes Ultimes)
-            let L4_man = [
-                "Attache-la au lit (ou immobilise ses poignets) et lèche-la passionnément sur tout le corps et le sexe.",
-                "Caresse délicatement son anus tout en la caressant sur son clitoris.",
-                "Prends le contrôle total : impose-lui la position de ton choix et lèche-la jusqu'à ce qu'elle frémisse.",
-                "Bandez-lui les yeux et procure-lui un buccalingus intense pendant 2 minutes.",
-                "Attache ses mains au-dessus de sa tête et fais-lui vivre un supplice de caresses torrides.",
-                "Lèche son sexe de manière soutenue et rythmée tout en lui caressant l'anus du bout du doigt.",
-                "Masse son fessier avec de l'huile puis glisse tes mains entre ses cuisses pour la soumettre à tes désirs."
-            ];
-
-            let L4_woman = [
-                "Bande-lui les yeux et suce-le intensément en alternant mouvements lents et rapides.",
-                "Attache-le au lit pour le sucer en prenant tout ton temps, sans qu'il ne puisse bouger.",
-                "Lèche ses couilles goulûment et entoure-les de tes lèvres avec passion pendant 1 minute et demie.",
-                "Prends ses testicules dans ta main, masse-les doucement tout en lui prodiguant une fellation très chaude.",
-                "Fais jouer tes lèvres et ta langue sur ses couilles puis remonte doucement pour le sucer jusqu'au bout.",
-                "Domine-le complètement : immobilise ses bras et suce-le en lui dictant des paroles très coquines.",
-                "Prends le contrôle absolu et guide son sexe là où tu le désires le plus."
-            ];
-
-            for(let text of L4_man) db[4].man.push(text);
-            for(let text of L4_woman) db[4].woman.push(text);
-
-            return db;
-        }
-
-        const massiveDatabase = generateMassiveLevelDatabase();
-
-        function calculateLevelThresholds(total) {
-            if (total === 20) {
-                return [3, 7, 13, 20];
-            } else if (total === 25) {
-                return [4, 9, 16, 25];
-            } else {
-                return [5, 13, 23, 35];
-            }
-        }
-
-        function startGame() {
-            gameState.man = document.getElementById('man-name').value || "Lui";
-            gameState.woman = document.getElementById('woman-name').value || "Elle";
-            gameState.totalTurns = parseInt(document.getElementById('game-duration').value);
-            gameState.currentTurn = 0;
-            gameState.objectFrequency = document.getElementById('object-frequency').value;
-            gameState.levelThresholds = calculateLevelThresholds(gameState.totalTurns);
-
-            // Réinitialiser le système de suivi anti-répétition
-            drawnQuestionsHistory = {
-                1: [],
-                2: [],
-                3: { man: [], woman: [] },
-                4: { man: [], woman: [] },
-                objects: {}
-            };
-
-            gameState.currentPlayer = gameState.man;
-
-            gameState.activeObjects = [];
-            document.querySelectorAll('#setup-screen .chips-grid input[type="checkbox"]:checked').forEach(cb => {
-                if (cb.id.startsWith('obj-')) {
-                    gameState.activeObjects.push(cb.id);
-                }
-            });
-
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('game-screen').classList.remove('hidden');
-            document.getElementById('top-quit-btn').classList.remove('hidden');
-
-            nextTurn();
-        }
-
-        function getCurrentLevel() {
-            let turn = gameState.currentTurn;
-            let t = gameState.levelThresholds;
-            if (turn <= t[0]) return 1;
-            if (turn <= t[1]) return 2;
-            if (turn <= t[2]) return 3;
-            return 4;
-        }
-
-        function nextTurn() {
-            gameState.currentTurn++;
-
-            if (gameState.currentTurn > gameState.totalTurns) {
-                endGame();
-                return;
-            }
-
-            // Alternance stricte tour par tour
-            if (gameState.currentTurn > 1) {
-                gameState.currentPlayer = (gameState.currentPlayer === gameState.man) ? gameState.woman : gameState.man;
-            }
-
-            document.getElementById('progress-indicator').innerText = `Tour ${gameState.currentTurn} / ${gameState.totalTurns}`;
-            document.getElementById('current-player-name').innerText = gameState.currentPlayer;
-
-            let level = getCurrentLevel();
-            updateFlames(level);
-
-            let t = gameState.levelThresholds;
-            let currentLevelEnd = t[level - 1];
-            let turnsLeftInLevel = currentLevelEnd - gameState.currentTurn + 1;
-
-            if (level === 4) {
-                document.getElementById('level-countdown-text').innerText = `Niveau Max 🔥 — Étape Finale !`;
-            } else {
-                document.getElementById('level-countdown-text').innerText = `Niveau ${level} — ${turnsLeftInLevel} tour(s) avant le niveau suivant`;
-            }
-
-            let question = getRandomQuestion(level);
-            displayQuestion(question);
-            resetTimer();
-        }
-
-        function updateFlames(level) {
-            let flames = document.querySelectorAll('#flames-container .flame');
-            flames.forEach((flame, idx) => {
-                if (idx < level) {
-                    flame.classList.add('active');
-                } else {
-                    flame.classList.remove('active');
-                }
-            });
-        }
-
-        // TIRAGE ALÉATOIRE SANS RÉPÉTITION
-        function getRandomQuestion(level) {
-            let isMan = (gameState.currentPlayer === gameState.man);
-
-            let objectChance = 0.2;
-            if (gameState.objectFrequency === 'peu') objectChance = 0.1;
-            if (gameState.objectFrequency === 'beaucoup') objectChance = 0.4;
-
-            // Question Objet
-            if (gameState.activeObjects.length > 0 && Math.random() < objectChance) {
-                let randomObjKey = gameState.activeObjects[Math.floor(Math.random() * gameState.activeObjects.length)];
-                let objQuestions = objectDatabase[randomObjKey];
-
-                if (!drawnQuestionsHistory.objects[randomObjKey]) {
-                    drawnQuestionsHistory.objects[randomObjKey] = [];
-                }
-
-                let availableObj = objQuestions.filter(q => !drawnQuestionsHistory.objects[randomObjKey].includes(q));
-                if (availableObj.length === 0) {
-                    drawnQuestionsHistory.objects[randomObjKey] = [];
-                    availableObj = objQuestions;
-                }
-
-                let selected = availableObj[Math.floor(Math.random() * availableObj.length)];
-                drawnQuestionsHistory.objects[randomObjKey].push(selected);
-                return selected;
-            }
-
-            // Question Classique du Niveau (1 à 4)
-            let pool = [];
-            let historyArray = null;
-
-            if (level === 1 || level === 2) {
-                pool = massiveDatabase[level];
-                historyArray = drawnQuestionsHistory[level];
-            } else {
-                pool = isMan ? massiveDatabase[level].man : massiveDatabase[level].woman;
-                historyArray = isMan ? drawnQuestionsHistory[level].man : drawnQuestionsHistory[level].woman;
-            }
-
-            let availableQuestions = pool.filter(q => !historyArray.includes(q));
-
-            // Si tout le catalogue du niveau a été tiré, réinitialiser l'historique
-            if (availableQuestions.length === 0) {
-                if (level === 1 || level === 2) {
-                    drawnQuestionsHistory[level] = [];
-                    historyArray = drawnQuestionsHistory[level];
-                } else {
-                    if (isMan) drawnQuestionsHistory[level].man = [];
-                    else drawnQuestionsHistory[level].woman = [];
-                    historyArray = isMan ? drawnQuestionsHistory[level].man : drawnQuestionsHistory[level].woman;
-                }
-                availableQuestions = pool;
-            }
-
-            let selectedQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-            historyArray.push(selectedQuestion);
-
-            return selectedQuestion;
-        }
-
-        function displayQuestion(qText) {
-            document.getElementById('question-text').innerText = qText;
-        }
-
-        let timerInterval = null;
-        function resetTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-            document.getElementById('timer-countdown').innerText = "01:00";
-            let btn = document.getElementById('timer-btn');
-            btn.disabled = false;
-            btn.innerText = "Lancer le chrono";
-        }
-
-        function startTimer() {
-            let seconds = 60;
-            let display = document.getElementById('timer-countdown');
-            let btn = document.getElementById('timer-btn');
-            btn.disabled = true;
-
-            if (timerInterval) clearInterval(timerInterval);
-
-            timerInterval = setInterval(() => {
-                seconds--;
-                let mins = Math.floor(seconds / 60);
-                let secs = seconds % 60;
-                display.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
-                if (seconds <= 0) {
-                    clearInterval(timerInterval);
-                    playBipSound();
-                    display.innerText = "FIN ! 🔔";
-                    btn.disabled = false;
-                }
-            }, 1000);
-        }
-
-        function skipQuestion() {
-            alert(`${gameState.currentPlayer} passe son tour et écope d'un gage défini par son partenaire !`);
-            nextTurn();
-        }
-
-        function endGameEarly() {
-            if (confirm("Voulez-vous vraiment terminer la partie maintenant ?")) {
-                endGame();
-            }
-        }
-
-        function endGame() {
-            document.getElementById('game-screen').classList.add('hidden');
-            document.getElementById('top-quit-btn').classList.add('hidden');
-            
-            let setup = document.getElementById('setup-screen');
-            setup.classList.remove('hidden');
-            setup.innerHTML = `
-                <h1>Partie Terminée ! 🔥</h1>
-                <p style="text-align: center; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
-                    La session est terminée. Vous avez exploré toutes les étapes avec succès. Laissez parler le reste de vos envies...
-                </p>
-                <button class="primary-btn" onclick="location.reload()">Recommencer une partie</button>
-            `;
-        }
-
-        function playBipSound() {
-            try {
-                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let oscillator = audioCtx.createOscillator();
-                let gainNode = audioCtx.createGain();
-                
-                oscillator.type = 'sine';
-                oscillator.frequency.value = 587.33;
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.5);
-            } catch (e) {
-                console.log("Audio non supporté");
-            }
-        }
-    </script>
+  </div>
+  <div class="panel">
+    <h2>🧰 Accessoires disponibles</h2>
+    <div class="chips" id="opts-acc"></div>
+  </div>
+  <p class="dbcount">Catalogue chargé : <b id="db-count">…</b> questions & défis uniques</p>
+  <button class="bigbtn" id="btn-start">COMMENCER LA SOIRÉE 🔥</button>
+</section>
+<!-- ================= GAME ================= -->
+<section id="game" class="hidden">
+  <div class="banner" id="turn-banner"></div>
+  <div class="meta">
+    <span id="round-info"></span>
+    <span class="lvlbadge" id="lvl-badge"></span>
+  </div>
+  <div class="card" id="challenge-card"></div>
+  <div class="timerwrap hidden" id="timer-wrap">
+    <div class="tcircle">
+      <svg width="150" height="150"><circle class="track" cx="75" cy="75" r="66" fill="none" stroke-width="9"/><circle class="prog" id="timer-prog" cx="75" cy="75" r="66" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="414.7" stroke-dashoffset="0"/></svg>
+      <div class="tval" id="timer-val"></div>
+    </div>
+  </div>
+  <div class="gbtns">
+    <button class="btn chrono" id="btn-chrono">⏱️ LANCER LE CHRONO</button>
+    <button class="btn next" id="btn-next">✅ DÉFI RÉALISÉ / TOUR SUIVANT</button>
+    <button class="btn ghost" id="btn-quit">Quitter la partie</button>
+  </div>
+</section>
+<!-- ================= END ================= -->
+<section id="end" class="hidden">
+  <div class="endwrap">
+    <span class="flame">🔥</span>
+    <h2>La soirée est terminée…</h2>
+    <p id="end-text">Le jeu s'arrête ici, mais la nuit ne fait que commencer.<br>À vous de jouer.</p>
+    <button class="bigbtn" id="btn-replay">REJOUER UNE SOIRÉE</button>
+  </div>
+</section>
+</main>
+<!-- ================= DAILY MODAL ================= -->
+<div class="overlay hidden" id="ov-daily">
+  <div class="modal">
+    <h3>📸 DÉFI DU JOUR</h3>
+    <div id="daily-pick">
+      <p style="text-align:center;color:var(--mut);font-size:13px;margin-bottom:14px;">Qui relève un défi du quotidien ?</p>
+      <div class="pick2">
+        <button class="forLui" id="daily-lui">Pour Lui 💙</button>
+        <button class="forElle" id="daily-elle">Pour Elle 💜</button>
+      </div>
+    </div>
+    <div id="daily-result" class="hidden">
+      <div class="dcard">
+        <span class="ph" id="daily-phase"></span>
+        <div class="txt" id="daily-text"></div>
+      </div>
+      <div class="mrow">
+        <button class="btn redraw" id="daily-redraw">🎲 Autre défi</button>
+        <button class="btn save" id="daily-save">📒 Ajouter au carnet</button>
+      </div>
+    </div>
+    <div class="mrow"><button class="btn close" id="daily-close">Fermer</button></div>
+  </div>
+</div>
+<!-- ================= GALLERY MODAL ================= -->
+<div class="overlay hidden" id="ov-gallery">
+  <div class="modal">
+    <h3>🖼️ LE CARNET SECRET</h3>
+    <div class="tabs">
+      <button class="tabLui on" id="tab-lui">ONGLET LUI</button>
+      <button class="tabElle" id="tab-elle">ONGLET ELLE</button>
+    </div>
+    <div id="gallery-list"></div>
+    <div class="mrow"><button class="btn close" id="gallery-close">Fermer</button></div>
+  </div>
+</div>
+<script>
+/* =====================================================================
+   KINKY NIGHT — application autonome en un seul fichier
+   ===================================================================== */
+"use strict";
+/* ---------- Catégories & accessoires ---------- */
+const CATS=[["g","Faire des gâteries"],["r","Recevoir des gâteries"],["m","Mémoire"],["d","Domination"],["t","Dirty Talk"],["h","Jeux très coquins"],["o","Jeux de rôle"],["b","Morsures & griffures"]];
+const ACCS=[["y","Bandeau / Masque"],["l","Liens / Menottes"],["u","Huile de massage"],["v","Vibromasseur / Plug"],["p","Plumes / Glace"],["c","Cockring"],["f","Appareil photo"],["w","Caméra"],["q","Lubrifiant"]];
+/* ---------- Base de défis en jeu ----------
+   C(niveau, joueur qui joue: 'L'=Lui / 'E'=Elle, texte, catégories, accessoires) */
+const DB=[];
+function C(l,b,t,c="",a="",f){DB.push({lvl:l,by:b,t:t,c:c,a:a,f:f||("u"+DB.length)});}
+/* ===== NIVEAU 1 — Elle joue (vise Lui) ===== */
+C(1,"E","Quel est le premier détail physique que tu as remarqué chez lui lors de votre première rencontre ?","m");
+C(1,"E","Chuchote-lui à l'oreille le compliment le plus osé que tu n'as jamais osé lui dire en public.","t");
+C(1,"E","Quelle tenue portée par lui te fait le plus d'effet sans qu'il ne s'en rende compte ?","m");
+C(1,"E","Fais glisser tes doigts du bas de son cou jusqu'à sa ceinture en le fixant sans ciller pendant 30 secondes.");
+C(1,"E","Quelle est la partie de son corps que tu préfères embrasser doucement ?","m");
+C(1,"E","Raconte-lui le rêve érotique le plus marquant que tu as fait avec lui.","m");
+C(1,"E","Donne-lui trois baisers très lents : un sur la joue, un sur le cou et un au coin des lèvres.");
+C(1,"E","Qu'est-ce qui te fait le plus monter la pression : ses mots, son regard ou son toucher ?","m");
+C(1,"E","Caresse-lui doucement les cheveux tout en lui décrivant ce que tu aimerais qu'il te fasse plus tard.","t");
+C(1,"E","Quelle est la chose la plus romantique ou sexy qu'il ait faite pour toi dernièrement ?","m");
+C(1,"E","Passe tes mains sous son t-shirt et caresse son dos doucement pendant 45 secondes.");
+C(1,"E","Si vous deviez partir ce soir dans un hôtel discret, que mettrais-tu dans ta valise ?","m");
+C(1,"E","Mords-lui délicatement le lobe de l'oreille droite avant d'y chuchoter un secret.","b");
+C(1,"E","As-tu déjà eu un fantasme en le regardant faire une tâche du quotidien ?","m");
+C(1,"E","Pose ta main sur son torse et sens son cœur battre pendant 30 secondes sans parler.");
+C(1,"E","Quelle chanson te donne immédiatement envie de vous rapprocher sous la couette ?","m");
+C(1,"E","Fais un massage rapide de ses épaules en insistant sur les zones de tension pendant 1 minute.");
+C(1,"E","Quel est le souvenir de préliminaires le plus intense que tu gardes de vous deux ?","m");
+C(1,"E","Embrasse son poignet intérieur très lentement.");
+C(1,"E","As-tu déjà eu envie de l'embrasser passionnément dans un endroit où c'était totalement inapproprié ?","m");
+C(1,"E","Fais glisser la pointe de ta langue le long de sa mâchoire.");
+C(1,"E","Quel est le compliment sur ton physique venant de lui qui te fait le plus plaisir ?","m");
+C(1,"E","Regarde-le dans les yeux et dis-lui exactement ce que tu penses de son regard.");
+C(1,"E","Caresse le bas de son ventre par-dessus ses vêtements sans descendre plus bas pendant 45 secondes.");
+C(1,"E","Quelle est selon toi sa plus grande qualité au lit ?","m");
+/* ===== NIVEAU 1 — Lui joue (vise Elle) ===== */
+C(1,"L","Quel est le souvenir le plus chaud que tu gardes de vos tout premiers baisers ?","m");
+C(1,"L","Prends sa main et embrasse chaque doigt un par un en la regardant dans les yeux.");
+C(1,"L","Quelle couleur de lingerie trouves-tu qu'elle porte le mieux ?","m");
+C(1,"L","Murmure-lui à l'oreille ce que tu aimerais lui retirer en premier ce soir.","t");
+C(1,"L","Quel est l'endroit de son corps le plus sensible que tu aimes caresser ?","m");
+C(1,"L","Fais glisser tes lèvres le long de son cou sans toucher sa peau avec tes dents pendant 30 secondes.");
+C(1,"L","As-tu déjà imaginé un scénario érotique précis avec elle cette semaine ?","m");
+C(1,"L","Caresse doucement le creux de sa taille tout en la rapprochant de toi.");
+C(1,"L","Qu'est-ce qui te fait instantanément fondre chez elle quand elle essaie de te séduire ?","m");
+C(1,"L","Pose un baiser doux et prolongé sur son décolleté ou sur sa clavicule.");
+C(1,"L","Si tu devais décrire son odeur corporelle en trois mots, lesquels choisirais-tu ?","m");
+C(1,"L","Trace des cercles invisibles avec ton index sur l'intérieur de sa cuisse par-dessus ses vêtements.");
+C(1,"L","Quel est le moment de la journée où tu la trouves la plus attirante ?","m");
+C(1,"L","Raconte-lui une pensée coquine que tu as eue à son sujet pendant la journée.","t");
+C(1,"L","Passe tes mains dans ses cheveux et bascule doucement sa tête en arrière pour l'embrasser sur le cou.");
+C(1,"L","Quelle est la position de massage qu'elle préfère recevoir de ta part ?","m");
+C(1,"L","Donne-lui un baiser sur la paume de la main en refermant ses doigts dessus comme pour y garder un secret.");
+C(1,"L","Quel geste tendre de sa part te donne immédiatement envie d'aller plus loin ?","m");
+C(1,"L","Fais-lui un compliment sincère sur une partie de son corps qu'elle sous-estime parfois.");
+C(1,"L","Effleure le bord de ses lèvres avec ton pouce pendant 30 secondes.");
+C(1,"L","As-tu déjà eu envie de l'interrompre dans ce qu'elle faisait juste pour l'embrasser ?","m");
+C(1,"L","Regarde-la fixement pendant 1 minute sans dire un mot et laisse un sourire en dire long.");
+C(1,"L","Caresse son dos de haut en bas avec la pulpe de tes doigts.");
+C(1,"L","Quelle est la chose la plus excitante qu'elle ait portée devant toi ?","m");
+C(1,"L","Embrasse le creux de son cou en expirant de l'air chaud sur sa peau.");
+/* ===== NIVEAU 2 — Elle joue ===== */
+C(2,"E","Retire-lui un vêtement de ton choix en prenant au moins 45 secondes.");
+C(2,"E","Fais glisser un glaçon le long de son cou jusqu'à son torse avant d'essuyer les gouttes avec tes lèvres.","","p");
+C(2,"E","Donne-lui une série de fessées douces mais bien rythmées sur les cuisses.","d");
+C(2,"E","Pose un suçon discret ou une marque de rouge à lèvres sur une zone cachée de son corps.","b");
+C(2,"E","Griffe très légèrement son torse nu avec la pointe de tes ongles pendant 1 minute.","b");
+C(2,"E","Assieds-toi à califourchon sur lui pendant 1 minute sans le laisser toucher tes hanches.","d");
+C(2,"E","Mords doucement sa lèvre inférieure jusqu'à ce qu'il émette un soupir.","b");
+C(2,"E","Passe tes mains sous la ceinture de son pantalon et reste immobile 30 secondes sans bouger.");
+C(2,"E","Chuchote-lui une phrase crue sur ce que tu vas lui faire dès que le jeu sera terminé.","t");
+C(2,"E","Caresse l'intérieur de ses cuisses par-dessus son sous-vêtement en remontant très haut.");
+C(2,"E","Embrasse-lui le torse en descendant lentement vers son nombril.");
+C(2,"E","Oblige-le à fermer les yeux et passe une plume ou un tissu doux sur son visage et son cou.","d","p");
+C(2,"E","Fais fondre un morceau de chocolat ou une goutte de boisson sur son cou et lèche-le.");
+C(2,"E","Resserre tes jambes autour des siennes tout en lui maintenant les poignets sur le lit.","d");
+C(2,"E","Donne-lui 5 baisers volés et passionnés de 5 secondes chacun, espacés de petits silences.");
+C(2,"E","Attache ses deux poignets avec un foulard doux : il reste attaché pendant les 2 prochains tours.","d","l");
+C(2,"E","Passe ta langue le long de sa colonne vertébrale.");
+C(2,"E","Retire ton propre haut ou sous-vêtement en le fixant droit dans les yeux.");
+C(2,"E","Fais jouer tes doigts très près de son érection sans jamais la toucher directement.","h");
+C(2,"E","Demande-lui de fermer les yeux et embrasse 3 endroits différents de son corps : il doit deviner lesquels.");
+C(2,"E","Joue un court scénario : tu es une masseuse professionnelle un peu trop entreprenante, pendant 2 minutes.","o");
+C(2,"E","Décris-lui avec des mots très crus la scène que tu imagines pour la fin de soirée.","t");
+/* ===== NIVEAU 2 — Lui joue ===== */
+C(2,"L","Déboutonne ou retire un vêtement qu'elle porte en utilisant uniquement une seule main.");
+C(2,"L","Fais glisser tes doigts sous le bord de sa culotte pour caresser le haut de ses fesses pendant 45 secondes.");
+C(2,"L","La domination du regard : fixe-la droit dans les yeux sans baisser les paupières pendant 2 minutes.","d");
+C(2,"L","Le massage des fesses à l'huile : pétris fermement ses fesses avec de l'huile parfumée pendant 1 minute.","","u");
+C(2,"L","Pose-lui un beau suçon bien visible sur l'épaule ou le cou.","b");
+C(2,"L","Le supplice de l'attente : approche tes lèvres des siennes comme pour l'embrasser, puis stoppe-toi à 1 cm pendant 45 secondes.","d");
+C(2,"L","Caresse l'extérieur de son sexe par-dessus sa culotte en suivant un rythme très lent.","h");
+C(2,"L","Mords doucement la chair de sa hanche ou de son épaule.","b");
+C(2,"L","Fais glisser un glaçon du creux de ses seins jusqu'au bas de son ventre.","","p");
+C(2,"L","Glisse tes mains sous ses vêtements et caresse ses seins ou ses tétons doucement pendant 1 minute.");
+C(2,"L","Passe ta langue le long de son encolure et répète ce geste 5 fois.");
+C(2,"L","Prends le contrôle de ses mains et immobilise-les au-dessus de sa tête sur le lit ou le canapé.","d");
+C(2,"L","Chuchote-lui le détail exact de ce que tu aimerais lui faire si vous étiez seuls dans un endroit isolé.","t");
+C(2,"L","Donne-lui une fessée appuyée sur chaque fesse.","d");
+C(2,"L","Retire-lui son bas (pantalon, jupe ou culotte) avec une extrême lenteur.");
+C(2,"L","Caresse le creux de ses genoux et remonte doucement le long de ses cuisses.");
+C(2,"L","Maintiens ta bouche tout près de son oreille et souffle chaudement en décrivant un fantasme.","t");
+C(2,"L","Fais-lui fermer les yeux et passe tes lèvres sur toute la surface de son visage.");
+C(2,"L","Prends un glaçon dans ta bouche et donne-lui un baiser glacial puis brûlant.","","p");
+C(2,"L","Presse son corps contre le tien et fais bouger tes hanches lentement contre elle pendant 45 secondes.");
+C(2,"L","Joue un court scénario : vous êtes deux inconnus qui viennent de se rencontrer dans un bar, séduis-la pendant 2 minutes.","o");
+C(2,"L","Griffe très doucement l'intérieur de ses cuisses en remontant, sans jamais atteindre le sommet.","b");
+/* ===== NIVEAU 3 — Elle joue ===== */
+C(3,"E","Le soin des testicules : joue doucement avec ses testicules avec tes doigts huilés pendant 1 minute 30.","g","u");
+C(3,"E","La caresse buccale ciblée : lèche ses testicules avec de longues caresses de langue tiède.","g");
+C(3,"E","La fellation masquée : bande-lui les yeux avec un foulard avant de commencer une fellation lente.","gd","y");
+C(3,"E","La soumission par les liens : attache-lui les poignets au lit avant de le sucer doucement.","gd","l");
+C(3,"E","Le teasing des pinces : pose 2 pinces à linge douces sur ses cuisses ou ses tétons puis retire-les avec tes dents.","db");
+C(3,"E","Le glaçon glissé sous le slip : coince un glaçon dans son boxer et fais-le fondre uniquement par frottement extérieur.","h","p");
+C(3,"E","La douche au glaçon : promène un glaçon le long de sa colonne vertébrale jusqu'à ses bourses.","h","p");
+C(3,"E","Le masochisme doux : inflige-lui 5 claques appuyées sur les cuisses pour faire monter sa tension.","d");
+C(3,"E","La cire tiède : laisse couler quelques gouttes de cire de bougie de massage tiède juste au-dessus de son érection.","dh","u");
+C(3,"E","L'exploration du périnée : caresse et lèche la zone entre ses testicules et son anus pendant 1 minute.","gh");
+C(3,"E","La succion alternée : aspire délicatement une bourse après l'autre dans ta bouche.","g");
+C(3,"E","Le massage prostatique guidé : avec du lubrifiant, caresse très doucement l'entrée de son anus avec le bout du doigt.","h","q");
+C(3,"E","La fellation rythmée : effectue une fellation intense pendant 2 minutes sans t'arrêter.","g");
+C(3,"E","Le travail des mains et de la bouche : alterne caresse manuelle sur la verge et léchage des testicules.","g");
+C(3,"E","L'écriture érotique : écris un mot explicite sur son bas-ventre avec du rouge à lèvres ou avec la pointe de ta langue.","t");
+C(3,"E","L'anneau de plaisir : enfile-lui délicatement un cockring puis caresse sa verge tendue pendant 1 minute.","h","c");
+C(3,"E","La photo trophée : prends une photo artistique et suggestive de son corps (cadrée comme TU le décides).","d","f");
+C(3,"E","Ordonne-lui de se caresser devant toi pendant 1 minute en le fixant sans le toucher.","rd");
+C(3,"E","Mords et griffe son torse et ses cuisses en alternant douceur et intensité pendant 1 minute.","b");
+C(3,"E","Décris-lui crûment, mot pour mot, ce que sa langue devra te faire au prochain niveau.","tr");
+C(3,"E","Fais vibrer un vibromasseur sur l'intérieur de ses cuisses et son périnée sans toucher sa verge.","h","v");
+C(3,"E","Jeu de rôle : tu es une infirmière très consciencieuse qui doit « examiner » son patient en détail pendant 2 minutes.","oh");
+/* ===== NIVEAU 3 — Lui joue ===== */
+C(3,"L","L'exploration anale douce : caresse très doucement l'entrée de son anus avec du lubrifiant et un doigt très léger.","h","q");
+C(3,"L","L'attachement et cunnilingus : attache-lui les poignets au lit avec un ruban et lèche son sexe intensément.","gd","l");
+C(3,"L","L'ordre de caresse : oblige-la à se caresser elle-même devant toi en suivant précisément toutes tes directives orales.","rdt");
+C(3,"L","Le cunnilingus glacé : prends un glaçon en bouche quelques secondes puis lèche son clitoris avec ardeur.","g","p");
+C(3,"L","La fessée appuyée : donne-lui 10 fessées bien sonores sur chaque fesse.","d");
+C(3,"L","Le contrôle du clitoris : caresse son clitoris de manière circulaire pendant 2 minutes sans aller jusqu'à l'orgasme.","h");
+C(3,"L","La pénétration des doigts : utilise deux doigts bien lubrifiés pour la caresser à l'intérieur tout en lui embrassant le cou.","h","q");
+C(3,"L","Le bandeau et les frissons : bande-lui les yeux et caresse tout son corps avec tes lèvres et tes dents.","db","y");
+C(3,"L","Le travail des tétons : tète et mords délicatement ses tétons en alternant le chaud de ta bouche et le froid d'un souffle.","b");
+C(3,"L","Le cunnilingus en profondeur : prends tout ton temps pour un cunnilingus de 3 minutes minimum en restant concentré sur son plaisir.","g");
+C(3,"L","Le guidage manuel : prends sa main et guide-la sur ton érection tout en lui léchant le cou.","r");
+C(3,"L","Le martinet ou la main : inflige-lui de légers tapotements rythmés sur les fesses à l'aide d'un accessoire doux ou de ta paume.","d");
+C(3,"L","La succion des lèvres intimes : aspire doucement ses lèvres intimes une par une.","g");
+C(3,"L","La dénudation totale : retire-lui son tout dernier sous-vêtement avec les dents.");
+C(3,"L","L'effleurage intime continu : caresse la fente de son sexe du bas vers le haut avec un doigt imbibé de lubrifiant.","h","q");
+C(3,"L","Le vibro découverte : fais glisser un vibromasseur en vibration douce le long de ses lèvres intimes sans pénétration.","h","v");
+C(3,"L","La photo boudoir : mets-la en scène et prends une photo sensuelle d'elle, dans la pose que TU choisis.","d","f");
+C(3,"L","Demande-lui de te sucer pendant 1 minute exactement, chrono en main : tu diriges le rythme à la voix.","rdt");
+C(3,"L","Mords et griffe doucement ses fesses et le bas de son dos pendant 1 minute.","b");
+C(3,"L","Jeu de rôle : tu es son professeur particulier très strict, elle doit obéir à trois de tes consignes coquines.","od");
+C(3,"L","Le dirty talk anatomique : décris-lui à voix haute et sans détour tout ce que tu observes et adores de son intimité.","t");
+C(3,"L","Plume et glace : alterne une plume et un glaçon sur ses tétons et son bas-ventre pendant 1 minute 30.","h","p");
+/* ===== NIVEAU 4 — Elle joue ===== */
+C(4,"E","La fellation guidée aux ordres : suce-le en obéissant à ses indications d'intensité et de vitesse pendant 3 minutes.","g");
+C(4,"E","La chevauchée dominante : mène la pénétration en te plaçant au-dessus de lui et impose ton rythme sans qu'il ne puisse bouger les hanches.","dh");
+C(4,"E","La double stimulation : utilise ta main sur sa verge tout en stimulant son anus avec un doigt lubrifié.","h","q");
+C(4,"E","Le contrôle de l'éjaculation (edging) : amène-le au bord de l'éjaculation par une fellation ou caresse intense, puis stoppe net 30 secondes. Répète 2 fois.","gdh");
+C(4,"E","La sodomie active : guide un plug anal ou un vibromasseur dans son anus avec beaucoup de lubrifiant avant d'enchaîner sur une caresse.","h","vq");
+C(4,"E","La fellation en position inversée : suce-le pendant qu'il est allongé au bord du lit, la tête légèrement basculée vers le bas.","gh");
+C(4,"E","Le bondage de la chaise : attache-le fermement sur une chaise et donne-lui du plaisir uniquement avec ta bouche sans qu'il puisse se libérer.","gd","l");
+C(4,"E","Le dirty talk explicite : décris-lui de manière très crue et détaillée tout ce que tu ressens au moment précis où vous le faites.","t");
+C(4,"E","La chevauchée inversée : mets-toi au-dessus de lui en lui tournant le dos (cowgirl inversée) tout en lui caressant les cuisses.","h");
+C(4,"E","La domination complète : prends les commandes absolues du lit — il n'a le droit de faire aucun geste sans ton autorisation explicite.","d");
+C(4,"E","Le cockring d'endurance : enfile-lui un cockring, puis chevauche-le lentement en lui interdisant de jouir tant que tu n'as pas dit « maintenant ».","dh","c");
+C(4,"E","La caméra complice : filme 1 minute de vos ébats sous l'angle que tu choisis — visionnage immédiat ensemble ensuite.","h","w");
+C(4,"E","Ordonne-lui de te faire un cunnilingus exactement comme tu le décris à voix haute, phrase après phrase.","rdt");
+C(4,"E","Marque-le : pendant la pénétration, griffe son dos et mords son épaule au rythme de tes vagues de plaisir.","bh");
+C(4,"E","Jeu de rôle final : tu es sa dominatrice d'un soir — impose-lui trois gages explicites qu'il doit exécuter immédiatement.","od");
+C(4,"E","Les yeux bandés : bande-lui les yeux et fais l'amour avec lui en le guidant uniquement à la voix.","dth","y");
+C(4,"E","La lenteur insoutenable : chevauche-le au ralenti extrême pendant 2 minutes — interdiction formelle d'accélérer, quoi qu'il supplie.","dh");
+C(4,"E","Le 69 : installe-vous en 69, toi au-dessus, et donnez-vous du plaisir mutuellement pendant 3 minutes.","grh");
+/* ===== NIVEAU 4 — Lui joue ===== */
+C(4,"L","La pénétration anale progressive : avec beaucoup de lubrifiant et de douceur, réalise une pénétration anale lente et contrôlée.","h","q");
+C(4,"L","Le blocage des poignets : maintiens ses deux bras au-dessus de sa tête avec une seule main pendant que tu la pénètres vigoureusement.","dh");
+C(4,"L","Le déni d'orgasme (edging) : stimule son clitoris et son sexe jusqu'à la limite de la jouissance, puis stoppe tout mouvement pendant 30 secondes.","dh");
+C(4,"L","Le cunnilingus surélevé : place un coussin sous ses fesses pour surélever son bassin et lèche-la avec ardeur jusqu'à ce qu'elle gémisse fort.","g");
+C(4,"L","La position du missionnaire profond : pénètre-la en lui repliant les jambes sur la poitrine pour aller le plus profond possible.","h");
+C(4,"L","L'utilisation simultanée du vibro : pénètre-la tout en appliquant un vibromasseur directement sur son clitoris.","h","v");
+C(4,"L","La levrette avec prise de cheveux : prends-la par l'arrière tout en attrapant doucement sa chevelure pour lui maintenir la tête relevée.","dh");
+C(4,"L","La pénétration avec doigt : pénètre-la vaginalement tout en massant son anus avec un doigt bien lubrifié.","h","q");
+C(4,"L","Les ordres crus : donne-lui des ordres précis et explicites sur la façon dont elle doit bouger son bassin sous toi.","dt");
+C(4,"L","L'orgasme guidé : choisis la position dans laquelle elle jouit le plus facilement et donne tout ce que tu as pour la faire jouir dans les 3 minutes.","h");
+C(4,"L","L'attachement intégral : attache ses poignets à la tête de lit, puis fais-lui l'amour en variant les rythmes sans qu'elle puisse te toucher.","dh","l");
+C(4,"L","Le bandeau du lâcher-prise : bande-lui les yeux, pénètre-la lentement et décris-lui à voix basse chaque sensation.","dth","y");
+C(4,"L","Exige une fellation dominante : assieds-toi confortablement et guide sa tête au rythme exact que tu désires.","rd");
+C(4,"L","La caméra complice : filme 1 minute de vos ébats sous l'angle que tu choisis — visionnage immédiat ensemble ensuite.","h","w");
+C(4,"L","Marque-la : pendant l'acte, mords son épaule et griffe le bas de son dos au moment où le plaisir monte.","bh");
+C(4,"L","Jeu de rôle final : tu es un inconnu autoritaire qui vient de la « capturer » — joue la scène jusqu'au bout avec son accord complice.","odh");
+C(4,"L","L'endurance imposée : pénètre-la avec des mouvements très lents pendant 2 minutes sans jamais accélérer, quoi qu'elle demande.","dh");
+C(4,"L","Le double plaisir : pendant que tu la pénètres, glisse un plug ou un vibromasseur en douceur pour une double stimulation.","h","vq");
+/* ===== DÉFIS CRÉATIFS & MINI-JEUX — 100% inédits ===== */
+/* --- Niveau 1 --- */
+C(1,"E","Jeu des 3 vérités : fais 3 confidences coquines sur toi, dont une fausse. Il doit deviner laquelle est le mensonge.","m");
+C(1,"E","Mime (sans un mot) un moment intime mémorable de votre couple : il a 30 secondes pour deviner lequel.","m");
+C(1,"E","Écris un mot coquin sur son dos avec ton doigt, lettre par lettre. Il doit le lire à voix haute.");
+C(1,"E","Note de dégustation : embrasse-le, puis décris son baiser comme un sommelier décrit un grand cru.");
+C(1,"E","Portrait chinois coquin : si ton désir pour lui était une météo, un plat et une musique, que serait-il ? Réponds aux trois.","m");
+C(1,"E","Imite sa façon de te séduire, gestes et phrases cultes incluses. Il valide ou conteste.","o");
+C(1,"E","Duel de regards de braise : fixez-vous. Le premier qui rit ou détourne les yeux doit un compliment torride à l'autre.");
+C(1,"E","Blind test peau : il ferme les yeux et doit reconnaître 3 endroits de ton corps rien qu'en les touchant du bout des doigts.");
+C(1,"E","Chuchote-lui l'alphabet très lentement à l'oreille et arrête-toi à la première lettre de ton fantasme du moment. Il a 3 essais pour deviner le mot.","t");
+C(1,"E","Interdiction de dire « oui » ou « non » : réponds à 5 questions coquines de son choix sans jamais prononcer ces mots.","m");
+C(1,"E","Selfie complice : prenez ensemble le selfie le plus sensuel possible… sans montrer vos visages.","","f");
+C(1,"E","Jeu du chaud/froid : promène ta main au-dessus de son corps sans le toucher, il guide par « chaud » ou « froid » vers l'endroit où il la veut.");
+C(1,"E","Décris votre prochaine nuit idéale en exactement 10 mots. Pas un de plus, pas un de moins.","t");
+C(1,"E","Retire-lui une chaussette ou un accessoire sans utiliser les mains.");
+C(1,"E","Compose le « menu » de ta soirée : une entrée, un plat, un dessert — chacun étant une chose que tu comptes lui faire.","t");
+C(1,"L","Jeu des 3 vérités : fais 3 confidences coquines sur toi, dont une fausse. Elle doit deviner laquelle est le mensonge.","m");
+C(1,"L","Mime (sans un mot) un moment intime mémorable de votre couple : elle a 30 secondes pour deviner lequel.","m");
+C(1,"L","Écris un mot coquin sur son dos avec ton doigt, lettre par lettre. Elle doit le lire à voix haute.");
+C(1,"L","Note de dégustation : embrasse-la, puis décris son baiser comme un sommelier décrit un grand cru.");
+C(1,"L","Portrait chinois coquin : si ton désir pour elle était une météo, un plat et une musique, que serait-il ? Réponds aux trois.","m");
+C(1,"L","Imite sa façon de te séduire, moue et regards inclus. Elle valide ou conteste.","o");
+C(1,"L","Duel de regards de braise : fixez-vous. Le premier qui rit ou détourne les yeux doit un compliment torride à l'autre.");
+C(1,"L","Blind test peau : elle ferme les yeux et doit reconnaître 3 endroits de son corps que tu touches du bout des doigts.");
+C(1,"L","Fais-lui deviner un mot coquin uniquement en le mimant avec les mains, sans jamais la toucher.","t");
+C(1,"L","Interdiction de dire « oui » ou « non » : réponds à 5 questions coquines de son choix sans jamais prononcer ces mots.","m");
+C(1,"L","Selfie complice : prenez ensemble le selfie le plus sensuel possible… sans montrer vos visages.","","f");
+C(1,"L","Jeu du chaud/froid : promène ta main au-dessus de son corps sans la toucher, elle guide par « chaud » ou « froid » vers l'endroit où elle la veut.");
+C(1,"L","Décris votre prochaine nuit idéale en exactement 10 mots. Pas un de plus, pas un de moins.","t");
+C(1,"L","Retire-lui un bijou, une chaussette ou un accessoire sans utiliser les mains.");
+C(1,"L","Invente-lui un surnom érotique sur-le-champ et justifie-le avec panache. Elle l'adopte si elle rit.","t");
+/* --- Niveau 2 --- */
+C(2,"E","Strip-quiz : pose-lui 3 questions sur toi (goûts, souvenirs, fantasmes). Chaque mauvaise réponse = il retire un vêtement.","m");
+C(2,"E","Pile ou face : pile, tu retires un de tes vêtements ; face, c'est lui. Lance 3 fois.");
+C(2,"E","La statue : il reste parfaitement immobile 1 minute pendant que tu fais ce que tu veux de lui (au-dessus de la ceinture). S'il bouge, on recommence.","d");
+C(2,"E","Le vestiaire : échangez un vêtement chacun et gardez-le pendant les 2 prochains tours.","o");
+C(2,"E","Yeux fermés, traverse la pièce guidée uniquement par sa voix… le parcours se termine sur ses lèvres.");
+C(2,"E","Karaoké sensuel : chante-lui 15 secondes d'une chanson en la rendant scandaleusement suggestive.","o");
+C(2,"E","Photo mystère : photographie 3 cm² de ta peau en très gros plan. Il doit deviner où. S'il échoue, il retire un vêtement.","","f");
+C(2,"E","Slow motion : rejouez votre premier baiser exactement comme il s'est passé… mais 4 fois plus lentement.","m");
+C(2,"E","Le défilé : traverse la pièce vers lui de la démarche la plus sensuelle dont tu es capable, sans rire.");
+C(2,"E","Twister coquin : donne-lui 3 instructions précises de placement de mains sur ton corps. Il obéit et ne bouge plus pendant 30 secondes.","d");
+C(2,"E","Compte ses battements : pose la main sur son cœur, embrasse-le fougueusement. S'il dépasse les 80 battements, tu gagnes un gage de ton choix.");
+C(2,"E","Body-lecture : écris « ce soir » quelque part sur son corps avec la pointe de ta langue. Il doit dire où et quoi.");
+C(2,"E","Le serveur : va lui chercher un verre, reviens dans une tenue « allégée » de ton choix et fais-le boire sans qu'il utilise ses mains.","od");
+C(2,"E","Marchandage : chaque vêtement que tu retires « coûte » à lui un aveu coquin. Négocie ferme, retire-en au moins deux.","mt");
+C(2,"E","La voyante : lis dans la paume de sa main un « avenir » très détaillé et très torride pour la fin de soirée.","ot");
+C(2,"L","Strip-quiz : pose-lui 3 questions sur toi (goûts, souvenirs, fantasmes). Chaque mauvaise réponse = elle retire un vêtement.","m");
+C(2,"L","Pile ou face : pile, tu retires un de tes vêtements ; face, c'est elle. Lance 3 fois.");
+C(2,"L","La statue : elle reste parfaitement immobile 1 minute pendant que tu fais ce que tu veux d'elle (au-dessus de la ceinture). Si elle bouge, on recommence.","d");
+C(2,"L","Le vestiaire : échangez un vêtement chacun et gardez-le pendant les 2 prochains tours.","o");
+C(2,"L","Yeux fermés, elle traverse la pièce guidée uniquement par ta voix… le parcours se termine sur tes lèvres.","d");
+C(2,"L","Karaoké sensuel : chante-lui 15 secondes d'une chanson en la rendant scandaleusement suggestive.","o");
+C(2,"L","Photo mystère : photographie 3 cm² de ta peau en très gros plan. Elle doit deviner où. Si elle échoue, elle retire un vêtement.","","f");
+C(2,"L","Slow motion : rejouez votre premier baiser exactement comme il s'est passé… mais 4 fois plus lentement.","m");
+C(2,"L","Le tailleur : rhabille-la d'un seul vêtement à toi, en prenant tout ton temps pour « ajuster » chaque centimètre.","o");
+C(2,"L","Twister coquin : elle te donne 3 instructions précises de placement de mains sur son corps. Obéis et ne bouge plus pendant 30 secondes.");
+C(2,"L","Compte ses battements : pose la main sur son cœur, embrasse-la fougueusement. Si elle dépasse les 80 battements, tu gagnes un gage de ton choix.");
+C(2,"L","Body-lecture : écris « ce soir » quelque part sur son corps avec la pointe de ta langue. Elle doit dire où et quoi.");
+C(2,"L","Le garde du corps : porte-la (princesse, épaule ou dos) jusqu'au canapé ou au lit et « fouille-la » consciencieusement.","od");
+C(2,"L","Marchandage : chaque vêtement que tu lui retires « coûte » un aveu coquin de ta part. Négocie ferme, retires-en au moins deux.","mt");
+C(2,"L","Le sculpteur : modèle sa pose comme une œuvre d'art (bras, jambes, cambrure), recule, admire, et embrasse ton « chef-d'œuvre » là où il le mérite.","d");
+/* --- Niveau 3 --- */
+C(3,"E","La télécommande humaine : il commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","hd");
+C(3,"E","Le silence imposé : donne-lui du plaisir avec les mains. S'il gémit, tu t'arrêtes 10 secondes. Durée : 2 minutes.","hd");
+C(3,"E","Dégustation à l'aveugle : yeux bandés, il doit deviner ce que tu poses sur ses lèvres (doigt, téton, langue, glaçon…). 5 manches.","h","y");
+C(3,"E","Le compte imposé : caresse-le intimement pendant 1 minute. Il doit compter à voix haute jusqu'à 60 sans se tromper… sinon tout recommence.","hd");
+C(3,"E","Face au miroir : installe-toi devant le miroir et caresse-toi en le regardant LUI dans le reflet. Il n'a pas le droit d'approcher.","h");
+C(3,"E","La sculpture : place ses mains exactement où tu les veux sur ton corps. Il est ta statue : interdiction de bouger d'un millimètre pendant 1 minute.","d");
+C(3,"E","Pile ou face intime : face, tu le gâtes 1 minute avec ta bouche ; pile, c'est lui qui dicte exactement ce que tu fais.","gd");
+C(3,"E","L'enchère : il « achète » du plaisir buccal en compliments très crus. 1 compliment = 10 secondes. Il fixe le budget, tu tiens la caisse.","gt");
+C(3,"E","Le labyrinthe : trace un chemin de baisers de son cou à son bas-ventre en suivant SES instructions « gauche / droite / plus bas ».","g");
+C(3,"E","Interdiction de le toucher : amène-le au bord du frisson uniquement avec ton souffle, à 1 cm de sa peau, partout. 1 minute 30.","d");
+C(3,"E","La roulette des zones : il énumère 5 zones de son corps. Choisis-en secrètement une et choie-la pendant 1 minute — il devait parier laquelle.","h");
+C(3,"E","Note vocale torride : enregistre 20 secondes de ta voix décrivant ce que tu vas lui faire, et fais-lui écouter au casque pendant que tu commences.","t","f");
+C(3,"E","Le distributeur : il tire 3 « tickets » imaginaires. À chaque ticket, annonce la surprise intime qu'il vient de gagner et exécute la première.","oh");
+C(3,"E","Marque ton territoire : dépose morsures et griffures légères sur 3 zones de son corps que tu revendiques à voix haute comme « à toi ».","bd");
+C(3,"E","La croupière : joue une partie de « plus ou moins » (nombre entre 1 et 20). Chaque erreur de sa part = tu descends ta bouche un peu plus bas.","go");
+C(3,"L","La télécommande humaine : elle commande « play », « pause », « ralenti » ou « avance rapide » et tes caresses intimes obéissent, pendant 2 minutes.","h");
+C(3,"L","Le silence imposé : donne-lui du plaisir avec les mains. Si elle gémit, tu t'arrêtes 10 secondes. Durée : 2 minutes.","hd");
+C(3,"L","Dégustation à l'aveugle : yeux bandés, elle doit deviner ce que tu poses sur ses lèvres (doigt, torse, langue, glaçon…). 5 manches.","h","y");
+C(3,"L","Le compte imposé : caresse-la intimement pendant 1 minute. Elle doit compter à voix haute jusqu'à 60 sans se tromper… sinon tout recommence.","hd");
+C(3,"L","Face au miroir : place-la devant le miroir et caresse-la en exigeant qu'elle se regarde ELLE, pas toi.","hd");
+C(3,"L","La sculpture : elle place tes mains exactement où elle les veut sur son corps. Tu es sa statue : interdiction de bouger pendant 1 minute.","h");
+C(3,"L","Pile ou face intime : face, tu la gâtes 1 minute avec ta bouche ; pile, c'est elle qui dicte exactement ce que tu fais.","gd");
+C(3,"L","L'enchère : elle « achète » du plaisir buccal en compliments très crus. 1 compliment = 10 secondes. Elle fixe le budget, tu tiens la caisse.","gt");
+C(3,"L","Le labyrinthe : trace un chemin de baisers de son cou à son bas-ventre en suivant SES instructions « gauche / droite / plus bas ».","g");
+C(3,"L","Interdiction de la toucher : amène-la au bord du frisson uniquement avec ton souffle, à 1 cm de sa peau, partout. 1 minute 30.","d");
+C(3,"L","La roulette des zones : elle énumère 5 zones de son corps. Choisis-en secrètement une et choie-la pendant 1 minute — elle devait parier laquelle.","h");
+C(3,"L","Note vocale torride : enregistre 20 secondes de ta voix décrivant ce que tu vas lui faire, et fais-lui écouter au casque pendant que tu commences.","t","f");
+C(3,"L","Le douanier : elle « passe la frontière ». Fouille réglementaire complète, très minutieuse, zones sensibles incluses.","oh");
+C(3,"L","Marque ton territoire : dépose morsures et griffures légères sur 3 zones de son corps que tu revendiques à voix haute comme « à toi ».","bd");
+C(3,"L","Le peintre : avec un doigt trempé dans une boisson fraîche, « peins » un motif sur son ventre et ses cuisses… puis efface tout avec ta langue.","g");
+/* --- Niveau 4 --- */
+C(4,"E","La pièce décide : pile = doux et lent, face = intense et profond. Lance la pièce 3 fois pendant l'acte et obéissez au verdict.","h");
+C(4,"E","Le chef d'orchestre : dirige son rythme uniquement en claquant des doigts : lent, rapide, silence… Il est ton instrument.","dh");
+C(4,"E","Le pari : chacun parie (en secret) sur le temps qu'il tiendra avant de supplier. Le perdant devra un défi du jour demain.","dh");
+C(4,"E","Les 3 interdits : choisis 3 choses qu'il n'a pas le droit de faire pendant l'acte (parler, te toucher les hanches…). Il doit tenir jusqu'au bout.","d");
+C(4,"E","L'échange scellé : murmure ton fantasme le plus inavouable à son oreille PENDANT l'acte — il doit répondre par le sien.","th");
+C(4,"E","La minute de pouvoir : toutes les minutes, le pouvoir change de mains. Au signal, l'autre décide de tout. Durée totale : 4 minutes.","dh");
+C(4,"E","Le juke-box : lance une chanson et calez STRICTEMENT votre rythme dessus, breaks et refrains compris.","h");
+C(4,"E","La dictée : raconte-lui une scène torride, phrase par phrase — il doit exécuter en direct tout ce que tu décris.","tdh");
+C(4,"E","Position inconnue : inventez ensemble une position jamais testée et tenez-la 2 minutes, fous rires autorisés, abandon interdit.","h");
+C(4,"E","Le mot de passe : choisis un mot secret. Chaque fois que tu le prononces pendant l'acte, il doit changer de rythme immédiatement.","dth");
+C(4,"E","Roi et Reine du silence : faites l'amour dans le silence TOTAL. Le premier qui émet un son exécute sur-le-champ un ordre de l'autre.","dh");
+C(4,"E","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour le faire jouir. Tous les moyens sont permis.","gh");
+C(4,"E","La croisée des sens : bande-lui les yeux ET impose le silence — il ne lui reste que le toucher. Fais-lui l'amour dans ce noir absolu.","dh","y");
+C(4,"E","Le tribunal : condamne-le à « réparer » une frustration de la semaine (vaisselle oubliée, retard…) par le nombre de minutes de plaisir de TON choix.","od");
+C(4,"E","Marathon des lieux : commencez dans une pièce, terminez dans une autre — minimum 3 étapes, chacune avec sa position.","h");
+C(4,"L","La pièce décide : pile = doux et lent, face = intense et profond. Lance la pièce 3 fois pendant l'acte et obéissez au verdict.","h");
+C(4,"L","Le métronome : elle claque des doigts et ton rythme obéit instantanément : lent, rapide, arrêt total… Tu es son instrument.","h");
+C(4,"L","Le pari : chacun parie (en secret) sur le temps qu'elle tiendra avant de gémir. Le perdant devra un défi du jour demain.","dh");
+C(4,"L","Les 3 interdits : elle choisit 3 choses que tu n'as pas le droit de faire pendant l'acte. Tiens jusqu'au bout ou paie un gage.","h");
+C(4,"L","L'échange scellé : murmure ton fantasme le plus inavouable à son oreille PENDANT l'acte — elle doit répondre par le sien.","th");
+C(4,"L","La minute de pouvoir : toutes les minutes, le pouvoir change de mains. Au signal, l'autre décide de tout. Durée totale : 4 minutes.","dh");
+C(4,"L","Le juke-box : lance une chanson et calez STRICTEMENT votre rythme dessus, breaks et refrains compris.","h");
+C(4,"L","La dictée : elle raconte une scène torride, phrase par phrase — tu dois exécuter en direct tout ce qu'elle décrit.","th");
+C(4,"L","Position inconnue : inventez ensemble une position jamais testée et tenez-la 2 minutes, fous rires autorisés, abandon interdit.","h");
+C(4,"L","Le mot de passe : elle choisit un mot secret. Chaque fois qu'elle le prononce pendant l'acte, change de rythme immédiatement.","th");
+C(4,"L","Roi et Reine du silence : faites l'amour dans le silence TOTAL. Le premier qui émet un son exécute sur-le-champ un ordre de l'autre.","dh");
+C(4,"L","Compte à rebours final : tu as exactement 5 minutes, chrono lancé, pour la faire jouir. Tous les moyens sont permis.","gh");
+C(4,"L","La croisée des sens : bande-lui les yeux ET impose le silence — il ne lui reste que le toucher. Fais-lui l'amour dans ce noir absolu.","dh","y");
+C(4,"L","Le naufragé : vous êtes les deux derniers humains sur Terre et c'est votre dernière nuit — joue la scène jusqu'au bout, répliques comprises.","oh");
+C(4,"L","Marathon des lieux : commencez dans une pièce, terminez dans une autre — minimum 3 étapes, chacune avec sa position.","h");
+/* =====================================================================
+   GÉNÉRATEUR DE VARIANTES — porte le catalogue à plus de 1000 défis
+   ===================================================================== */
+(function(){
+  const durs1=["pendant 20 secondes","pendant 30 secondes","pendant 45 secondes","pendant 1 minute"];
+  const acts1=[["Embrasse très lentement",""],["Effleure du bout des doigts",""],["Dépose une pluie de petits baisers sur",""],["Souffle un air chaud sur",""],["Caresse avec tes lèvres entrouvertes",""]];
+  const z1L=["son cou","sa nuque","l'intérieur de son poignet","sa clavicule","son épaule dénudée","le contour de son oreille","sa mâchoire","le bas de son dos"];
+  const z1E=["son cou","sa nuque","l'intérieur de son poignet","sa clavicule","son épaule dénudée","le contour de son oreille","son décolleté","le bas de son dos"];
+  acts1.forEach((a,ai)=>{durs1.forEach(d=>{
+    z1L.forEach(z=>C(1,"E",a[0]+" "+z+" "+d+".",a[1],"","f1a"+ai));
+    z1E.forEach(z=>C(1,"L",a[0]+" "+z+" "+d+".",a[1],"","f1a"+ai));
+  });});
+  const durs2=["pendant 30 secondes","pendant 45 secondes","pendant 1 minute","pendant 1 minute 30"];
+  const acts2=[["Caresse fermement",""],["Embrasse à pleine bouche",""],["Mordille doucement","b"],["Griffe très légèrement","b"],["Masse sensuellement",""]];
+  const z2L=["l'intérieur de ses cuisses","le bas de son ventre","ses fesses par-dessus les vêtements","son torse nu","le creux de ses reins","sa hanche dénudée"];
+  const z2E=["l'intérieur de ses cuisses","le bas de son ventre","ses fesses par-dessus les vêtements","sa poitrine par-dessus les vêtements","le creux de ses reins","sa hanche dénudée"];
+  acts2.forEach((a,ai)=>{durs2.forEach(d=>{
+    z2L.forEach(z=>C(2,"E",a[0]+" "+z+" "+d+".",a[1],"","f2a"+ai));
+    z2E.forEach(z=>C(2,"L",a[0]+" "+z+" "+d+".",a[1],"","f2a"+ai));
+  });});
+  const starters=["Raconte-lui","Avoue-lui","Décris-lui en détail"];
+  const topicsE=["ton fantasme le plus secret le concernant","le moment où tu l'as trouvé irrésistible cette semaine","le souvenir le plus torride de vos débuts","la dernière fois que tu as pensé à lui en te réveillant","l'endroit insolite où tu rêves de l'embrasser","ce que tu ressens quand il te déshabille du regard"];
+  const topicsL=["ton fantasme le plus secret la concernant","le moment où tu l'as trouvée irrésistible cette semaine","le souvenir le plus torride de vos débuts","la dernière fois que tu as pensé à elle en te réveillant","l'endroit insolite où tu rêves de l'embrasser","ce que tu ressens quand elle te déshabille du regard"];
+  starters.forEach((s,si)=>{topicsE.forEach((t,ti)=>C(1,"E",s+" "+t+".","m","","f1q"+ti));topicsL.forEach((t,ti)=>C(1,"L",s+" "+t+".","m","","f1q"+ti));});
+  const durs3=["pendant 45 secondes","pendant 1 minute","pendant 1 minute 30"];
+  const acts3=[["Parcours avec ta langue","g",""],["Embrasse intensément","",""],["Caresse avec un doigt lubrifié","h","q"],["Fais glisser un glaçon sur","h","p"],["Alterne baisers et petites morsures sur","b",""]];
+  const z3L=["son bas-ventre","l'intérieur de ses cuisses nues","son sexe par-dessus le boxer","le creux de son aine","ses fesses nues"];
+  const z3E=["son bas-ventre","l'intérieur de ses cuisses nues","sa poitrine nue","le creux de son aine","ses fesses nues"];
+  acts3.forEach((a,ai)=>{durs3.forEach(d=>{
+    z3L.forEach(z=>C(3,"E",a[0]+" "+z+" "+d+".",a[1],a[2],"f3a"+ai));
+    z3E.forEach(z=>C(3,"L",a[0]+" "+z+" "+d+".",a[1],a[2],"f3a"+ai));
+  });});
+  const orders=[["Ordonne-lui de changer de position toutes les 30 secondes, à ton signal, pendant 2 minutes.","dh"],["Impose un rythme très lent pendant 1 minute, puis très intense pendant 30 secondes, en donnant tes ordres à voix haute.","dth"],["Interdis-lui de te toucher avec les mains pendant 2 minutes : seule sa bouche est autorisée.","dh"],["Fais-lui répéter à voix haute une phrase très crue de ton invention avant chaque nouveau geste, pendant 2 minutes.","dt"]];
+  const styles=["en le fixant droit dans les yeux","en chuchotant à son oreille","d'une voix autoritaire qui ne laisse aucun choix"];
+  orders.forEach((o,oi)=>{styles.forEach(s=>{
+    C(4,"E",o[0]+" Le tout, "+s+".",o[1],"","f4o"+oi);
+    C(4,"L",o[0]+" Le tout, "+s+".",o[1],"","f4o"+oi);
+  });});
+  const conf=["Décris crûment ce que tu ressens exactement en ce moment précis.","Dis à voix haute ce que tu veux qu'on te fasse dans les 5 prochaines minutes, sans aucun filtre.","Décris ton orgasme idéal pour cette nuit, avec les mots les plus explicites possibles.","Avoue la pratique que tu n'as jamais osé demander — c'est le moment."];
+  conf.forEach(t=>{C(4,"E",t,"t");C(4,"L",t,"t");});
+})();
+/* =====================================================================
+   DÉFIS DU JOUR — 50 pour Lui, 50 pour Elle (5 phases d'audace)
+   ===================================================================== */
+const DAILY={L:[],E:[]};
+function DL(ph,t){DAILY.L.push({id:"L"+DAILY.L.length,ph:ph,t:t});}
+function DE(ph,t){DAILY.E.push({id:"E"+DAILY.E.length,ph:ph,t:t});}
+/* ----- Pour Lui ----- */
+DL(1,"SMS Explicite : envoie-lui un SMS détaillé au travail en lui décrivant ce que tu vas lui faire ce soir.");
+DL(2,"Sortie sans sous-vêtement : amène-la au restaurant en sachant qu'elle ne porte rien sous sa robe ou son pantalon.");
+DL(3,"Quickie cuisine : prends-la par surprise contre le plan de travail de la cuisine.");
+DL(3,"Réveil buccal : réveille-la au petit matin par un cunnilingus doux et prolongé.");
+DL(2,"Photo interdite : envoie-lui une photo suggestive prise discrètement depuis ton lieu de travail ou un vestiaire.");
+DL(2,"Douche habillée : entraîne-la sous la douche chaude sans enlever vos vêtements.");
+DL(1,"Massage complet à l'huile : réalise un massage complet de 30 minutes sans rien attendre en retour immédiatement.");
+DL(2,"Séance de strip-tease : fais-lui un strip-tease lent et assumé dans la chambre.");
+DL(3,"Le jeu du bar : retrouvez-vous dans un bar public et faites comme si vous ne vous connaissiez pas.");
+DL(2,"Achat de lingerie : choisis et commande-lui une tenue coquine qu'elle devra porter au prochain rendez-vous.");
+DL(4,"Nuit des yeux bandés : passez toute la soirée au lit en lui gardant les yeux bandés.");
+DL(4,"Fessées de punition : inflige-lui une séance de fessées appliquées avant de passer à l'acte.");
+DL(4,"Contrôle du vibro à distance : fais-lui porter un toy télécommandé pendant une balade ou au supermarché.");
+DL(3,"Dirty talk imposé : pendant toute la soirée, parle-lui uniquement avec des termes crus et érotiques.");
+DL(5,"Attachement intégral : attache ses 4 membres aux coins du lit avant de la caresser.");
+DL(5,"Initiation à la sodomie : prends 40 minutes dédiées uniquement à la détente et à la pénétration anale progressive.");
+DL(3,"Caresse sous la table : glisse ta main sous sa jupe ou son pantalon pendant un dîner entre amis ou au restaurant.");
+DL(2,"Interdiction de toucher : reste nu devant elle sans qu'elle n'ait le droit de te toucher pendant 15 minutes.");
+DL(2,"Baiser d'ascenseur : plaque-la contre la paroi d'un ascenseur pour un baiser brûlant.");
+DL(5,"Orgasme refusé 24h : excite-la plusieurs fois dans la journée mais interdis-lui de jouir avant le lendemain.");
+DL(1,"Petit-déjeuner au lit avec un mot coquin caché sous la tasse décrivant ton programme du soir.");
+DL(1,"Compliment surprise : appelle-la en pleine journée juste pour lui dire ce que tu adores de son corps.");
+DL(1,"Bain préparé : fais-lui couler un bain aux bougies et lave-lui les cheveux toi-même.");
+DL(1,"Slow dance : ce soir, fais-la danser collé-serré sur votre chanson dans le salon, lumières tamisées.");
+DL(1,"Playlist coquine : crée-lui une playlist de chansons qui te font penser à vos nuits et envoie-la-lui au réveil.");
+DL(2,"Vestiaire complice : en boutique, rejoins-la dans la cabine d'essayage pour un baiser volé.");
+DL(2,"Le mot dans la poche : glisse dans son sac un mot décrivant très précisément ta prochaine envie.");
+DL(2,"Soirée mains liées : pendant le film du soir, garde une main posée sur sa cuisse, sans jamais monter plus haut.");
+DL(3,"Cinéma dernière rangée : caresse-la discrètement pendant toute la séance.");
+DL(3,"Sieste coquine : impose une « sieste » dominicale qui ne comportera aucun sommeil.");
+DL(3,"La voiture : trouvez un coin tranquille et embrassez-vous comme des ados… puis laisse tes mains décider.");
+DL(3,"Miroir : fais-lui l'amour face au miroir de la chambre en lui demandant de regarder.");
+DL(3,"Jeu du glaçon : au dessert, récupère un glaçon et fais-le fondre sur sa nuque devant tout le monde, mine de rien.");
+DL(4,"Nuit à thème : impose un jeu de rôle complet (inconnu d'hôtel, patron/assistante, kiné très zélé) avec tenue adaptée.");
+DL(4,"Sextape d'un soir : filmez vos ébats ce soir, visionnez-les ensemble, puis supprimez-les ensemble.");
+DL(4,"Shooting boudoir : organise une séance photo sensuelle d'elle, tu es le photographe exigeant.");
+DL(4,"Menu du soir : écris un « menu » en 3 services (préliminaires, plat, dessert) qu'elle devra commander à voix haute.");
+DL(4,"Domination douce : ce soir elle n'a le droit de rien faire — tu décides de tout, du premier baiser au dernier frisson.");
+DL(4,"L'heure du plug : propose-lui de porter un plug pendant votre dîner en tête-à-tête à la maison.");
+DL(4,"Edging du soir : amène-la 3 fois au bord de l'orgasme dans la soirée avant de la laisser jouir.");
+DL(5,"Week-end capture : réserve une nuit d'hôtel surprise avec un seul programme : elle n'en sort pas reposée.");
+DL(5,"Soumise d'un jour : elle porte un accessoire discret choisi par toi toute la journée et t'obéit au doigt et à l'œil ce soir.");
+DL(5,"Triple assaut : offre-lui trois orgasmes dans la même soirée, par trois moyens différents.");
+DL(5,"La séance bondage : prépare foulards et liens, attache-la intégralement et prends tout ton temps.");
+DL(5,"Sodomie matinale : réveillez-vous plus tôt et consacrez le lever du jour à une pénétration anale très douce.");
+DL(5,"Le marathon : bloque 2 heures complètes ce week-end, téléphones éteints, uniquement dédiées à vos corps.");
+DL(5,"Fantasme avoué : réalise ce soir LE fantasme qu'elle t'a avoué un jour et que tu n'as jamais mis en scène.");
+DL(5,"Jeu des interdits : établis 3 interdits pour elle ce soir (parler, toucher, jouir) — chaque infraction se paie en fessées.");
+DL(5,"Nuit blanche : interdiction de dormir avant qu'elle ait joui au moins deux fois.");
+DL(5,"Maître du vibro : garde la télécommande de son toy toute la soirée Netflix et joue avec sans prévenir.");
+/* ----- Pour Elle ----- */
+DE(1,"SMS Coquin : envoie-lui une photo de ta lingerie ou de ton décolleté pendant sa pause déjeuner.");
+DE(2,"Pas de culotte au ciné/resto : rends-toi à votre rendez-vous en enlevant ta culotte dans la voiture.");
+DE(3,"Fellation au réveil : glisse-toi sous les draps le matin pour le réveiller avec une fellation intense.");
+DE(4,"Dominatrice d'un soir : prends les clés de la soirée et donne-lui des ordres du début à la fin.");
+DE(2,"Photo boudoir : prends une photo très osée dans le miroir et envoie-lui avec une légende explicite.");
+DE(4,"Fellation sous le bureau : glisse-toi sous la table pendant qu'il travaille ou regarde un film.");
+DE(3,"Le jeu du silence : reçois ses caresses sans émettre le moindre son, sous peine d'interruption immédiate.");
+DE(3,"Commande de sextoy : choisis un nouveau sextoy pour le couple et impose son utilisation dès réception.");
+DE(2,"Soirée sans soutien-gorge : porte un haut transparent ou moulant sans soutien-gorge devant lui toute la soirée.");
+DE(4,"Léchage prolongé : consacre 10 minutes entières uniquement à la caresse buccale de ses bourses.");
+DE(5,"Attache-le au lit : attache ses poignets et ses chevilles et fais-le languir avant de le chevaucher.");
+DE(2,"Marquage au rouge à lèvres : couvre son corps de traces de baisers au rouge à lèvres vif.");
+DE(1,"Massage des pieds et cuisses : masse ses jambes et ses cuisses jusqu'à ce qu'il ne tienne plus en place.");
+DE(4,"Masturbation sous ton regard : ordonne-lui de se caresser devant toi sans que tu ne le touches.");
+DE(4,"Nuit à thème : impose un jeu de rôle complet (infirmière, professeure, inconnue) avec tenue adaptée.");
+DE(1,"Mot doux torride : cache un mot très explicite dans la poche de sa veste avant qu'il parte travailler.");
+DE(1,"Compliment miroir : dis-lui ce soir, les yeux dans les yeux, ce que tu préfères de son corps.");
+DE(1,"Bain à deux : prépare un bain chaud, bougies allumées, et lave-le toi-même très lentement.");
+DE(1,"Slow privé : fais-le asseoir et danse pour lui sur une chanson entière, sans qu'il ait le droit de bouger.");
+DE(1,"Petit-déjeuner surprise : sers-lui son café habillée uniquement de sa chemise.");
+DE(2,"Cabine d'essayage : envoie-lui une photo d'essayage de lingerie avec « laquelle je prends ? ».");
+DE(2,"Baiser volé public : embrasse-le fougueusement dans un lieu public quand il s'y attend le moins.");
+DE(2,"Strip-tease maison : offre-lui un déshabillage lent, lumière tamisée, musique choisie.");
+DE(2,"La jupe stratégique : porte une jupe et rappelle-lui discrètement à l'oreille qu'il ne devrait pas attendre ce soir.");
+DE(2,"Sieste peau contre peau : impose une sieste nue en cuillère, sans téléphone, mains libres de vagabonder.");
+DE(3,"Caresse sous la table : au restaurant, fais glisser ton pied le long de sa jambe jusqu'à le faire rougir.");
+DE(3,"Voiture complice : sur un parking discret, embrasse-le comme au premier soir et laisse tes mains descendre.");
+DE(3,"Douche surprise : rejoins-le sous la douche sans prévenir et savonne-le toi-même, partout.");
+DE(3,"Le miroir : demande-lui de te prendre face au miroir et regarde-vous jusqu'au bout.");
+DE(3,"L'apéro coquin : transforme l'apéritif en dégustation… sur sa peau (chantilly, chocolat, liqueur).");
+DE(3,"Sextos en réunion : bombarde-le de messages torrides pendant qu'il est en réunion, interdiction d'y répondre avant le soir.");
+DE(3,"La sieste réparatrice : réveille-le de sa sieste en étant déjà à califourchon sur lui.");
+DE(4,"Shooting privé : mets-le en scène et prends des photos de lui, tu es la photographe très directive.");
+DE(4,"Sextape d'un soir : propose de filmer vos ébats, visionnez ensemble, supprimez ensemble.");
+DE(4,"Le plug complice : porte un plug pendant votre dîner et ne lui révèle qu'au dessert.");
+DE(4,"Edging imposé : amène-le 3 fois au bord de l'orgasme dans la soirée, il ne jouira qu'à TA décision.");
+DE(4,"Reine de la soirée : il devient ton serviteur dévoué pendant 2 heures : massages, caresses et obéissance totale.");
+DE(4,"Vibro partagé : utilise ton toy devant lui sans qu'il ait le droit de te toucher — il regarde seulement.");
+DE(4,"Les 5 sens : bande-lui les yeux et fais-lui deviner ce que tu poses sur sa peau (glace, plume, lèvres, chocolat…).");
+DE(4,"Dirty call : appelle-le au travail et décris-lui à voix basse ce que tu es en train d'imaginer.");
+DE(5,"Nuit de la maîtresse : incarne une inconnue exigeante, rendez-vous à l'hôtel, il devra suivre TOUTES tes règles.");
+DE(5,"Réveil enchaîné : attache-le pendant son sommeil (léger !) et réveille-le avec ta bouche.");
+DE(5,"Triple couronne : offre-lui trois orgasmes dans la journée, par trois moyens différents.");
+DE(5,"Initiation prostatique : propose une découverte du massage prostatique, tout en douceur et lubrifiant.");
+DE(5,"Le marathon : bloque 2 heures complètes ce week-end, téléphones éteints, uniquement dédiées à vos corps.");
+DE(5,"Fantasme avoué : réalise ce soir LE fantasme qu'il t'a confié un jour et que tu n'as jamais osé mettre en scène.");
+DE(5,"Jeu des interdits : impose-lui 3 interdits ce soir (parler, toucher, jouir) — chaque infraction se paie cher.");
+DE(5,"Sodomie offerte : propose-lui ce que tu réserves aux très grandes occasions, à ton rythme, avec beaucoup de douceur.");
+DE(5,"La panthère : réveille-le en pleine nuit pour un round dont il se souviendra au réveil.");
+DE(5,"Contrôle total 24h : pendant 24 heures, chacun de ses orgasmes ne dépend que de toi.");
+/* =====================================================================
+   ÉTAT & PERSISTANCE
+   ===================================================================== */
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+let setup=store.get("kn_setup",{nL:"",nE:"",rounds:25,optsL:Object.fromEntries(CATS.map(c=>[c[0],true])),optsE:Object.fromEntries(CATS.map(c=>[c[0],true])),accs:Object.fromEntries(ACCS.map(a=>[a[0],true]))});
+let gallery=store.get("kn_gallery",{L:[],E:[]});
+let game=null; /* {plan,turn,idx,used:{}} */
+const LVL_NAMES={1:"NIVEAU 1 · ÉCHAUFFEMENT",2:"NIVEAU 2 · TENSION SENSUELLE",3:"NIVEAU 3 · PULSION & PLAISIR",4:"NIVEAU 4 · CLIMAX & LÂCHER-PRISE"};
+const LVL_SPLIT={20:[3,5,7,5],25:[4,6,9,6],35:[5,9,12,9]}; /* N1 courte < N2 < N3 la plus longue, N4 = N2 */
+/* ---------- Setup UI ---------- */
+function chip(label,on,cls,cb,tid){const el=document.createElement("div");el.className="chip "+cls+(on?" on":"");el.setAttribute("data-testid",tid);el.innerHTML='<span class="dot"></span>'+label;el.onclick=()=>{el.classList.toggle("on");cb(el.classList.contains("on"));};return el;}
+function buildSetup(){
+  $("name-lui").value=setup.nL;$("name-elle").value=setup.nE;
+  const ol=$("opts-lui"),oe=$("opts-elle"),oa=$("opts-acc");ol.innerHTML="";oe.innerHTML="";oa.innerHTML="";
+  CATS.forEach(c=>{
+    ol.appendChild(chip(c[1],setup.optsL[c[0]],"pLui",v=>{setup.optsL[c[0]]=v;save();},"opt-lui-"+c[0]));
+    oe.appendChild(chip(c[1],setup.optsE[c[0]],"pElle",v=>{setup.optsE[c[0]]=v;save();},"opt-elle-"+c[0]));
+  });
+  ACCS.forEach(a=>oa.appendChild(chip(a[1],setup.accs[a[0]],"pAcc",v=>{setup.accs[a[0]]=v;save();},"acc-"+a[0])));
+  document.querySelectorAll("#seg-rounds button").forEach(b=>{
+    b.classList.toggle("on",+b.dataset.r===setup.rounds);
+    b.onclick=()=>{setup.rounds=+b.dataset.r;save();document.querySelectorAll("#seg-rounds button").forEach(x=>x.classList.toggle("on",x===b));};
+  });
+  $("db-count").textContent=DB.length+DAILY.L.length+DAILY.E.length;
+}
+function save(){setup.nL=$("name-lui").value.trim();setup.nE=$("name-elle").value.trim();store.set("kn_setup",setup);}
+$("name-lui").addEventListener("input",save);$("name-elle").addEventListener("input",save);
+/* ---------- Jeu ---------- */
+function buildPlan(n){const s=LVL_SPLIT[n]||LVL_SPLIT[25];const p=[];s.forEach((c,i)=>{for(let k=0;k<c;k++)p.push(i+1);});return p;}
+function nameOf(p){return p==="L"?(setup.nL||"Lui"):(setup.nE||"Elle");}
+function pickChallenge(lvl,p){
+  const opts=p==="L"?setup.optsL:setup.optsE;
+  const pool=[];
+  DB.forEach((c,i)=>{if(c.lvl===lvl&&c.by===p&&[...c.c].every(k=>opts[k])&&[...c.a].every(k=>setup.accs[k]))pool.push(i);});
+  if(!pool.length)return {t:"Aucun défi ne correspond à vos filtres pour ce niveau… Improvisez un baiser de 30 secondes ! 😏"};
+  const key=lvl+p;
+  game.used[key]=game.used[key]||[];
+  if(!Array.isArray(game.fams))game.fams=[];
+  /* 1) jamais deux fois le même défi, 2) jamais deux défis de la même "famille"
+     (même gabarit de phrase) dans une même partie, tous joueurs confondus
+     -> chaque tour est unique */
+  let avail=pool.filter(i=>!game.used[key].includes(i)&&!game.fams.includes(DB[i].f));
+  if(!avail.length)avail=pool.filter(i=>!game.used[key].includes(i));
+  if(!avail.length){game.used[key]=[];avail=pool;}
+  /* privilégie très fortement les défis 100% uniques (non issus de gabarits) */
+  const uniq=avail.filter(i=>DB[i].f[0]==="u");
+  if(uniq.length&&Math.random()<0.85)avail=uniq;
+  const i=avail[Math.floor(Math.random()*avail.length)];
+  game.used[key].push(i);game.fams.push(DB[i].f);
+  return DB[i];
+}
+function parseDuration(t){
+  let m=t.match(/(\d+)\s*minutes?(?:\s*(?:et\s*)?(\d+))?/i);
+  if(m)return (+m[1])*60+(m[2]?+m[2]:0);
+  m=t.match(/(\d+)\s*secondes?/i);
+  if(m)return +m[1];
+  return null;
+}
+function showTurn(){
+  const p=game.plan.length>game.idx?null:null;
+  const lvl=game.plan[game.idx],who=game.turn;
+  const ch=pickChallenge(lvl,who);
+  game.cur=ch;
+  const theme=who==="L"?"tLui":"tElle";
+  const banner=$("turn-banner");banner.className="banner "+theme;
+  banner.textContent=(who==="L"?"💙 Au tour de ":"💜 Au tour de ")+nameOf(who);
+  $("round-info").textContent="Tour "+(game.idx+1)+" / "+game.plan.length;
+  const badge=$("lvl-badge");badge.className="lvlbadge lv"+lvl;badge.textContent=LVL_NAMES[lvl];
+  const card=$("challenge-card");card.className="card "+theme;card.textContent=ch.t;
+  card.style.animation="none";void card.offsetWidth;card.style.animation="";
+  const nb=$("btn-next");nb.className="btn next "+theme;
+  stopTimer();
+  game.dur=parseDuration(ch.t)||60;
+  $("btn-chrono").textContent="⏱️ LANCER LE CHRONO ("+fmt(game.dur)+")";
+  $("btn-chrono").classList.remove("hidden");
+  $("timer-wrap").classList.add("hidden");
+}
+function fmt(s){const m=Math.floor(s/60),r=s%60;return m>0?(m+":"+String(r).padStart(2,"0")):(r+"s");}
+/* ---------- Chrono ---------- */
+let tHandle=null,tEnd=0,tTotal=0;
+const CIRC=414.7;
+function startTimer(){
+  stopTimer();unlockAudio();
+  tTotal=game.dur;tEnd=Date.now()+tTotal*1000;
+  $("timer-wrap").classList.remove("hidden");
+  $("btn-chrono").classList.add("hidden");
+  tHandle=setInterval(tick,150);tick();
+}
+function tick(){
+  const left=Math.max(0,(tEnd-Date.now())/1000);
+  $("timer-val").textContent=fmt(Math.ceil(left));
+  $("timer-prog").style.strokeDashoffset=String(CIRC*(1-left/tTotal));
+  if(left<=0){stopTimer();$("timer-val").textContent="🔥";beep();}
+}
+function stopTimer(){if(tHandle){clearInterval(tHandle);tHandle=null;}}
+let audioCtx=null;
+function unlockAudio(){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();}catch(e){}}
+function beep(){
+  try{
+    unlockAudio();
+    [0,0.35,0.7].forEach((d,i)=>{
+      const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);
+      o.type="sine";o.frequency.value=i===2?1318:880;
+      const t0=audioCtx.currentTime+d;
+      g.gain.setValueAtTime(0.4,t0);g.gain.exponentialRampToValueAtTime(0.001,t0+0.3);
+      o.start(t0);o.stop(t0+0.32);
+    });
+  }catch(e){}
+  if(navigator.vibrate)navigator.vibrate([250,120,250,120,450]);
+}
+/* ---------- Navigation jeu ---------- */
+function startGame(){
+  save();
+  game={plan:buildPlan(setup.rounds),turn:Math.random()<0.5?"L":"E",idx:0,used:{},fams:[]};
+  $("setup").classList.add("hidden");$("end").classList.add("hidden");$("game").classList.remove("hidden");
+  window.scrollTo(0,0);
+  showTurn();
+}
+function nextTurn(){
+  game.idx++;
+  if(game.idx>=game.plan.length){endGame();return;}
+  game.turn=game.turn==="L"?"E":"L";
+  showTurn();window.scrollTo(0,0);
+}
+function endGame(){
+  stopTimer();
+  $("game").classList.add("hidden");$("end").classList.remove("hidden");
+  $("end-text").innerHTML=(setup.nL||"Lui")+" &amp; "+(setup.nE||"Elle")+", les "+setup.rounds+" tours sont écoulés…<br>Le jeu s'arrête ici, mais la nuit ne fait que commencer. 🔥";
+}
+function quitGame(){stopTimer();game=null;$("game").classList.add("hidden");$("end").classList.add("hidden");$("setup").classList.remove("hidden");buildSetup();}
+$("btn-start").onclick=startGame;
+$("btn-next").onclick=nextTurn;
+$("btn-chrono").onclick=startTimer;
+$("btn-quit").onclick=quitGame;
+$("btn-replay").onclick=()=>{$("end").classList.add("hidden");$("setup").classList.remove("hidden");buildSetup();};
+$("logo-home").onclick=()=>{if(!game)return;};
+/* ---------- Défi du jour ---------- */
+let dailyDraw=null;
+function openDaily(){$("ov-daily").classList.remove("hidden");$("daily-pick").classList.remove("hidden");$("daily-result").classList.add("hidden");dailyDraw=null;}
+function drawDaily(who){
+  const pending=gallery[who].map(x=>x.id);
+  let pool=DAILY[who].filter(d=>!pending.includes(d.id));
+  if(!pool.length)pool=DAILY[who];
+  const d=pool[Math.floor(Math.random()*pool.length)];
+  dailyDraw={who:who,d:d};
+  $("daily-phase").textContent="PHASE "+d.ph+" / 5 · POUR "+(who==="L"?nameOf("L").toUpperCase():nameOf("E").toUpperCase());
+  $("daily-text").textContent=d.t;
+  $("daily-pick").classList.add("hidden");$("daily-result").classList.remove("hidden");
+}
+function saveDaily(){
+  if(!dailyDraw)return;
+  if(!gallery[dailyDraw.who].some(x=>x.id===dailyDraw.d.id)){
+    gallery[dailyDraw.who].push({id:dailyDraw.d.id,t:dailyDraw.d.t,ph:dailyDraw.d.ph,date:new Date().toLocaleDateString("fr-FR")});
+    store.set("kn_gallery",gallery);
+  }
+  $("ov-daily").classList.add("hidden");
+  galTab=dailyDraw.who;openGallery();
+}
+$("btn-daily").onclick=openDaily;
+$("daily-lui").onclick=()=>drawDaily("L");
+$("daily-elle").onclick=()=>drawDaily("E");
+$("daily-redraw").onclick=()=>drawDaily(dailyDraw.who);
+$("daily-save").onclick=saveDaily;
+$("daily-close").onclick=()=>$("ov-daily").classList.add("hidden");
+/* ---------- Galerie ---------- */
+let galTab="L";
+function openGallery(){$("ov-gallery").classList.remove("hidden");renderGallery();}
+function renderGallery(){
+  $("tab-lui").classList.toggle("on",galTab==="L");
+  $("tab-elle").classList.toggle("on",galTab==="E");
+  const list=$("gallery-list");list.innerHTML="";
+  const items=gallery[galTab];
+  if(!items.length){list.innerHTML='<div class="gempty" data-testid="gallery-empty">Aucun défi en cours pour '+(galTab==="L"?nameOf("L"):nameOf("E"))+'.<br>Tirez-en un avec l\'icône 📸 !</div>';return;}
+  items.forEach(it=>{
+    const el=document.createElement("div");el.className="gitem";el.setAttribute("data-testid","gallery-item");
+    el.innerHTML='<div class="ph">PHASE '+it.ph+' · tiré le '+it.date+'</div><div class="txt">'+it.t.replace(/</g,"&lt;")+'</div>';
+    const btn=document.createElement("button");btn.className="done";btn.setAttribute("data-testid","gallery-done-btn");btn.textContent="✔ Marquer comme Réalisé";
+    btn.onclick=()=>{
+      for(let k=0;k<10;k++){
+        const s=document.createElement("span");s.className="spark";s.textContent="✦";
+        s.style.left=(15+Math.random()*70)+"%";s.style.top=(20+Math.random()*50)+"%";
+        s.style.setProperty("--dx",(Math.random()*120-60)+"px");s.style.setProperty("--dy",(Math.random()*-90-20)+"px");
+        el.appendChild(s);
+      }
+      el.classList.add("out");
+      setTimeout(()=>{
+        gallery[galTab]=gallery[galTab].filter(x=>x.id!==it.id);
+        store.set("kn_gallery",gallery);renderGallery();
+      },450);
+    };
+    el.appendChild(btn);list.appendChild(el);
+  });
+}
+$("btn-gallery").onclick=openGallery;
+$("tab-lui").onclick=()=>{galTab="L";renderGallery();};
+$("tab-elle").onclick=()=>{galTab="E";renderGallery();};
+$("gallery-close").onclick=()=>$("ov-gallery").classList.add("hidden");
+document.querySelectorAll(".overlay").forEach(ov=>ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.add("hidden");}));
+/* ---------- testids statiques ---------- */
+[["name-lui","input-name-lui"],["name-elle","input-name-elle"],["btn-start","start-game-btn"],["btn-next","next-turn-btn"],["btn-chrono","start-timer-btn"],["btn-quit","quit-game-btn"],["btn-replay","replay-btn"],["btn-daily","daily-challenge-btn"],["btn-gallery","gallery-btn"],["daily-lui","daily-for-lui-btn"],["daily-elle","daily-for-elle-btn"],["daily-save","daily-save-btn"],["daily-redraw","daily-redraw-btn"],["daily-close","daily-close-btn"],["gallery-close","gallery-close-btn"],["tab-lui","gallery-tab-lui"],["tab-elle","gallery-tab-elle"],["turn-banner","turn-banner"],["challenge-card","challenge-card"],["lvl-badge","level-badge"],["timer-val","timer-value"],["db-count","db-count"]].forEach(([id,tid])=>{const el=$(id);if(el)el.setAttribute("data-testid",tid);});
+document.querySelectorAll("#seg-rounds button").forEach(b=>b.setAttribute("data-testid","rounds-"+b.dataset.r));
+/* ---------- init ---------- */
+buildSetup();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"7f7b0fd8732c4326aae4b9d58d5c514a"}' crossorigin="anonymous"></script>
 </body>
+</html>
+
 </html>
